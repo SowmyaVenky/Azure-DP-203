@@ -3,7 +3,7 @@
 This project shows some of the experiments we can do to get familiar with the aspects tested on the DP-203 exam. Here are the steps to get the basic stuff provisioned via ARM templates. We can do this a couple of times via the UI to get familiar, but we can save a lot of time by making it create via the ARM templates. 
 
 <p align="center">
-  <img src="SampleArchitecture.png" width="350" title="Sample Architecure">
+  <img src="SampleArchitecture.png" title="Sample Architecure">
 </p>
 
 Here are the steps:
