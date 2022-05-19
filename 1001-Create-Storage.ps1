@@ -1,5 +1,5 @@
 ######################################################################
-##                PART I: Creating an Azure Data Factory            ##
+##                PART I: Creating storage accounts, containers and upload files #
 ######################################################################
 
 ####Venky Notes

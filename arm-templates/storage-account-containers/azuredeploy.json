@@ -15,9 +15,16 @@
           "description": "Specifies the name of the Azure Storage account."
         }
       },
-      "containerName": {
+      "rawContainerName": {
         "type": "string",
-        "defaultValue": "logs",
+        "defaultValue": "raw",
+        "metadata": {
+          "description": "Specifies the name of the blob container."
+        }
+      },
+      "stagingContainerName": {
+        "type": "string",
+        "defaultValue": "staging",
         "metadata": {
           "description": "Specifies the name of the blob container."
         }
@@ -41,16 +48,51 @@
         },
         "kind": "StorageV2",
         "properties": {
-          "accessTier": "Hot"
+          "accessTier": "Hot",
+          "isHnsEnabled": true
         }
       },
       {
         "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
         "apiVersion": "2021-06-01",
-        "name": "[format('{0}/default/{1}', parameters('storageAccountName'), parameters('containerName'))]",
+        "name": "[format('{0}/default/{1}', parameters('storageAccountName'), parameters('rawContainerName'))]",
         "dependsOn": [
           "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
-        ]
+        ],
+        "sku": {
+          "name": "Standard_LRS",
+          "tier": "Standard"
+        },
+        "properties": {
+          "publicAccess": "Container",
+          "cors": {
+            "corsRules": []
+          },
+          "deleteRetentionPolicy": {
+            "enabled": false
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+        "apiVersion": "2021-06-01",
+        "name": "[format('{0}/default/{1}', parameters('storageAccountName'), parameters('stagingContainerName'))]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+        ],
+        "sku": {
+          "name": "Standard_LRS",
+          "tier": "Standard"
+        },
+        "properties": {
+          "publicAccess": "Container",
+          "cors": {
+            "corsRules": []
+          },
+          "deleteRetentionPolicy": {
+            "enabled": false
+          }
+        }
       }
     ]
   }
