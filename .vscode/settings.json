@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "mssqlOptions": {
+                "appName": "SQLTools",
+                "useUTC": true,
+                "encrypt": true
+            },
+            "previewLimit": 50,
+            "server": "20.228.157.175",
+            "port": 1433,
+            "askForPassword": true,
+            "driver": "MSSQL",
+            "name": "venky-sql-server",
+            "database": "master",
+            "username": "venkyuser"
+        }
+    ]
+}
