@@ -28,7 +28,7 @@ Get-AzSubscription
 
 #################################01 - Create a storage account ########################
 # Use ARM template to deploy resources
-Write-Host "Creating Azure resources. This may take some time..."
+Write-Host "Creating storage account and containers for data lake. This may take some time..."
 
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
   -TemplateFile "arm-templates/storage-account-containers/azuredeploy.json" `
