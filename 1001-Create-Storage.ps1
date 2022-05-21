@@ -18,7 +18,7 @@ $RawStorageContainerName = "raw" + $random_suffix
 $StagingStorageContainerName = "stage" + $random_suffix
 
 # DEFINE RESOURCE GROUP NAME AND LOCATION PARAMETERS
-$resourceGroupName = "1-49772ee6-playground-sandbox"
+$resourceGroupName = "1-b4d662d1-playground-sandbox"
 
 #Login to Azure  - First pass uncomment to login to azure.
 # Connect-AzAccount
@@ -32,7 +32,7 @@ Write-Host "Creating Azure resources. This may take some time..."
 
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
   -TemplateFile "arm-templates/storage-account-containers/azuredeploy.json" `
-  -Mode Complete `
+  -Mode Incremental `
   -storageAccountName $StorageAccountName `
   -rawContainerName $RawStorageContainerName `
   -stagingContainerName $StagingStorageContainerName `
