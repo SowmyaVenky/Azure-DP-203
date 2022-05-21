@@ -2,33 +2,16 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "value": {
-                "type": "String",
-                "value": "southcentralus"
-            }
-        },
         "networkInterfaceName": {
-            "value": {
-                "type": "String",
                 "value": "venkysqlservervm347"
-            }
         },
         "enableAcceleratedNetworking": {
-            "value": {
-                "type": "Bool",
                 "value": true
-            }
         },
         "networkSecurityGroupName": {
-            "value": {
-                "type": "String",
                 "value": "venkysqlservervm-nsg"
-            }
         },
         "networkSecurityGroupRules": {
-            "value": {
-                "type": "Array",
                 "value": [
                     {
                         "name": "RDP",
@@ -57,31 +40,19 @@
                         }
                     }
                 ]
-            }
         },
         "subnetName": {
-            "value": {
-                "type": "String",
                 "value": "default"
-            }
         },
         "virtualNetworkName": {
-            "value": {
-                "type": "String",
-                "value": "1-0efd47f3-playground-sandbox-vnet"
-            }
+                "value": "venky-sqlservervm-vnet"
         },
         "addressPrefixes": {
-            "value": {
-                "type": "Array",
                 "value": [
                     "10.0.0.0/16"
                 ]
-            }
         },
         "subnets": {
-            "value": {
-                "type": "Array",
                 "value": [
                     {
                         "name": "default",
@@ -90,65 +61,35 @@
                         }
                     }
                 ]
-            }
         },
         "publicIpAddressName": {
-            "value": {
-                "type": "String",
                 "value": "venkysqlservervm-ip"
-            }
         },
         "publicIpAddressType": {
-            "value": {
-                "type": "String",
                 "value": "Dynamic"
-            }
         },
         "publicIpAddressSku": {
-            "value": {
-                "type": "String",
                 "value": "Basic"
-            }
         },
         "pipDeleteOption": {
-            "value": {
-                "type": "String",
                 "value": "Detach"
-            }
         },
         "virtualMachineName": {
-            "value": {
-                "type": "String",
                 "value": "venkysqlservervm"
-            }
         },
         "virtualMachineComputerName": {
-            "value": {
-                "type": "String",
                 "value": "venkysqlserverv"
-            }
         },
         "virtualMachineRG": {
-            "value": {
-                "type": "String",
                 "value": "1-0efd47f3-playground-sandbox"
-            }
         },
         "osDiskType": {
-            "value": {
-                "type": "String",
                 "value": "StandardSSD_LRS"
-            }
         },
         "osDiskDeleteOption": {
-            "value": {
-                "type": "String",
                 "value": "Delete"
-            }
         },
         "dataDisks": {
-            "value": {
-                "type": "Array",
                 "value": [
                     {
                         "lun": 0,
@@ -175,11 +116,8 @@
                         "diskEncryptionSet": null
                     }
                 ]
-            }
         },
         "dataDiskResources": {
-            "value": {
-                "type": "Array",
                 "value": [
                     {
                         "name": "venkysqlservervm_DataDisk_0",
@@ -202,227 +140,118 @@
                         }
                     }
                 ]
-            }
         },
         "virtualMachineSize": {
-            "value": {
-                "type": "String",
                 "value": "Standard_DS1_v2"
-            }
         },
         "nicDeleteOption": {
-            "value": {
-                "type": "String",
                 "value": "Detach"
-            }
         },
         "adminUsername": {
-            "value": {
-                "type": "String",
                 "value": "venkyuser"
-            }
         },
         "adminPassword": {
-            "value": null
+                "value": "Ganesh20022002"
         },
         "patchMode": {
-            "value": {
-                "type": "String",
                 "value": "AutomaticByOS"
-            }
         },
         "enableHotpatching": {
-            "value": {
-                "type": "Bool",
                 "value": false
-            }
-        },
-        "sqlVirtualMachineLocation": {
-            "value": {
-                "type": "String",
-                "value": "southcentralus"
-            }
         },
         "sqlVirtualMachineName": {
-            "value": {
-                "type": "String",
                 "value": "venkysqlservervm"
-            }
         },
         "sqlConnectivityType": {
-            "value": {
-                "type": "String",
                 "value": "Public"
-            }
         },
         "sqlPortNumber": {
-            "value": {
-                "type": "Int",
                 "value": 1433
-            }
         },
         "sqlStorageDisksCount": {
-            "value": {
-                "type": "Int",
                 "value": 1
-            }
         },
         "sqlStorageWorkloadType": {
-            "value": {
-                "type": "String",
                 "value": "OLTP"
-            }
         },
         "sqlStorageDisksConfigurationType": {
-            "value": {
-                "type": "String",
                 "value": "NEW"
-            }
         },
         "sqlStorageStartingDeviceId": {
-            "value": {
-                "type": "Int",
                 "value": 2
-            }
         },
         "sqlStorageDeploymentToken": {
-            "value": {
-                "type": "Int",
                 "value": 68299
-            }
         },
         "sqlAutopatchingDayOfWeek": {
-            "value": {
-                "type": "String",
                 "value": "Sunday"
-            }
         },
         "sqlAutopatchingStartHour": {
-            "value": {
-                "type": "String",
                 "value": "2"
-            }
         },
         "sqlAutopatchingWindowDuration": {
-            "value": {
-                "type": "String",
                 "value": "60"
-            }
         },
         "sqlAuthenticationLogin": {
-            "value": {
-                "type": "String",
                 "value": "venkyuser"
-            }
         },
         "sqlAuthenticationPassword": {
-            "value": null
+                "value": "Ganesh20022002"
         },
         "dataPath": {
-            "value": {
-                "type": "String",
                 "value": "F:\\data"
-            }
         },
         "dataDisksLUNs": {
-            "value": {
-                "type": "Array",
                 "value": [
                     0
                 ]
-            }
         },
         "logPath": {
-            "value": {
-                "type": "String",
                 "value": "G:\\log"
-            }
         },
         "logDisksLUNs": {
-            "value": {
-                "type": "Array",
                 "value": [
                     1
                 ]
-            }
         },
         "tempDbPath": {
-            "value": {
-                "type": "String",
                 "value": "D:\\tempDb"
-            }
         },
         "dataFileCount": {
-            "value": {
-                "type": "Int",
                 "value": 1
-            }
         },
         "dataFileSize": {
-            "value": {
-                "type": "Int",
                 "value": 8
-            }
         },
         "dataGrowth": {
-            "value": {
-                "type": "Int",
                 "value": 64
-            }
         },
         "logFileSize": {
-            "value": {
-                "type": "Int",
                 "value": 8
-            }
         },
         "logGrowth": {
-            "value": {
-                "type": "Int",
                 "value": 64
-            }
         },
         "sqlSystemDbOnDataDisk": {
-            "value": {
-                "type": "Bool",
                 "value": false
-            }
         },
         "rServicesEnabled": {
-            "value": {
-                "type": "String",
                 "value": "false"
-            }
         },
         "maxdop": {
-            "value": {
-                "type": "Int",
                 "value": 0
-            }
         },
         "isOptimizeForAdHocWorkloadsEnabled": {
-            "value": {
-                "type": "Bool",
                 "value": false
-            }
         },
         "collation": {
-            "value": {
-                "type": "String",
                 "value": "SQL_Latin1_General_CP1_CI_AS"
-            }
         },
         "minServerMemoryMB": {
-            "value": {
-                "type": "Int",
                 "value": 0
-            }
         },
         "maxServerMemoryMB": {
-            "value": {
-                "type": "Int",
                 "value": 2147483647
-            }
         }
     }
 }
