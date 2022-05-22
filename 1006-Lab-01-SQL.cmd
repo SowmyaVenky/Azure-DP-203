@@ -4,7 +4,7 @@
 @rem ######################################################################
 
 @rem ##### Install the sqlcmd utility to get access to synapse from the local computer.
-rem sqlcmd -S "venkysynapseworkspace101.sql.azuresynapse.net" -U venkyuser -P Ganesh20022002 -d venkysqlpool -I -i synapse-tutorial\01\setup.sql
+sqlcmd -S "venkysynapseworkspace101.sql.azuresynapse.net" -U venkyuser -P Ganesh20022002 -d venkysqlpool -I -i synapse-tutorial\01\setup.sql
 
 @rem # Load data
 bcp dbo.DimCurrency in synapse-tutorial\01\data\DimCurrency.txt -S "venkysynapseworkspace101.sql.azuresynapse.net" -U venkyuser -P Ganesh20022002 -d venkysqlpool -f synapse-tutorial\01\data\DimCurrency.fmt -q -k -E -b 5000
@@ -17,4 +17,5 @@ bcp dbo.DimProductSubCategory in synapse-tutorial\01\data\DimProductSubCategory.
 bcp dbo.DimPromotion in synapse-tutorial\01\data\DimPromotion.txt -S "venkysynapseworkspace101.sql.azuresynapse.net" -U venkyuser -P Ganesh20022002 -d venkysqlpool -f synapse-tutorial\01\data\DimPromotion.fmt -q -k -E -b 5000
 bcp dbo.DimSalesTerritory in synapse-tutorial\01\data\DimSalesTerritory.txt -S "venkysynapseworkspace101.sql.azuresynapse.net" -U venkyuser -P Ganesh20022002 -d venkysqlpool -f synapse-tutorial\01\data\DimSalesTerritory.fmt -q -k -E -b 5000
 bcp dbo.FactInternetSales in synapse-tutorial\01\data\FactInternetSales.txt -S "venkysynapseworkspace101.sql.azuresynapse.net" -U venkyuser -P Ganesh20022002 -d venkysqlpool -f synapse-tutorial\01\data\FactInternetSales.fmt -q -k -E -b 5000
+bcp dbo.FactResellerSales in synapse-tutorial\01\data\FactResellerSales.txt -S "venkysynapseworkspace101.sql.azuresynapse.net" -U venkyuser -P Ganesh20022002 -d venkysqlpool -f synapse-tutorial\01\data\FactResellerSales.fmt -q -k -E -b 5000
 

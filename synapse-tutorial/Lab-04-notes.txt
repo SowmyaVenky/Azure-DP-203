@@ -1,0 +1,72 @@
+%%pyspark
+df = spark.read.load('abfss://files@datalakexxxxxxx.dfs.core.windows.net/sales/orders/2019.csv', format='csv'
+## If header exists uncomment line below
+##, header=True
+)
+display(df.limit(10))
+
+-- Schema on read
+%%pyspark
+from pyspark.sql.types import *
+from pyspark.sql.functions import *
+
+orderSchema = StructType([
+StructField("SalesOrderNumber", StringType()),
+StructField("SalesOrderLineNumber", IntegerType()),
+StructField("OrderDate", DateType()),
+StructField("CustomerName", StringType()),
+StructField("Email", StringType()),
+StructField("Item", StringType()),
+StructField("Quantity", IntegerType()),
+StructField("UnitPrice", FloatType()),
+StructField("Tax", FloatType())
+])
+
+df = spark.read.load('abfss://files@datalakexxxxxxx.dfs.core.windows.net/sales/orders/*.csv', format='csv', schema=orderSchema)
+display(df.limit(100))
+df.printSchema()
+
+-- Filter dataframes
+
+customers = df['CustomerName', 'Email']
+print(customers.count())
+print(customers.distinct().count())
+display(customers.distinct())
+
+-- Filter 
+customers = df.select("CustomerName", "Email").where(df['Item']=='Road-250 Red, 52')
+print(customers.count())
+print(customers.distinct().count())
+display(customers.distinct())
+
+-- Aggregate
+
+productSales = df.select("Item", "Quantity").groupBy("Item").sum()
+display(productSales)
+yearlySales = df.select(year("OrderDate").alias("Year")).groupBy("Year").count().orderBy("Year")
+display(yearlySales)
+
+--Spark SQL using python code.
+
+df.createOrReplaceTempView("salesorders")
+
+spark_df = spark.sql("SELECT * FROM salesorders")
+display(spark_df)
+
+--Note magic 
+%%sql
+SELECT YEAR(OrderDate) AS OrderYear,
+       SUM((UnitPrice * Quantity) + Tax) AS GrossRevenue
+FROM salesorders
+GROUP BY YEAR(OrderDate)
+ORDER BY OrderYear;
+
+--- Visualization
+
+sqlQuery = "SELECT CAST(YEAR(OrderDate) AS CHAR(4)) AS OrderYear, \
+                SUM((UnitPrice * Quantity) + Tax) AS GrossRevenue \
+            FROM salesorders \
+            GROUP BY CAST(YEAR(OrderDate) AS CHAR(4)) \
+            ORDER BY OrderYear"
+df_spark = spark.sql(sqlQuery)
+df_spark.show()
