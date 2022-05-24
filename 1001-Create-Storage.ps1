@@ -12,13 +12,12 @@
 #2. Create a rawzone container under the storage account.
 #3. Create a staging container under the storage.
 
-$random_suffix = Get-Random
-$StorageAccountName = "vksa" + $random_suffix
-$RawStorageContainerName = "raw" + $random_suffix
-$StagingStorageContainerName = "stage" + $random_suffix
+$StorageAccountName = "vksa042772"
+$RawStorageContainerName = "raw042772"
+$StagingStorageContainerName = "stage042772"
 
 # DEFINE RESOURCE GROUP NAME AND LOCATION PARAMETERS
-$resourceGroupName = "1-9db78bfb-playground-sandbox"
+$resourceGroupName = "1-366b7d95-playground-sandbox"
 
 #Login to Azure  - First pass uncomment to login to azure.
 Connect-AzAccount

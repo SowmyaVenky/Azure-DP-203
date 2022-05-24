@@ -1,5 +1,6 @@
 ######################################################################
-##                PART 4: Create a ADF instance #
+##                PART 8: Create databricks workspaces #
+## This is not working because linux academy will not allow for this priviledge
 ######################################################################
 
 ####Venky Notes
@@ -15,10 +16,10 @@ $resourceGroupName = "1-366b7d95-playground-sandbox"
 
 #################################01 - Create ADF ########################
 # Use ARM template to deploy resources
-Write-Host "Creating Azure Data Factory. This may take some time..."
+Write-Host "Creating databricks Workspace. This may take some time..."
 
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
-  -TemplateFile "arm-templates/azure-data-factory/azuredeploy.json" `
-  -TemplateParameterFile "arm-templates/azure-data-factory/azuredeploy.parameters.json" `
+  -TemplateFile "arm-templates/databricks-ws/azuredeploy.json" `
+  -TemplateParameterFile "arm-templates/databricks-ws/azuredeploy.parameters.json" `
   -Mode Incremental `
-  -Force
+  -Force  

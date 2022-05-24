@@ -2,6 +2,11 @@
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
+IF OBJECT_ID(N'[dbo].[FactInternetSales]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[FactInternetSales]
+GO
+
 CREATE TABLE [dbo].[FactInternetSales](
 	[SalesOrderNumber] [nvarchar](20) NOT NULL,
 	[SalesOrderLineNumber] [tinyint] NOT NULL,
@@ -29,6 +34,11 @@ CREATE TABLE [dbo].[FactInternetSales](
 )
 
 GO
+
+IF OBJECT_ID(N'[dbo].[DimCustomer]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimCustomer]
+GO
+
 CREATE TABLE [dbo].[DimCustomer](
 	[CustomerKey] [int] IDENTITY(1,1) NOT NULL,
 	[GeographyKey] [int] NULL,
@@ -62,6 +72,11 @@ CREATE TABLE [dbo].[DimCustomer](
 )
 
 GO
+
+IF OBJECT_ID(N'[dbo].[DimDate]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimDate]
+GO
+
 CREATE TABLE [dbo].[DimDate](
 	[DateKey] [int] NOT NULL,
 	[FullDateAlternateKey] [date] NOT NULL,
@@ -85,6 +100,11 @@ CREATE TABLE [dbo].[DimDate](
 )
 
 GO
+
+IF OBJECT_ID(N'[dbo].[DimGeography]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimGeography]
+GO
+
 CREATE TABLE [dbo].[DimGeography](
 	[GeographyKey] [int] IDENTITY(1,1) NOT NULL,
 	[City] [nvarchar](30) NULL,
@@ -99,6 +119,11 @@ CREATE TABLE [dbo].[DimGeography](
 	[IpAddressLocator] [nvarchar](15) NULL)
 
 GO
+
+IF OBJECT_ID(N'[dbo].[DimProduct]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimProduct]
+GO
+
 CREATE TABLE [dbo].[DimProduct](
 	[ProductKey] [int] IDENTITY(1,1) NOT NULL,
 	[ProductAlternateKey] [nvarchar](25) NULL,
@@ -142,6 +167,10 @@ WITH
   ); 
 GO
 
+IF OBJECT_ID(N'[dbo].[DimProductCategory]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimProductCategory]
+GO
+
 CREATE TABLE [dbo].[DimProductCategory](
 	[ProductCategoryKey] [int] IDENTITY(1,1) NOT NULL,
 	[ProductCategoryAlternateKey] [int] NULL,
@@ -150,6 +179,11 @@ CREATE TABLE [dbo].[DimProductCategory](
 	[FrenchProductCategoryName] [nvarchar](50) NOT NULL)
 
 GO
+
+IF OBJECT_ID(N'[dbo].[DimProductSubcategory]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimProductSubcategory]
+GO
+
 CREATE TABLE [dbo].[DimProductSubcategory](
 	[ProductSubcategoryKey] [int] IDENTITY(1,1) NOT NULL,
 	[ProductSubcategoryAlternateKey] [int] NULL,
@@ -157,6 +191,10 @@ CREATE TABLE [dbo].[DimProductSubcategory](
 	[SpanishProductSubcategoryName] [nvarchar](50) NOT NULL,
 	[FrenchProductSubcategoryName] [nvarchar](50) NOT NULL,
 	[ProductCategoryKey] [int] NULL)
+GO
+
+IF OBJECT_ID(N'[dbo].[DimSalesTerritory]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimSalesTerritory]
 GO
 
 CREATE TABLE [dbo].[DimSalesTerritory](
@@ -172,6 +210,10 @@ WITH
   ); 
 GO
 
+
+IF OBJECT_ID(N'[dbo].[FactResellerSales]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[FactResellerSales]
+GO
 
 CREATE TABLE [dbo].[FactResellerSales](
 	[SalesOrderNumber] [nvarchar](20) NOT NULL,
@@ -198,6 +240,10 @@ CREATE TABLE [dbo].[FactResellerSales](
 	[CarrierTrackingNumber] [nvarchar](25) NULL,
 	[CustomerPONumber] [nvarchar](25) NULL,
 	[RevisionNumber] [tinyint] NOT NULL)
+GO
+
+IF OBJECT_ID(N'[dbo].[vFactSales]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[vFactSales]
 GO
 
 CREATE VIEW [dbo].[vFactSales]
@@ -267,6 +313,9 @@ AS
 		[dbo].[FactInternetSales];
 GO
 
+IF OBJECT_ID(N'[dbo].[DimAccount]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimAccount]
+GO
 
 CREATE TABLE [dbo].[DimAccount](
 	[AccountKey] [int] IDENTITY(1,1) NOT NULL,
@@ -281,6 +330,11 @@ CREATE TABLE [dbo].[DimAccount](
 	[CustomMemberOptions] [nvarchar](200) NULL)
 
 GO
+
+IF OBJECT_ID(N'[dbo].[DimCurrency]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimCurrency]
+GO
+
 CREATE TABLE [dbo].[DimCurrency](
 	[CurrencyKey] [int] IDENTITY(1,1) NOT NULL,
 	[CurrencyAlternateKey] [nchar](3) NOT NULL,
@@ -288,12 +342,22 @@ CREATE TABLE [dbo].[DimCurrency](
 	[FormatString] [nvarchar](20) NULL)
 
 GO
+
+IF OBJECT_ID(N'[dbo].[DimDepartmentGroup]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimDepartmentGroup]
+GO
+
 CREATE TABLE [dbo].[DimDepartmentGroup](
 	[DepartmentGroupKey] [int] IDENTITY(1,1) NOT NULL,
 	[ParentDepartmentGroupKey] [int] NULL,
 	[DepartmentGroupName] [nvarchar](50) NULL)
 
 GO
+
+IF OBJECT_ID(N'[dbo].[DimEmployee]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimEmployee]
+GO
+
 CREATE TABLE [dbo].[DimEmployee](
 	[EmployeeKey] [int] IDENTITY(1,1) NOT NULL,
 	[ParentEmployeeKey] [int] NULL,
@@ -331,6 +395,11 @@ WITH
     CLUSTERED INDEX (EmployeeKey)  
   ); 
 GO
+
+IF OBJECT_ID(N'[dbo].[DimOrganization]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimOrganization]
+GO
+
 CREATE TABLE [dbo].[DimOrganization](
 	[OrganizationKey] [int] IDENTITY(1,1) NOT NULL,
 	[ParentOrganizationKey] [int] NULL,
@@ -339,6 +408,11 @@ CREATE TABLE [dbo].[DimOrganization](
 	[CurrencyKey] [int] NULL)
 
 GO
+
+IF OBJECT_ID(N'[dbo].[DimPromotion]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimPromotion]
+GO
+
 CREATE TABLE [dbo].[DimPromotion](
 	[PromotionKey] [int] IDENTITY(1,1) NOT NULL,
 	[PromotionAlternateKey] [int] NULL,
@@ -356,6 +430,10 @@ CREATE TABLE [dbo].[DimPromotion](
 	[EndDate] [datetime] NULL,
 	[MinQty] [int] NULL,
 	[MaxQty] [int] NULL)
+GO
+
+IF OBJECT_ID(N'[dbo].[DimReseller]', N'U') IS NOT NULL   
+DROP TABLE [dbo].[DimReseller]
 GO
 
 CREATE TABLE [dbo].[DimReseller](
