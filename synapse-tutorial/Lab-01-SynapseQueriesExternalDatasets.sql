@@ -1,3 +1,4 @@
+-- HAVE TO BE IN SERVERLESS POOL FOR IT TO WORK! 
 SELECT TOP 100 * FROM
     OPENROWSET(
         BULK 'https://azureopendatastorage.blob.core.windows.net/nyctlc/yellow/puYear=*/puMonth=*/*.parquet',
@@ -42,8 +43,12 @@ WHERE nyc.filepath(1) = '2016'
 GROUP BY CAST([tpepPickupDateTime] AS DATE)
 ORDER BY 1 ASC
 
-WITH taxi_rides AS (
+
 SELECT
+    *
+FROM 
+(
+ SELECT
     CAST([tpepPickupDateTime] AS DATE) AS [current_day],
     COUNT(*) as rides_per_day
 FROM
@@ -52,10 +57,11 @@ FROM
         FORMAT='PARQUET'
     ) AS [nyc]
 WHERE nyc.filepath(1) = '2016'
-GROUP BY CAST([tpepPickupDateTime] AS DATE)
-),
-public_holidays AS (
-SELECT
+GROUP BY CAST([tpepPickupDateTime] AS DATE)   
+) t
+LEFT OUTER JOIN 
+(
+ SELECT
     holidayname as holiday,
     date
 FROM
@@ -63,24 +69,49 @@ FROM
         BULK 'https://azureopendatastorage.blob.core.windows.net/holidaydatacontainer/Processed/*.parquet',
         FORMAT='PARQUET'
     ) AS [holidays]
-WHERE countryorregion = 'United States' AND YEAR(date) = 2016
-),
-joined_data AS (
-SELECT
-    *
-FROM taxi_rides t
-LEFT OUTER JOIN public_holidays p on t.current_day = p.date
-)
+WHERE countryorregion = 'United States' AND YEAR(date) = 2016   
+) p 
+on t.current_day = p.date
 
 SELECT 
-    *,
-    holiday_rides = 
+   *,
+   holiday_rides = 
     CASE   
       WHEN holiday is null THEN 0   
       WHEN holiday is not null THEN rides_per_day
     END   
-FROM joined_data
-ORDER BY current_day ASC
+FROM 
+(
+SELECT
+    *
+FROM 
+(
+ SELECT
+    CAST([tpepPickupDateTime] AS DATE) AS [current_day],
+    COUNT(*) as rides_per_day
+FROM
+    OPENROWSET(
+        BULK 'https://azureopendatastorage.blob.core.windows.net/nyctlc/yellow/puYear=*/puMonth=*/*.parquet',
+        FORMAT='PARQUET'
+    ) AS [nyc]
+WHERE nyc.filepath(1) = '2016'
+GROUP BY CAST([tpepPickupDateTime] AS DATE)   
+) t
+LEFT OUTER JOIN 
+(
+ SELECT
+    holidayname as holiday,
+    date
+FROM
+    OPENROWSET(
+        BULK 'https://azureopendatastorage.blob.core.windows.net/holidaydatacontainer/Processed/*.parquet',
+        FORMAT='PARQUET'
+    ) AS [holidays]
+WHERE countryorregion = 'United States' AND YEAR(date) = 2016   
+) p 
+on t.current_day = p.date
+) X
+ORDER BY X.current_day ASC
 
 SELECT
     AVG(windspeed) AS avg_windspeed,

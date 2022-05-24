@@ -8,7 +8,7 @@
 #3. Get the resource group name that has been provisioned. 
   
 # DEFINE RESOURCE GROUP NAME AND LOCATION PARAMETERS
-$resourceGroupName = "1-12f375e4-playground-sandbox"
+$resourceGroupName = "1-9db78bfb-playground-sandbox"
 
 #Login to Azure  - First pass uncomment to login to azure.
 # Connect-AzAccount
@@ -24,5 +24,5 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
   -Force
 
   ##### Install the sqlcmd utility to get access to synapse from the local computer.
-  sqlcmd -S "venkysynapseworkspace101.sql.azuresynapse.net" -U venkyuser -P Ganesh20022002 -d venkysqlpool -I -i synapse-tutorial\01\setup.sql
+  Write-Host "After this step, please install sqlcmd utility from the microsoft website, then run the 1006-Lab-01-SQL.cmd - Note that this is a cmd, and you will need a regular dos prompt for this, not a PS shell"
   

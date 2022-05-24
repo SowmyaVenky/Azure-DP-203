@@ -1,22 +1,31 @@
 -- Replace the data lake URLs correctly to match the exact paths based on what has been generaed by the ARM template.
 -- Read all the sales csv files across multiple years.
--- This is auto-generated code
+-- We need to create a linked service to allow Synapse get to the files we have on the ADLS storage
+-- account that is NOT PRIMARY to the synapse workspace. We go to Data -> click on the + button, and 
+-- then connect to external data... After we fill out the required details, a linked service will be 
+-- created and will allow synapse to connect and pull data.
+
+-- The first time we add the linked service, it will not show up on the left nav of synapse. we need 
+-- to click the 3 dots and hit refresh to reveal the new linked sevice to show up. 
+
+-- If we do not do that it will not work. Note be on SERVERLESS POOL - These are exploratory.
 SELECT
-    TOP 100 *
+    TOP 100 *
 FROM
-    OPENROWSET(
-        BULK 'https://datalakexxxxxxx.dfs.core.windows.net/files/sales/csv**',
-        FORMAT = 'CSV',
-        PARSER_VERSION='2.0'
-    ) AS [result]
+    OPENROWSET(
+        BULK 'https://vksa1086099719.dfs.core.windows.net/raw1086099719/wwi-02/synapse-tutorial/02/sales/csv/**',
+        FORMAT = 'CSV',
+        PARSER_VERSION = '2.0'
+    ) AS [result]
+
 -- Note that the columns are not recognized and they are named C1, C2 etc.
 -- Now use WITH to give structure for the data read from the file. Note collate on fields.
 SELECT
     TOP 100 *
 FROM
     OPENROWSET(
-        BULK 'https://datalakexxxxxxx.dfs.core.windows.net/files/sales/csv/**',
-        FORMAT = 'CSV',
+        BULK 'https://vksa1086099719.dfs.core.windows.net/raw1086099719/wwi-02/synapse-tutorial/02/sales/csv/**',
+        FORMAT = 'CSV',
         PARSER_VERSION='2.0'
     )
     WITH (
@@ -30,42 +39,46 @@ FROM
         UnitPrice DECIMAL(18,2),
         TaxAmount DECIMAL (18,2)
     ) AS [result]
+
 -- Now query the parquet files in the folder that are partitioned by date. Note ** at end.
 -- This will include all the sub-folders.
 SELECT
     TOP 100 *
 FROM
     OPENROWSET(
-        BULK 'https://datalakexxxxxxx.dfs.core.windows.net/files/sales/parquet/**',
+        BULK 'https://vksa1086099719.dfs.core.windows.net/raw1086099719/wwi-02/synapse-tutorial/02/sales/parquet/**',
         FORMAT = 'PARQUET'
     ) AS [result]
+
 -- Query aggreate from all folders.
 SELECT YEAR(OrderDate) AS OrderYear,
        COUNT(*) AS OrdredItems
 FROM
     OPENROWSET(
-        BULK 'https://datalakexxxxxxx.dfs.core.windows.net/files/sales/parquet/**',
+        BULK 'https://vksa1086099719.dfs.core.windows.net/raw1086099719/wwi-02/synapse-tutorial/02/sales/parquet/**',
         FORMAT = 'PARQUET'
     ) AS [result]
 GROUP BY YEAR(OrderDate)
 ORDER BY OrderYear
+
 -- Note the way to query based on file path. Only 2019 and 2020 
 SELECT YEAR(OrderDate) AS OrderYear,
        COUNT(*) AS OrdredItems
 FROM
     OPENROWSET(
-        BULK 'https://datalakexxxxxxx.dfs.core.windows.net/files/sales/parquet/year=*/**',
+        BULK 'https://vksa1086099719.dfs.core.windows.net/raw1086099719/wwi-02/synapse-tutorial/02/sales/parquet/year=*/**',
         FORMAT = 'PARQUET'
     ) AS [result]
 WHERE [result].filepath(1) IN ('2019', '2020')
 GROUP BY YEAR(OrderDate)
 ORDER BY OrderYear
+
 -- Query sales orders in JSON format. Note use of CSV even when we read JSON
 SELECT
     TOP 100 *
 FROM
     OPENROWSET(
-        BULK 'https://datalakexxxxxxx.dfs.core.windows.net/files/sales/json/**',
+        BULK 'https://vksa1086099719.dfs.core.windows.net/raw1086099719/wwi-02/synapse-tutorial/02/sales/json/**',
         FORMAT = 'CSV',
         FIELDTERMINATOR ='0x0b',
         FIELDQUOTE = '0x0b',
@@ -78,7 +91,7 @@ SELECT JSON_VALUE(Doc, '$.SalesOrderNumber') AS OrderNumber,
        Doc
 FROM
     OPENROWSET(
-        BULK 'https://datalakexxxxxxx.dfs.core.windows.net/files/sales/json/**',
+        BULK 'https://vksa1086099719.dfs.core.windows.net/raw1086099719/wwi-02/synapse-tutorial/02/sales/json/**',
         FORMAT = 'CSV',
         FIELDTERMINATOR ='0x0b',
         FIELDQUOTE = '0x0b',
@@ -95,9 +108,10 @@ Use Sales;
 GO;
 
 CREATE EXTERNAL DATA SOURCE sales_data WITH (
-    LOCATION = 'https://datalakexxxxxxx.dfs.core.windows.net/files/sales/'
+    LOCATION = 'https://vksa1086099719.dfs.core.windows.net/raw1086099719/wwi-02/synapse-tutorial/02/sales/'
 );
 GO;
+
 -- NOW SWITCH TO THE SALES DB to create the other artifacts inside sales db, not master.
 -- RELATIVE paths are being used now.
 

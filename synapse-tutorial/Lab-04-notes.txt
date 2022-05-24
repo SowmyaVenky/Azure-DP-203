@@ -1,5 +1,5 @@
 %%pyspark
-df = spark.read.load('abfss://files@datalakexxxxxxx.dfs.core.windows.net/sales/orders/2019.csv', format='csv'
+df = spark.read.load('abfss://raw1086099719@vksa1086099719.dfs.core.windows.net/wwi-02/synapse-tutorial/04/orders/2019.csv', format='csv'
 ## If header exists uncomment line below
 ##, header=True
 )
@@ -22,7 +22,7 @@ StructField("UnitPrice", FloatType()),
 StructField("Tax", FloatType())
 ])
 
-df = spark.read.load('abfss://files@datalakexxxxxxx.dfs.core.windows.net/sales/orders/*.csv', format='csv', schema=orderSchema)
+df = spark.read.load('abfss://raw1086099719@vksa1086099719.dfs.core.windows.net/wwi-02/synapse-tutorial/04/orders/2019.csv', format='csv', schema=orderSchema)
 display(df.limit(100))
 df.printSchema()
 
@@ -33,11 +33,18 @@ print(customers.count())
 print(customers.distinct().count())
 display(customers.distinct())
 
--- Filter 
+-- Filter - there where is not correct so you will get 0 results
 customers = df.select("CustomerName", "Email").where(df['Item']=='Road-250 Red, 52')
 print(customers.count())
 print(customers.distinct().count())
 display(customers.distinct())
+
+-- Correct where clause 
+customers = df.select("CustomerName", "Email").where(df['Item']=='Road-150 Red, 62')
+print(customers.count())
+print(customers.distinct().count())
+display(customers.distinct())
+
 
 -- Aggregate
 
@@ -70,3 +77,35 @@ sqlQuery = "SELECT CAST(YEAR(OrderDate) AS CHAR(4)) AS OrderYear, \
             ORDER BY OrderYear"
 df_spark = spark.sql(sqlQuery)
 df_spark.show()
+
+-- Plotting
+from matplotlib import pyplot as plt
+
+# matplotlib requires a Pandas DataFrame, not a Spark one
+df_sales = df_spark.toPandas()
+
+# Create a bar plot of revenue by year
+plt.bar(x=df_sales['OrderYear'], height=df_sales['GrossRevenue'])
+
+# Display the plot
+plt.show()
+
+# Clear the plot area
+plt.clf()
+
+# Create a Figure
+fig = plt.figure(figsize=(8,3))
+
+# Create a bar plot of revenue by year
+plt.bar(x=df_sales['OrderYear'], height=df_sales['GrossRevenue'], color='orange')
+
+# Customize the chart
+plt.title('Revenue by Year')
+plt.xlabel('Year')
+plt.ylabel('Revenue')
+plt.grid(color='#95a5a6', linestyle='--', linewidth=2, axis='y', alpha=0.7)
+plt.xticks(rotation=45)
+
+# Show the figure
+plt.show()
+

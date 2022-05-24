@@ -1,8 +1,11 @@
 -- https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/tutorial-logical-data-warehouse
+--- NOTE HAVE TO BE IN SERVERLESS POOL FOR THIS TO WORK!!!
 
 CREATE DATABASE Ldw
       COLLATE Latin1_General_100_BIN2_UTF8;
 GO
+
+--- SWITH THE DATABASE FROM MASTER TO the LDW database --
 CREATE EXTERNAL DATA SOURCE ecdc_cases WITH (
     LOCATION = 'https://pandemicdatalake.blob.core.windows.net/public/curated/covid-19/ecdc_cases/'
 );
@@ -38,3 +41,7 @@ create external table ecdc_adls.cases (
     file_format = ParquetFormat
 );
 GO
+
+SELECT * 
+FROM 
+ecdc_adls.cases;

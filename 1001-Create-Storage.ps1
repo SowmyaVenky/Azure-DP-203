@@ -18,10 +18,10 @@ $RawStorageContainerName = "raw" + $random_suffix
 $StagingStorageContainerName = "stage" + $random_suffix
 
 # DEFINE RESOURCE GROUP NAME AND LOCATION PARAMETERS
-$resourceGroupName = "1-12f375e4-playground-sandbox"
+$resourceGroupName = "1-9db78bfb-playground-sandbox"
 
 #Login to Azure  - First pass uncomment to login to azure.
-# Connect-AzAccount
+Connect-AzAccount
 
 Write-Host "Here are your subscriptions..."
 Get-AzSubscription
