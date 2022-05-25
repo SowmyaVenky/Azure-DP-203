@@ -9,7 +9,7 @@
 #3. Get the resource group name that has been provisioned. 
   
 # DEFINE RESOURCE GROUP NAME AND LOCATION PARAMETERS
-$resourceGroupName = "1-366b7d95-playground-sandbox"
+$resourceGroupName = "1-ed5d73ef-playground-sandbox"
 
 #Login to Azure  - First pass uncomment to login to azure.
 # Connect-AzAccount
