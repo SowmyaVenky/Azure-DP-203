@@ -2,7 +2,7 @@
 -- https://github.com/MicrosoftLearning/DP-203-Data-Engineer/blob/master/Instructions/Labs/LAB_05_load_data_into_the_data_warehouse.md
 
 -- Note round robin distribution, because staging tables are not queried directly.
-create schema wwi-staging;
+create schema [wwi_staging];
 GO
 CREATE TABLE [wwi_staging].[SaleHeap]
 ( 
@@ -105,7 +105,7 @@ GO
 
 -- Replace SUFFIX with the unique suffix for your resources
 COPY INTO wwi_staging.SaleHeap
-FROM 'https://raw042772@vksa042772.dfs.core.windows.net/wwi-02/sale-small/Year=2019'
+FROM 'https://vksa042772.dfs.core.windows.net/raw042772/wwi-02/sale-small/Year=2019/'
 WITH (
     FILE_TYPE = 'PARQUET',
     COMPRESSION = 'SNAPPY'
@@ -127,7 +127,7 @@ GO
 
 -- Replace SUFFIX with the unique suffix for your resources
 COPY INTO wwi_staging.DailySalesCounts
-FROM 'https://raw042772@vksa042772.dfs.core.windows.net/wwi-02/campaign-analytics/dailycounts.txt'
+FROM 'https://vksa042772.dfs.core.windows.net/raw042772/wwi-02/campaign-analytics/dailycounts.txt'
 WITH (
     FILE_TYPE = 'CSV',
     FIELDTERMINATOR='.',
@@ -158,6 +158,13 @@ CREATE WORKLOAD GROUP BigDataLoad WITH
       CAP_PERCENTAGE_RESOURCE = 100
   );
 
+--Create the user we need to do the performant load.
+-- NEED TO RUN THIS ON THE MASTER DB --
+create login [asa.sql.import01] with password = 'Ganesh20022002';
+
+create user [asa.sql.import01] for login [asa.sql.import01]
+execute sp_addrolemember 'db_owner', 'asa.sql.import01'  
+
 -- Create workload classifier
 CREATE WORKLOAD Classifier HeavyLoader WITH
 (
@@ -169,3 +176,35 @@ CREATE WORKLOAD Classifier HeavyLoader WITH
 -- View classifiers
 SELECT * FROM sys.workload_management_workload_classifiers
 
+-- Create the schema and the target table used to put data via the heavy load user.
+IF OBJECT_ID(N'[wwi_perf].[Sale_Heap]', N'U') IS NOT NULL   
+DROP TABLE [wwi_perf].[Sale_Heap]  
+
+CREATE SCHEMA wwi_perf;
+
+CREATE TABLE [wwi_perf].[Sale_Heap]
+( 
+	[TransactionId] [uniqueidentifier]  NOT NULL,
+	[CustomerId] [int]  NOT NULL,
+	[ProductId] [smallint]  NOT NULL,
+	[Quantity] [tinyint]  NOT NULL,
+	[Price] [decimal](9,2)  NOT NULL,
+	[TotalAmount] [decimal](9,2)  NOT NULL,
+	[TransactionDateId] [int]  NOT NULL,
+	[ProfitAmount] [decimal](9,2)  NOT NULL,
+	[Hour] [tinyint]  NOT NULL,
+	[Minute] [tinyint]  NOT NULL,
+	[StoreId] [smallint]  NOT NULL
+)
+WITH
+(
+	DISTRIBUTION = ROUND_ROBIN,
+	HEAP
+)
+
+-- Now continue the process of building a copy job via ADF, and make sure the user is set to 
+-- asa.sql.import01 to get the advantages of the capacity management we setup.
+-- After the pipeline runs it will pull data from the data lake and put it on the DW via the linked service
+-- pointing to synapse and the target table. Once load is done, confirm
+
+SELECT COUNT(1) FROM [wwi_perf].[Sale_Heap]
