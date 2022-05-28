@@ -1,0 +1,19 @@
+-- Conditional split usage example to detect bad rows and push them to blob storage.
+https://docs.microsoft.com/en-us/azure/data-factory/how-to-data-flow-error-rows
+
+-- Example of how to split data into multiple buckets based on input data
+https://docs.microsoft.com/en-us/azure/data-factory/data-flow-conditional-split
+
+CleanData
+    split(
+        year < 1960,
+	    year > 1980,
+	    disjoint: false
+    ) ~> SplitByYear@(moviesBefore1960, moviesAfter1980, AllOtherMovies)
+
+
+-- Tumblng window trigger
+https://docs.microsoft.com/en-us/azure/data-factory/how-to-create-tumbling-window-trigger
+
+-- ADF to Synapse optimizations
+https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-sql-data-warehouse?tabs=data-factory#parallel-copy-from-synapse-analytics

@@ -1,0 +1,118 @@
+-- Databricks - steps to work 
+1. Mount the data lake to DBFS using managed identity and app registrations.
+2. Read data lake data into data frame
+3. Apply transformations on the data frame
+4. Write data to data-lake, or directly to synapse
+5. When loading to synapse better to load into a staging area before loading
+
+https://docs.microsoft.com/en-us/azure/databricks/scenarios/databricks-extract-load-sql-data-warehouse#load-data-into-azure-synapse
+
+----Session Config
+val appID = "<appID>"
+val secret = "<secret>"
+val tenantID = "<tenant-id>"
+
+spark.conf.set("fs.azure.account.auth.type", "OAuth")
+spark.conf.set("fs.azure.account.oauth.provider.type", "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider")
+spark.conf.set("fs.azure.account.oauth2.client.id", "<appID>")
+spark.conf.set("fs.azure.account.oauth2.client.secret", "<secret>")
+spark.conf.set("fs.azure.account.oauth2.client.endpoint", "https://login.microsoftonline.com/<tenant-id>/oauth2/token")
+spark.conf.set("fs.azure.createRemoteFileSystemDuringInitialization", "true")
+
+-- Account Config
+val storageAccountName = "<storage-account-name>"
+val appID = "<app-id>"
+val secret = "<secret>"
+val fileSystemName = "<file-system-name>"
+val tenantID = "<tenant-id>"
+
+spark.conf.set("fs.azure.account.auth.type." + storageAccountName + ".dfs.core.windows.net", "OAuth")
+spark.conf.set("fs.azure.account.oauth.provider.type." + storageAccountName + ".dfs.core.windows.net", "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider")
+spark.conf.set("fs.azure.account.oauth2.client.id." + storageAccountName + ".dfs.core.windows.net", "" + appID + "")
+spark.conf.set("fs.azure.account.oauth2.client.secret." + storageAccountName + ".dfs.core.windows.net", "" + secret + "")
+spark.conf.set("fs.azure.account.oauth2.client.endpoint." + storageAccountName + ".dfs.core.windows.net", "https://login.microsoftonline.com/" + tenantID + "/oauth2/token")
+spark.conf.set("fs.azure.createRemoteFileSystemDuringInitialization", "true")
+dbutils.fs.ls("abfss://" + fileSystemName  + "@" + storageAccountName + ".dfs.core.windows.net/")
+spark.conf.set("fs.azure.createRemoteFileSystemDuringInitialization", "false")
+
+In this section, you upload the transformed data into Azure Synapse. 
+You use the Azure Synapse connector for Azure Databricks to directly upload a dataframe as a 
+table in a Synapse Spark pool.
+
+As mentioned earlier, the Azure Synapse connector uses Azure Blob storage 
+temporary storage to upload data between Azure Databricks and Azure Synapse.
+
+val blobStorage = "<blob-storage-account-name>.blob.core.windows.net"
+val blobContainer = "<blob-container-name>"
+val blobAccessKey =  "<access-key>"
+
+val tempDir = "wasbs://" + blobContainer + "@" + blobStorage +"/tempDirs"
+
+val acntInfo = "fs.azure.account.key."+ blobStorage
+sc.hadoopConfiguration.set(acntInfo, blobAccessKey)
+
+// Synapse DW settings
+//Azure Synapse related settings
+val dwDatabase = "<database-name>"
+val dwServer = "<database-server-name>"
+val dwUser = "<user-name>"
+val dwPass = "<password>"
+val dwJdbcPort =  "1433"
+val dwJdbcExtraOptions = "encrypt=true;trustServerCertificate=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"
+val sqlDwUrl = "jdbc:sqlserver://" + dwServer + ":" + dwJdbcPort + ";database=" + dwDatabase + ";user=" + dwUser+";password=" + dwPass + ";$dwJdbcExtraOptions"
+val sqlDwUrlSmall = "jdbc:sqlserver://" + dwServer + ":" + dwJdbcPort + ";database=" + dwDatabase + ";user=" + dwUser+";password=" + dwPass
+
+spark.conf.set(
+    "spark.sql.parquet.writeLegacyFormat",
+    "true")
+
+renamedColumnsDF.write.format("com.databricks.spark.sqldw")
+.option("url", sqlDwUrlSmall)
+.option("dbtable", "SampleTable")       
+.option( "forward_spark_azure_storage_credentials","True")
+.option("tempdir", tempDir)
+.mode("overwrite").save()
+
+Automated (job) clusters always use optimized autoscaling. The type of autoscaling performed on 
+all-purpose clusters depends on the workspace configuration.
+
+• A workload for data engineers who will use Python and SQL. --> high concurrency
+
+• A workload for jobs that will run notebooks that use Python, Scala, and SQL. --> standard
+
+• A workload that data scientists will use to perform ad hoc analysis in Scala and R. --> standard
+ because high concurrency does not support Scala
+
+
+A High Concurrency cluster is a managed cloud resource. The key benefits of High Concurrency 
+clusters are that they provide fine-grained sharing for maximum resource utilization and 
+minimum query latencies.
+
+Databricks chooses the appropriate number of workers required to run your job. 
+This is referred to as autoscaling. Autoscaling makes it easier to achieve high cluster
+utilization, because you don't need to provision the cluster to match a workload.
+
+The cluster configuration includes an auto terminate setting whose default value depends on 
+cluster mode: Standard and Single Node clusters terminate automatically after 120 minutes by 
+default.
+
+High Concurrency clusters do not terminate automatically by default.
+
+Standard autoscaling is used by all-purpose clusters in workspaces in the Standard pricing tier. 
+Optimized autoscaling is used by all-purpose clusters in the Azure Databricks Premium Plan.
+
+https://docs.databricks.com/clusters/cluster-config-best-practices.html
+
+Window Types:
+
+Tumbling windows are a series of fixed-sized, non-overlapping and contiguous time intervals. 
+The following diagram illustrates a stream with a series of events and how they are mapped 
+into 10-second tumbling windows.
+
+Hopping window functions hop forward in time by a fixed period. 
+It may be easy to think of them as Tumbling windows that can overlap 
+and be emitted more often than the window size. 
+Events can belong to more than one Hopping window result set. 
+To make a Hopping window the same as a Tumbling window, specify the hop size to be the 
+same as the window size.
+
