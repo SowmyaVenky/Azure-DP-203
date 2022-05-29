@@ -1,0 +1,44 @@
+Row level security 
+-- Function and add security policy
+CREATE FUNCTION Security.tvf_securitypredicate(@SalesRep AS nvarchar(50))  
+    RETURNS TABLE  
+WITH SCHEMABINDING  
+AS  
+    RETURN SELECT 1 AS tvf_securitypredicate_result
+WHERE @SalesRep = USER_NAME() OR USER_NAME() = 'Manager';  
+GO
+CREATE SECURITY POLICY SalesFilter  
+ADD FILTER PREDICATE Security.tvf_securitypredicate(SalesRep)
+ON Sales.Orders
+WITH (STATE = ON);  
+GO
+
+--Always encrypted settings
+There are four permissions for Always Encrypted:
+ALTER ANY COLUMN MASTER KEY (Required to create and delete a column master key.)
+
+ALTER ANY COLUMN ENCRYPTION KEY (Required to create and delete a column encryption key.)
+
+VIEW ANY COLUMN MASTER KEY DEFINITION (Required to access and read the metadata of the 
+column master keys to manage keys or query encrypted columns.)
+
+VIEW ANY COLUMN ENCRYPTION KEY DEFINITION (Required to access and read the metadata of the
+column encryption key to manage keys or query encrypted columns.)
+
+-- TDE with customer managed keys
+For Azure SQL Database and Azure Synapse Analytics, the TDE protector is set at the server level 
+and is inherited by all encrypted databases associated with that server. For Azure SQL Managed 
+Instance, the TDE protector is set at the instance level and is inherited by all encrypted
+databases on that instance.
+
+For geo-redundancy - 2 Azure KeyValuts in 2 regions. 
+Create new encryption key and add to vault in primary region.
+Backup and restore that key to the secondary region.
+Assign key-vault to secondary.
+Turn TDE on,
+Assign key-valut to primary
+Turn TDE on
+
+-- To be able to see the DMV views in the database, we need to make sure user has this permissions
+To query the DMVs in this article, you need either VIEW DATABASE STATE or CONTROL permission. 
+Usually, granting VIEW DATABASE STATE is the preferred permission as it is much more restrictive.

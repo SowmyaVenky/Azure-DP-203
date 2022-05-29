@@ -1,0 +1,83 @@
+For the fastest load, use compressed delimited text files.Split large compressed files into 
+smaller compressed files.
+
+Assign each loading user to a specific resource class or workload group. To run a load, sign 
+in as one of the loading users, and then run the load. 
+
+To achieve the fastest loading speed for moving data into a data warehouse table, load data into
+a staging table. Define the staging table as a heap and use round-robin for the distribution 
+option.
+
+For best columnstore compressions, load 1M+ rows and use higher resource class to have enough
+memory for the compression to happen.
+
+If you have thousands or more single inserts throughout the day, batch the inserts so you can 
+bulk load them. Develop your processes to append the single inserts to a file, and then create 
+another process that periodically loads the file.
+
+When loading a distributed table, your incoming data shouldn't be sorted on the distribution key. 
+Doing so will slow down your loads.
+
+In most cases data is partitioned on a date column that is closely tied to the order in which 
+the data is loaded into the SQL pool. One of the greatest benefits of using partitions to 
+maintain data is the avoidance of transaction logging.
+
+When creating partitions on clustered columnstore tables, it is important to consider how many 
+rows belong to each partition. For optimal compression and performance of clustered columnstore
+tables, a minimum of 1 million rows per distribution and partition is needed. Before partitions
+ are created, dedicated SQL pool already divides each table into 60 distributions.
+
+All queries executed on SQL pool are logged to sys.dm_pdw_exec_requests. 
+This DMV contains the last 10,000 queries executed.
+
+Use the Request ID and the Step Index to retrieve information about a data movement step 
+running on each distribution from sys.dm_pdw_dms_workers.
+
+Use sys.dm_pdw_request_steps to monitor ShuffleMove operations.
+
+Monitor transactions - sys.dm_pdw_nodes_tran_database_transactions
+
+Distribution columns selection
+
+To balance the parallel processing, select a distribution column that:
+
+Has many unique values. The column can have duplicate values. All rows 
+with the same value are assigned to the same distribution. Since there are 60 distributions, 
+some distributions can have > 1 unique values while others may end with zero values.
+
+Does not have NULLs, or has only a few NULLs. For an extreme example, if all values in the column 
+are NULL, all the rows are assigned to the same distribution. As a result, query processing is 
+skewed to one distribution, and does not benefit from parallel processing.
+
+Is NOT A DATE column. All data for the same date lands in the same distribution. If several users
+are all filtering on the same date, then only 1 of the 60 distributions do all the processing work.
+
+Is used in JOIN, GROUP BY, DISTINCT, OVER, and HAVING clauses. When two large fact tables have 
+frequent joins, query performance improves when you distribute both tables on one of the join 
+columns. When a table is not used in joins, consider distributing the table on a column that is 
+frequently in the GROUP BY clause.
+
+Is not used in WHERE clauses. This could narrow the query to not run on all the distributions.
+
+Is not a date column. WHERE clauses often filter by date. When this happens, all the processing 
+could run on only a few distributions.
+
+
+Start with Round Robin, but aspire to a hash distribution strategy to take advantage of a 
+massively parallel architecture.Make sure that common hash keys have the same data format.
+
+Don't distribute on varchar format.
+
+Dimension tables with a common hash key to a fact table with frequent join operations can be hash
+distributed.
+
+Use sys.dm_pdw_nodes_db_partition_stats to analyze any skewness in the data.
+Use sys.dm_pdw_request_steps to analyze data movements behind queries, monitor the time
+broadcast, and shuffle operations take. This is helpful to review your distribution strategy.
+
+https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/cheat-sheet
+
+https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-partition?context=%2Fazure%2Fsynapse-analytics%2Fcontext%2Fcontext
+
+How to distribute
+https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-distribute#choosing-a-distribution-column

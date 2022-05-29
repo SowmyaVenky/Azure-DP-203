@@ -1,0 +1,2 @@
+The most common error status code is 429 (rate limiting/throttling). 
+This error means that requests to Azure Cosmos DB are more than the provisioned throughput. The most common solution to this problem is to scale up the RUs for the given collection.

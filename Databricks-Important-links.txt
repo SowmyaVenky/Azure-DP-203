@@ -73,8 +73,8 @@ renamedColumnsDF.write.format("com.databricks.spark.sqldw")
 .option("tempdir", tempDir)
 .mode("overwrite").save()
 
-Automated (job) clusters always use optimized autoscaling. The type of autoscaling performed on 
-all-purpose clusters depends on the workspace configuration.
+Automated (job) clusters always use optimized autoscaling. The type of autoscaling performed 
+on all-purpose clusters depends on the workspace configuration.
 
 • A workload for data engineers who will use Python and SQL. --> high concurrency
 
@@ -100,6 +100,14 @@ High Concurrency clusters do not terminate automatically by default.
 
 Standard autoscaling is used by all-purpose clusters in workspaces in the Standard pricing tier. 
 Optimized autoscaling is used by all-purpose clusters in the Azure Databricks Premium Plan.
+
+Azure Databricks provides three kinds of logging of cluster-related activity:
+Cluster event logs, which capture cluster lifecycle events, like creation, termination, 
+configuration edits, and so on.
+
+Apache Spark driver and worker logs, which you can use for debugging.
+
+Cluster init-script logs, valuable for debugging init scripts.
 
 https://docs.databricks.com/clusters/cluster-config-best-practices.html
 
