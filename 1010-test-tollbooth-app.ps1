@@ -1,5 +1,6 @@
 ######################################################################
-##                PART 5: Create Synapse workspaces #
+##                PART 10: Test tollbooth app for azure streaming analytics #
+## This uses a COMPLETE deployment, so this can't be used with other tests.
 ######################################################################
 
 ####Venky Notes
@@ -11,18 +12,14 @@
 $resourceGroupName = "1-9f374037-playground-sandbox"
 
 #Login to Azure  - First pass uncomment to login to azure.
-# Connect-AzAccount
+Connect-AzAccount
 
 #################################01 - Create ADF ########################
 # Use ARM template to deploy resources
-Write-Host "Creating Synapse Workspace. This may take some time..."
+Write-Host "Creating tollbooth app. This may take some time..."
 
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
-  -TemplateFile "arm-templates/synapse/azuredeploy.json" `
-  -TemplateParameterFile "arm-templates/synapse/azuredeploy.parameters.json" `
-  -Mode Incremental `
-  -Force
-
-  ##### Install the sqlcmd utility to get access to synapse from the local computer.
-  Write-Host "After this step, please install sqlcmd utility from the microsoft website, then run the 1006-Lab-01-SQL.cmd - Note that this is a cmd, and you will need a regular dos prompt for this, not a PS shell"
-  
+  -TemplateFile "arm-templates/tollbooth-app/azuredeploy.json" `
+  -TemplateParameterFile "arm-templates/tollbooth-app/azuredeploy.parameters.json" `
+  -Mode Complete `
+  -Force  
