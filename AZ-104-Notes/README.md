@@ -1,4 +1,4 @@
-# Azure-DP-104
+# Azure-AZ-104
 
 This project shows some of the experiments we can do to get familiar with the aspects tested on the AZ-104 exam. Lot of fun things to create here and get our hands dirty! 
 

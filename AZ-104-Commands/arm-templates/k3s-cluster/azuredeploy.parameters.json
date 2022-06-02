@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualNetworks_venky_vnet_1_name": {
+            "value": "venky-vnet-1"
+        },
+        "virtualMachines_venky_win_entry_name": {
+            "value": "venky-win-entry"
+        },
+        "virtualMachines_venky_k3s_slave_1_name": {
+            "value": "venky-k3s-slave-1"
+        },
+        "virtualMachines_venky_k3s_slave_2_name": {
+            "value": "venky-k3s-slave-2"
+        },
+        "networkInterfaces_venky_win_entry561_name": {
+            "value": "venky-win-entry561"
+        },
+        "publicIPAddresses_venky_win_entry_ip_name": {
+            "value": "venky-win-entry-ip"
+        },
+        "virtualMachines_venky_k3s_master_node_name": {
+            "value": "venky-k3s-master-node"
+        },
+        "networkInterfaces_venky_k3s_master_38_name": {
+            "value": "venky-k3s-master-38"
+        },
+        "networkInterfaces_venky_k3s_slave_1124_name": {
+            "value": "venky-k3s-slave-1124"
+        },
+        "networkInterfaces_venky_k3s_slave_2186_name": {
+            "value": "venky-k3s-slave-2186"
+        },
+        "networkSecurityGroups_venky_win_entry_nsg_name": {
+            "value": "venky-win-entry-nsg"
+        },
+        "networkSecurityGroups_venky_k3s_slave_1_nsg_name": {
+            "value": "venky-k3s-slave-1-nsg"
+        },
+        "networkSecurityGroups_venky_k3s_slave_2_nsg_name": {
+            "value": "venky-k3s-slave-2-nsg"
+        },
+        "networkSecurityGroups_venky_k3s_master_node_nsg_name": {
+            "value": "venky-k3s-master-node-nsg"
+        } 
+    }
+}
