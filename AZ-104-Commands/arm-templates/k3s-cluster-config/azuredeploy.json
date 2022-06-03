@@ -1,0 +1,43 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "defaultValue": "[resourceGroup().location]",
+            "type": "String"
+        },
+        "k3s-master-vm-name": {
+            "defaultValue": "venky-k3s-master-node",
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "name": "k3s-master-script",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/microsoft.custom-script-linux-arm-2.0.57/MainTemplate.json"
+                },
+                "parameters": {
+                    "fileUris": {
+                        "value": [
+                            "https://venkyinitscr101.blob.core.windows.net/initsh101/shell-scripts/install-yugabyte.sh"
+                        ]
+                    },
+                    "commandToExecute": {
+                        "value": "sh install-yugabyte.sh"
+                    },
+                    "vmName": {
+                        "value": "[parameters('k3s-master-vm-name')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }     
+        }
+    ]
+}

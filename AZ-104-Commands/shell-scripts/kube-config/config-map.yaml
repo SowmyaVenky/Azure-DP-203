@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: cart-microservice-properties
 data:
-  yugabyte.datasource.url: "jdbc:postgresql://192.168.0.4:5433/yugabyte?ssl=true&sslmode=verify-full"
+  yugabyte.datasource.url: "jdbc:postgresql://192.168.0.4:5433/yugabyte"
   yugabyte.datasource.load-balance: "true"
   yugabyte.datasource.username: "admin"
   yugabyte.datasource.password: ""
