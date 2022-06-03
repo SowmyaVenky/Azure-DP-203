@@ -17,7 +17,7 @@ $RawStorageContainerName = "raw042772"
 $StagingStorageContainerName = "stage042772"
 
 # DEFINE RESOURCE GROUP NAME AND LOCATION PARAMETERS
-$resourceGroupName = "1-b2c7d833-playground-sandbox"
+$resourceGroupName = "1-2fbacb54-playground-sandbox"
 
 #Login to Azure  - First pass uncomment to login to azure.
 Connect-AzAccount

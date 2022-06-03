@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnet1Name": {
+        "type": "string",
+        "defaultValue": "venky-vnet-1",
+        "metadata": {
+            "description": "Name for vNet 1"
+        }
+        },
+        "vnet2Name": {
+        "type": "string",
+        "defaultValue": "venky-vnet-2",
+        "metadata": {
+            "description": "Name for vNet 2"
+        }
+        }
+    },
+    "resources": [
+        {
+        "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+        "apiVersion": "2020-05-01",
+        "name": "[format('{0}/{1}', parameters('vnet1Name'), format('{0}-{1}', parameters('vnet1Name'), parameters('vnet2Name')))]",
+        "properties": {
+            "allowVirtualNetworkAccess": true,
+            "allowForwardedTraffic": false,
+            "allowGatewayTransit": false,
+            "useRemoteGateways": false,
+            "remoteVirtualNetwork": {
+            "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnet2Name'))]"
+            }
+        }
+        }
+    ]
+  }

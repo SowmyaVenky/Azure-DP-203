@@ -1,0 +1,48 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "defaultValue": "[resourceGroup().location]",
+            "type": "String"
+        },
+        "virtualNetworkName": {
+            "defaultValue": "venky-vnet-2",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/VirtualNetworks",
+            "apiVersion": "2021-01-01",
+            "name": "[parameters('virtualNetworkName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "tags": {},
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "192.168.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "venky-subnet-1",
+                        "properties": {
+                            "addressPrefix": "192.168.0.0/24"
+                        }
+                    },
+                    {
+                        "name": "venky-subnet-2",
+                        "properties": {
+                            "addressPrefix": "192.168.1.0/24"
+                        }
+                    }
+
+                ],
+                "enableDdosProtection": false
+            }
+        }
+    ]
+}
