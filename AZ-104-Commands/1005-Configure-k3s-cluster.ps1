@@ -8,7 +8,7 @@
 #3. Get the resource group name that has been provisioned. 
 
 # DEFINE RESOURCE GROUP NAME AND LOCATION PARAMETERS
-$resourceGroupName = "1-2b9199e3-playground-sandbox"
+$resourceGroupName = (Get-AzResourceGroup).ResourceGroupName
 
 #Login to Azure  - First pass uncomment to login to azure.
 # Connect-AzAccount
@@ -18,6 +18,11 @@ $resourceGroupName = "1-2b9199e3-playground-sandbox"
 Write-Host "Executing scripts for k3s config. This may take some time..."
 
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
-  -TemplateFile "arm-templates/k3s-cluster-config/azuredeploy.json" `
+  -TemplateFile "arm-templates/k3s-cluster-config/azuredeploy-master.json" `
+  -Mode Incremental `
+  -Force
+
+New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
+  -TemplateFile "arm-templates/k3s-cluster-config/azuredeploy-slave.json" `
   -Mode Incremental `
   -Force

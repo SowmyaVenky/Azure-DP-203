@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "defaultValue": "[resourceGroup().location]",
+            "type": "String"
+        },
+        "k3s-slave-vm-1": {
+            "defaultValue": "venky-k3s-slave-1",
+            "type": "String"
+        },
+        "k3s-slave-vm-2": {
+            "defaultValue": "venky-k3s-slave-2",
+            "type": "String"
+        }                
+    },
+    "resources": [
+        {
+            "name": "k3s-slave-script-1",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/microsoft.custom-script-linux-arm-2.0.57/MainTemplate.json"
+                },
+                "parameters": {
+                    "fileUris": {
+                        "value": [
+                            "https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/k3s-slave.sh"
+                        ]
+                    },
+                    "commandToExecute": {
+                        "value": "sh k3s-slave.sh"
+                    },
+                    "vmName": {
+                        "value": "[parameters('k3s-slave-vm-1')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }     
+        },
+       {
+            "name": "k3s-slave-script-2",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "https://catalogartifact.azureedge.net/publicartifacts/microsoft.custom-script-linux-arm-2.0.57/MainTemplate.json"
+                },
+                "parameters": {
+                    "fileUris": {
+                        "value": [
+                            "https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/k3s-slave.sh"
+                        ]
+                    },
+                    "commandToExecute": {
+                        "value": "sh k3s-slave.sh"
+                    },
+                    "vmName": {
+                        "value": "[parameters('k3s-slave-vm-2')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }     
+        }        
+    ]
+}

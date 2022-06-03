@@ -1,3 +1,9 @@
+If you are encountering issues, please take a look at the following log files
+on your virtual machine and provide their contents in the issue description:
+sudo cat /var/log/azure/custom-script/handler.log
+sudo cat /var/log/waagent.log
+
+
 1. Login to the venky-win-entry windows machine using RDP. This is exposed to public via public IP.
 2. k3s master node is 10.0.0.4 - ssh into that 
 ssh venkyuser@10.0.0.4
@@ -28,11 +34,6 @@ sudo k3s kubectl expose deployment kubernetes-bootcamp --type=LoadBalancer --nam
 
 # Scale
 sudo k3s kubectl scale deployment kubernetes-bootcamp --replicas=3
-
-If you are encountering issues, please take a look at the following log files
-on your virtual machine and provide their contents in the issue description:
-  - /var/log/azure/custom-script/handler.log
-  - /var/log/waagent.log
 
 # Check to make sure pods have scaled
 sudo k3s kubectl get po -o wide

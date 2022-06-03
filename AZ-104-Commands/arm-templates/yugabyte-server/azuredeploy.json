@@ -130,7 +130,7 @@
             "parameters": {
                 "fileUris": {
                     "value": [
-                        "https://venkyinitscr101.blob.core.windows.net/initsh101/shell-scripts/install-yugabyte.sh"
+                        "https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/install-yugabyte.sh"
                     ]
                 },
                 "commandToExecute": {
