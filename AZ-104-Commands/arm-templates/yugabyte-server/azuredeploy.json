@@ -122,6 +122,9 @@
         "name": "microsoft.custom-script-linux",
         "apiVersion": "2015-01-01",
         "type": "Microsoft.Resources/deployments",
+        "dependsOn": [
+          "[resourceId('Microsoft.Compute/virtualMachines', variables('vmName'))]"
+        ],
         "properties": {
             "mode": "incremental",
             "templateLink": {
