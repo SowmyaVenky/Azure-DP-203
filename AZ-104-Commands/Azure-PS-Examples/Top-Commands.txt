@@ -1,0 +1,11 @@
+https://vbcloudboy.medium.com/which-powershell-commands-i-should-know-for-az-104-certification-c22a45fdd8f6
+
+Search for command 
+Get-Command -Verb Add* -Noun File* 
+
+Get more help on a command after we find the name of the command.
+Get-Help -Name New-FileShare
+
+Get a specific section.
+Get-Help -Name New-FileShare -Examples
+

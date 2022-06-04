@@ -1,0 +1,20 @@
+Start docker desktop
+Run this command to start yugabyte for the first time, else just start the container.
+
+docker run -d --name yugabyte  -p7000:7000 -p9000:9000 -p5433:5433 -p9042:9042  yugabytedb/yugabyte:latest bin/yugabyted start --daemon=false
+docker exec -it yugabyte bash
+
+[root@102fe6a91cdd yugabyte]# bin/ysqlsh
+ysqlsh (11.2-YB-2.13.1.0-b0)
+Type "help" for help.
+
+yugabyte=# CREATE TABLE IF NOT EXISTS customer (id VARCHAR(50) PRIMARY KEY,   name VARCHAR(50),   email  VARCHAR(50),   address VARCHAR(50),   birthday VARCHAR(50));
+CREATE TABLE
+yugabyte=#
+
+http://localhost:8080/loaddb?amount=100
+http://localhost:8080/showdb?page=4
+
+I created a new docker hub account for this 
+venkyjagannath / guardian edge first pw 
+image pushed as venkyjagannath/spring-data-yugabytedb-example:1.0
