@@ -18,3 +18,6 @@ http://localhost:8080/showdb?page=4
 I created a new docker hub account for this 
 venkyjagannath / guardian edge first pw 
 image pushed as venkyjagannath/spring-data-yugabytedb-example:1.0
+
+Once we login to the master k3s cluster,
+wget https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/Spring-boot-yugabyte/deployment.yaml
