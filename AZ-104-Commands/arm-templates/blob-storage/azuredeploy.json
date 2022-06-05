@@ -51,6 +51,7 @@
           "tier": "Standard"
         },
         "properties": {
+          "allowBlobPublicAccess" : "true",
           "publicAccess": "Container",
           "cors": {
             "corsRules": []
