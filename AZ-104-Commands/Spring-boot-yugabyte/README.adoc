@@ -21,3 +21,8 @@ image pushed as venkyjagannath/spring-data-yugabytedb-example:1.0
 
 Once we login to the master k3s cluster,
 wget https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/Spring-boot-yugabyte/deployment.yaml
+
+JDK 17 gives problems
+add this to the java --add-opens java.base/java.lang=ALL-UNNAMED
+
+http://10.0.0.4:8080/loaddb?amount=100
