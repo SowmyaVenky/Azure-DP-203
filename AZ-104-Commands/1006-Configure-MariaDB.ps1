@@ -1,6 +1,5 @@
 ######################################################################
 ##                PART 5: Create a ubuntu VM and install Maria DB on it.
-## This script depends on the 1000-Create-Storage.ps1 to get the scripts to work.
 ######################################################################
 
 ####Venky Notes
@@ -124,6 +123,18 @@ $Params = @{
     Publisher          = 'Microsoft.Azure.Extensions'
     ExtensionType      = 'CustomScript'
     TypeHandlerVersion = '2.1'
-    Settings          = @{fileUris = @('https://venkyinitscr101.blob.core.windows.net/initsh101/shell-scripts/install-yugabyte.sh'); commandToExecute = 'sh install-yugabyte.sh'}
+    Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/install-yugabyte.sh'); commandToExecute = 'sh install-yugabyte.sh'}
+}
+Set-AzVMExtension @Params
+
+#install maria db for testing 
+$Params = @{
+    ResourceGroupName  = $resourceGroupName
+    VMName             = "MariaDBVM"
+    Name               = 'CustomScript'
+    Publisher          = 'Microsoft.Azure.Extensions'
+    ExtensionType      = 'CustomScript'
+    TypeHandlerVersion = '2.1'
+    Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/mariadb-install.sh'); commandToExecute = 'sh mariadb-install.sh'}
 }
 Set-AzVMExtension @Params

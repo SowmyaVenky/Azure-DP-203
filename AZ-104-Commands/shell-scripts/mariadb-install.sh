@@ -1,3 +1,4 @@
+#!/bin/bash
 sudo apt update
 export DEBIAN_FRONTEND=noninteractive
 sudo debconf-set-selections <<< "mariadb-server mysql-server/root_password password petclinic"
