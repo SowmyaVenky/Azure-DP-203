@@ -43,7 +43,7 @@ $sshrule = New-AzNetworkSecurityRuleConfig `
 
 #JDBC access to Yugabyte allow 
 $yugabytejdbc = New-AzNetworkSecurityRuleConfig `
--Name ssh-rule `
+-Name yugabyte-jdbc `
 -Description "Allow yugabyte jdbc" `
 -Access Allow -Protocol Tcp -Direction Inbound -Priority 200 `
 -SourceAddressPrefix Internet -SourcePortRange * `
@@ -135,6 +135,6 @@ $Params = @{
     Publisher          = 'Microsoft.Azure.Extensions'
     ExtensionType      = 'CustomScript'
     TypeHandlerVersion = '2.1'
-    Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/mariadb-install.sh'); commandToExecute = 'sh mariadb-install.sh'}
+    Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/mariadb-install.sh'); commandToExecute = './mariadb-install.sh'}
 }
 Set-AzVMExtension @Params

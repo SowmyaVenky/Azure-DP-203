@@ -25,4 +25,7 @@ wget https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Comm
 JDK 17 gives problems
 add this to the java --add-opens java.base/java.lang=ALL-UNNAMED
 
+java --add-opens java.base/java.lang=ALL-UNNAMED -jar target\spring-data-yugabytedb-example-1.0.0-SNAPSHOT.jar
+
+
 http://10.0.0.4:8080/loaddb?amount=100

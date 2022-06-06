@@ -10,7 +10,7 @@ public class SpringDataJpaExampleApplication {
 
 	public static void main(String[] args) {
 		try {
-			QuickStartApp.main(args);
+			//QuickStartApp.main(args);
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();	

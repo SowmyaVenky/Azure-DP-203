@@ -1,5 +1,7 @@
 ######################################################################
-##                Setup Spring petclinic on a ACI container group.
+##                Setup Spring Yugabyte on a ACI container group.
+## This expects the yugabyte linux VM to be hosted and working at 192.168.0.4.
+## This will be dependent on the 1001-Create-K3s-cluster.ps1
 ######################################################################
 
 ####Venky Notes
@@ -15,9 +17,10 @@ $resourceGroupName = (Get-AzResourceGroup).ResourceGroupName
 
 #################################01 - Create a second vnet ########################
 # Use ARM template to deploy resources
-Write-Host "Creating ACI container group for spring pet-clinic H2. This may take some time..."
+Write-Host "Creating ACI container group for spring yugabyte testing. This may take some time..."
 
+## This will deploy the H2 version of the app so that we can test basic stuff.
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
-  -TemplateFile "arm-templates/aci-petclinic/azuredeploy.json" `
+  -TemplateFile "arm-templates/aci-yugabyte/azuredeploy.json" `
   -Mode Incremental `
   -Force

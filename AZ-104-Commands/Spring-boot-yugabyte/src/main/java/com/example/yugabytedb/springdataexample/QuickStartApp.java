@@ -10,11 +10,16 @@ public class QuickStartApp {
   public static void main(String[] args) throws ClassNotFoundException, SQLException {
     String yugabyteHost = "127.0.0.1";
     if( args != null && args.length ==1 ) {
+        System.out.println("Got the server argument from user : " + args[0]);
         yugabyteHost = args[0];
     }
 
     Class.forName("com.yugabyte.Driver");
-    String yburl = "jdbc:yugabytedb://" + yugabyteHost + ":5433/yugabyte?user=yugabyte&password=yugabyte&load-balance=true";
+    //jdbc:postgresql://20.253.176.186:5433/yugabyte
+    String yburl = "jdbc:postgresql://" + yugabyteHost + ":5433/yugabyte?user=yugabyte&password=yugabyte&load-balance=true";
+    
+    System.out.println("Using the JDBC URL : " + yburl);
+
     Connection conn = DriverManager.getConnection(yburl);
     Statement stmt = conn.createStatement();
     try {
