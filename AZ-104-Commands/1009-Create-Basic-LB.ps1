@@ -5,6 +5,10 @@
 ## There are NAT rules to allow SSH via the LB on ports 42001 and 42002 to each of the VMs.
 ## NSGS HAVE TO ALLOW 22 and 5000 on the individual NICs to make this thing work. Need to investigate
 ## why this is really the case since there is a default rule to allow all from a load balancer.
+
+### NEED TO FIGURE THIS OUT 
+### I am not able to set the venky-lb-backend-pool correctly, need to manually set the VNET and 
+### select the vms that are available to put that into the scope of the LB 
 ######################################################################
 
 ####Venky Notes
@@ -38,7 +42,7 @@ $Params = @{
   Publisher          = 'Microsoft.Azure.Extensions'
   ExtensionType      = 'CustomScript'
   TypeHandlerVersion = '2.1'
-  Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/install-flaskapp.sh'); commandToExecute = 'sh install-yugabyte.sh'}
+  Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/install-flaskapp.sh'); commandToExecute = 'sh install-flaskapp.sh'}
 }
 Set-AzVMExtension @Params
 
@@ -50,6 +54,6 @@ $Params = @{
   Publisher          = 'Microsoft.Azure.Extensions'
   ExtensionType      = 'CustomScript'
   TypeHandlerVersion = '2.1'
-  Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/install-flaskapp.sh'); commandToExecute = './mariadb-install.sh'}
+  Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/install-flaskapp.sh'); commandToExecute = 'sh install-flaskapp.sh'}
 }
 Set-AzVMExtension @Params
