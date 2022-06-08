@@ -25,8 +25,10 @@ Write-Host "Creating 2 UBUNTU machines with a Basic LB in front. This may take s
 ## This will deploy the H2 version of the app so that we can test basic stuff.
 New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
   -TemplateFile "arm-templates/basic-lb-with-vms/azuredeploy.json" `
-  -Mode Incremental `
+  -Mode Complete `
   -Force
+
+exit;
 
 #Adter the VMs are provisioned, we need to run the flask scripts.
 $Params = @{

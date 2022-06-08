@@ -56,7 +56,8 @@
         }
     },
     "variables": {},
-    "resources": [
+    "resources": 
+    [
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2020-11-01",
@@ -124,6 +125,23 @@
                             "sourceAddressPrefixes": [],
                             "destinationAddressPrefixes": []
                         }
+                    },
+                    {
+                        "name": "ssh",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 101,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
                     }
                 ]
             }
@@ -139,23 +157,7 @@
             },
             "properties": {
                 "publicIPAddressVersion": "IPv4",
-                "publicIPAllocationMethod": "Dynamic",
-                "idleTimeoutInMinutes": 4,
-                "ipTags": []
-            }
-        },
-        {
-            "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2020-11-01",
-            "name": "[parameters('publicIPAddresses_venkyvm1_pip_name')]",
-            "location": "[resourceGroup().location]",
-            "sku": {
-                "name": "Basic",
-                "tier": "Regional"
-            },
-            "properties": {
-                "publicIPAddressVersion": "IPv4",
-                "publicIPAllocationMethod": "Dynamic",
+                "publicIPAllocationMethod": "Static",
                 "idleTimeoutInMinutes": 4,
                 "ipTags": []
             }
@@ -171,7 +173,7 @@
             },
             "properties": {
                 "publicIPAddressVersion": "IPv4",
-                "publicIPAllocationMethod": "Dynamic",
+                "publicIPAllocationMethod": "Static",
                 "idleTimeoutInMinutes": 4,
                 "ipTags": []
             }
@@ -219,119 +221,6 @@
                 ],
                 "virtualNetworkPeerings": [],
                 "enableDdosProtection": false
-            }
-        },
-        {
-            "type": "Microsoft.Network/loadBalancers/backendAddressPools",
-            "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('loadBalancers_venkylb_basic_name'), '/venky-lb-backend-pool')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_venkylb_basic_name'))]"
-            ],
-            "properties": {}
-        },
-        {
-            "type": "Microsoft.Network/loadBalancers/inboundNatRules",
-            "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('loadBalancers_venkylb_basic_name'), '/venky-vm1-ssh')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_venkylb_basic_name'))]"
-            ],
-            "properties": {
-                "frontendIPConfiguration": {
-                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_venkylb_basic_name')), '/frontendIPConfigurations/venky-lb-front-end-config')]"
-                },
-                "frontendPort": 42001,
-                "backendPort": 22,
-                "enableFloatingIP": false,
-                "idleTimeoutInMinutes": 4,
-                "protocol": "Tcp",
-                "enableTcpReset": false
-            }
-        },
-        {
-            "type": "Microsoft.Network/loadBalancers/inboundNatRules",
-            "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('loadBalancers_venkylb_basic_name'), '/venkyvm2-ssh')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_venkylb_basic_name'))]"
-            ],
-            "properties": {
-                "frontendIPConfiguration": {
-                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_venkylb_basic_name')), '/frontendIPConfigurations/venky-lb-front-end-config')]"
-                },
-                "frontendPort": 42002,
-                "backendPort": 22,
-                "enableFloatingIP": false,
-                "idleTimeoutInMinutes": 4,
-                "protocol": "Tcp",
-                "enableTcpReset": false
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
-            "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('networkSecurityGroups_venkyvm1_nsg_name'), '/Port_5000')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_venkyvm1_nsg_name'))]"
-            ],
-            "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "5000",
-                "sourceAddressPrefix": "*",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 100,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
-            "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('networkSecurityGroups_venkyvm2_nsg_name'), '/Port_5000')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_venkyvm2_nsg_name'))]"
-            ],
-            "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "5000",
-                "sourceAddressPrefix": "*",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 100,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
-            "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('networkSecurityGroups_venkyvm1_nsg_name'), '/ssh')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_venkyvm1_nsg_name'))]"
-            ],
-            "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "22",
-                "sourceAddressPrefix": "*",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 101,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
             }
         },
         {
@@ -383,8 +272,6 @@
             "name": "[parameters('availabilitySets_venky_availset_101_name')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachines_venkyvm1_name'))]",
-                "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachines_venkyvm2_name'))]"
             ],
             "sku": {
                 "name": "Aligned"
@@ -393,13 +280,85 @@
                 "platformUpdateDomainCount": 2,
                 "platformFaultDomainCount": 2,
                 "virtualMachines": [
-                    {
-                        "id": "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachines_venkyvm1_name'))]"
-                    },
-                    {
-                        "id": "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachines_venkyvm2_name'))]"
-                    }
                 ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('networkInterfaces_venkyvm158_name')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_venky_vnet_1_name'), 'front-end-sn')]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_venkyvm1_nsg_name'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.0.4",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_venky_vnet_1_name'), 'front-end-sn')]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4",
+                            "loadBalancerBackendAddressPools": [
+                            ],
+                            "loadBalancerInboundNatRules": [
+                            ]
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableAcceleratedNetworking": true,
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_venkyvm1_nsg_name'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('networkInterfaces_venkyvm2464_name')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_venky_vnet_1_name'), 'front-end-sn')]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_venkyvm2_nsg_name'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.0.5",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_venky_vnet_1_name'), 'front-end-sn')]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4",
+                            "loadBalancerBackendAddressPools": [
+                               
+                            ],
+                            "loadBalancerInboundNatRules": [
+                               
+                            ]
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableAcceleratedNetworking": true,
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_venkyvm2_nsg_name'))]"
+                }
             }
         },
         {
@@ -430,8 +389,7 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "StandardSSD_LRS",
-                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_venkyvm1_name'), '_OsDisk_1_2161af9ad71b42a899558ea1e2a59a45'))]"
+                            "storageAccountType": "StandardSSD_LRS"
                         },
                         "deleteOption": "Delete",
                         "diskSizeGB": 30
@@ -441,6 +399,7 @@
                 "osProfile": {
                     "computerName": "[parameters('virtualMachines_venkyvm1_name')]",
                     "adminUsername": "venkyuser",
+                    "adminPassword": "Ganesh20022002",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": false,
                         "provisionVMAgent": true,
@@ -450,8 +409,7 @@
                         }
                     },
                     "secrets": [],
-                    "allowExtensionOperations": true,
-                    "requireGuestProvisionSignal": true
+                    "allowExtensionOperations": true
                 },
                 "networkProfile": {
                     "networkInterfaces": [
@@ -493,8 +451,7 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "StandardSSD_LRS",
-                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_venkyvm2_name'), '_OsDisk_1_7486c1f8de3548d1ad01b46e0c72adf3'))]"
+                            "storageAccountType": "StandardSSD_LRS"
                         },
                         "deleteOption": "Delete",
                         "diskSizeGB": 30
@@ -504,6 +461,7 @@
                 "osProfile": {
                     "computerName": "[parameters('virtualMachines_venkyvm2_name')]",
                     "adminUsername": "venkyuser",
+                    "adminPassword": "Ganesh20022002",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": false,
                         "provisionVMAgent": true,
@@ -513,8 +471,7 @@
                         }
                     },
                     "secrets": [],
-                    "allowExtensionOperations": true,
-                    "requireGuestProvisionSignal": true
+                    "allowExtensionOperations": true
                 },
                 "networkProfile": {
                     "networkInterfaces": [
@@ -529,224 +486,51 @@
             }
         },
         {
-            "type": "Microsoft.Network/bastionHosts",
+            "type": "Microsoft.Network/loadBalancers/backendAddressPools",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('bastionHosts_venky_vnet_1_bastion_name')]",
-            "location": "[resourceGroup().location]",
+            "name": "[concat(parameters('loadBalancers_venkylb_basic_name'), '/venky-lb-backend-pool')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_venky_vnet_1_ip_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_venky_vnet_1_name'), 'AzureBastionSubnet')]"
+                
             ],
-            "sku": {
-                "name": "Basic"
-            },
-            "properties": {
-                "dnsName": "bst-3c20fad1-f3d9-4d31-8bc2-ec4e4e5cb882.bastion.azure.com",
-                "ipConfigurations": [
-                    {
-                        "name": "IpConf",
-                        "properties": {
-                            "privateIPAllocationMethod": "Dynamic",
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_venky_vnet_1_ip_name'))]"
-                            },
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_venky_vnet_1_name'), 'AzureBastionSubnet')]"
-                            }
-                        }
-                    }
-                ]
-            }
+            "properties": {}
         },
         {
-            "type": "Microsoft.Network/loadBalancers",
+            "type": "Microsoft.Network/loadBalancers/inboundNatRules",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('loadBalancers_venkylb_basic_name')]",
-            "location": "[resourceGroup().location]",
+            "name": "[concat(parameters('loadBalancers_venkylb_basic_name'), '/venky-vm1-ssh')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_venky_lb_pip_name'))]"
-            ],
-            "sku": {
-                "name": "Basic",
-                "tier": "Regional"
-            },
-            "properties": {
-                "frontendIPConfigurations": [
-                    {
-                        "name": "venky-lb-front-end-config",
-                        "properties": {
-                            "privateIPAllocationMethod": "Dynamic",
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_venky_lb_pip_name'))]"
-                            }
-                        }
-                    }
-                ],
-                "backendAddressPools": [
-                    {
-                        "name": "venky-lb-backend-pool",
-                        "properties": {}
-                    }
-                ],
-                "loadBalancingRules": [
-                    {
-                        "name": "venky-lb-rule-1",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_venkylb_basic_name')), '/frontendIPConfigurations/venky-lb-front-end-config')]"
-                            },
-                            "frontendPort": 80,
-                            "backendPort": 5000,
-                            "enableFloatingIP": false,
-                            "idleTimeoutInMinutes": 4,
-                            "protocol": "Tcp",
-                            "enableTcpReset": false,
-                            "loadDistribution": "Default",
-                            "backendAddressPool": {
-                                "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancers_venkylb_basic_name'), 'venky-lb-backend-pool')]"
-                            },
-                            "probe": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_venkylb_basic_name')), '/probes/venky-lb-probe')]"
-                            }
-                        }
-                    }
-                ],
-                "probes": [
-                    {
-                        "name": "venky-lb-probe",
-                        "properties": {
-                            "protocol": "Http",
-                            "port": 5000,
-                            "requestPath": "/",
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2
-                        }
-                    }
-                ],
-                "inboundNatRules": [
-                    {
-                        "name": "venky-vm1-ssh",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_venkylb_basic_name')), '/frontendIPConfigurations/venky-lb-front-end-config')]"
-                            },
-                            "frontendPort": 42001,
-                            "backendPort": 22,
-                            "enableFloatingIP": false,
-                            "idleTimeoutInMinutes": 4,
-                            "protocol": "Tcp",
-                            "enableTcpReset": false
-                        }
-                    },
-                    {
-                        "name": "venkyvm2-ssh",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_venkylb_basic_name')), '/frontendIPConfigurations/venky-lb-front-end-config')]"
-                            },
-                            "frontendPort": 42002,
-                            "backendPort": 22,
-                            "enableFloatingIP": false,
-                            "idleTimeoutInMinutes": 4,
-                            "protocol": "Tcp",
-                            "enableTcpReset": false
-                        }
-                    }
-                ],
-                "inboundNatPools": []
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2020-11-01",
-            "name": "[parameters('networkInterfaces_venkyvm158_name')]",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_venky_vnet_1_name'), 'front-end-sn')]",
-                "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancers_venkylb_basic_name'), 'venky-lb-backend-pool')]",
-                "[resourceId('Microsoft.Network/loadBalancers/inboundNatRules', parameters('loadBalancers_venkylb_basic_name'), 'venky-vm1-ssh')]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_venkyvm1_nsg_name'))]"
+                
             ],
             "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAddress": "10.0.0.4",
-                            "privateIPAllocationMethod": "Static",
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_venky_vnet_1_name'), 'front-end-sn')]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4",
-                            "loadBalancerBackendAddressPools": [
-                                {
-                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancers_venkylb_basic_name'), 'venky-lb-backend-pool')]"
-                                }
-                            ],
-                            "loadBalancerInboundNatRules": [
-                                {
-                                    "id": "[resourceId('Microsoft.Network/loadBalancers/inboundNatRules', parameters('loadBalancers_venkylb_basic_name'), 'venky-vm1-ssh')]"
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
+                "frontendIPConfiguration": {
+                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_venkylb_basic_name')), '/frontendIPConfigurations/venky-lb-front-end-config')]"
                 },
-                "enableAcceleratedNetworking": true,
-                "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_venkyvm1_nsg_name'))]"
-                }
+                "frontendPort": 42001,
+                "backendPort": 22,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 4,
+                "protocol": "Tcp",
+                "enableTcpReset": false
             }
         },
         {
-            "type": "Microsoft.Network/networkInterfaces",
+            "type": "Microsoft.Network/loadBalancers/inboundNatRules",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('networkInterfaces_venkyvm2464_name')]",
-            "location": "[resourceGroup().location]",
+            "name": "[concat(parameters('loadBalancers_venkylb_basic_name'), '/venkyvm2-ssh')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_venky_vnet_1_name'), 'front-end-sn')]",
-                "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancers_venkylb_basic_name'), 'venky-lb-backend-pool')]",
-                "[resourceId('Microsoft.Network/loadBalancers/inboundNatRules', parameters('loadBalancers_venkylb_basic_name'), 'venkyvm2-ssh')]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_venkyvm2_nsg_name'))]"
+                
             ],
             "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAddress": "10.0.0.5",
-                            "privateIPAllocationMethod": "Static",
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_venky_vnet_1_name'), 'front-end-sn')]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4",
-                            "loadBalancerBackendAddressPools": [
-                                {
-                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancers_venkylb_basic_name'), 'venky-lb-backend-pool')]"
-                                }
-                            ],
-                            "loadBalancerInboundNatRules": [
-                                {
-                                    "id": "[resourceId('Microsoft.Network/loadBalancers/inboundNatRules', parameters('loadBalancers_venkylb_basic_name'), 'venkyvm2-ssh')]"
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
+                "frontendIPConfiguration": {
+                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_venkylb_basic_name')), '/frontendIPConfigurations/venky-lb-front-end-config')]"
                 },
-                "enableAcceleratedNetworking": true,
-                "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_venkyvm2_nsg_name'))]"
-                }
+                "frontendPort": 42002,
+                "backendPort": 22,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 4,
+                "protocol": "Tcp",
+                "enableTcpReset": false
             }
         }
-    ]
+   ]
 }
