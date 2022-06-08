@@ -32,8 +32,6 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
   -Mode Complete `
   -Force
 
-exit;
-
 #Adter the VMs are provisioned, we need to run the flask scripts.
 $Params = @{
   ResourceGroupName  = $resourceGroupName
@@ -46,7 +44,6 @@ $Params = @{
 }
 Set-AzVMExtension @Params
 
-#install maria db for testing 
 $Params = @{
   ResourceGroupName  = $resourceGroupName
   VMName             = "venkyvm2"
