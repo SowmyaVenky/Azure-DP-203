@@ -1,0 +1,111 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "publicIPAddresses_venky_vnet_gw_pip_name": {
+            "defaultValue": "venky-vnet-gw-pip",
+            "type": "String"
+        },
+        "virtualNetworkGateways_venky_virtual_network_gateway_name": {
+            "defaultValue": "venky-virtual-network-gateway",
+            "type": "String"
+        },
+        "virtualNetworks_venky_vnet_1_externalid": {
+            "defaultValue": "/subscriptions/0f39574d-d756-48cf-b622-0e27a6943bd2/resourceGroups/1-30916026-playground-sandbox/providers/Microsoft.Network/virtualNetworks/venky-vnet-1",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('publicIPAddresses_venky_vnet_gw_pip_name')]",
+            "location": "southcentralus",
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            },
+            "properties": {
+                "ipAddress": "23.102.151.10",
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworkGateways",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('virtualNetworkGateways_venky_virtual_network_gateway_name')]",
+            "location": "southcentralus",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_venky_vnet_gw_pip_name'))]"
+            ],
+            "properties": {
+                "enablePrivateIpAddress": false,
+                "ipConfigurations": [
+                    {
+                        "name": "default",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_venky_vnet_gw_pip_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(parameters('virtualNetworks_venky_vnet_1_externalid'), '/subnets/GatewaySubnet')]"
+                            }
+                        }
+                    }
+                ],
+                "sku": {
+                    "name": "VpnGw2",
+                    "tier": "VpnGw2"
+                },
+                "gatewayType": "Vpn",
+                "vpnType": "RouteBased",
+                "enableBgp": false,
+                "activeActive": false,
+                "vpnClientConfiguration": {
+                    "vpnClientAddressPool": {
+                        "addressPrefixes": [
+                            "192.168.0.0/16"
+                        ]
+                    },
+                    "vpnClientProtocols": [
+                        "IkeV2"
+                    ],
+                    "vpnAuthenticationTypes": [
+                        "Certificate"
+                    ],
+                    "vpnClientRootCertificates": [
+                        {
+                            "name": "venkyrootca",
+                            "properties": {
+                                "publicCertData": "MIIDIDCCAgigAwIBAgIQGQms97CfTapF17JiobAjNDANBgkqhkiG9w0BAQsFADAR MQ8wDQYDVQQDDAZSb290Q0EwHhcNMjIwNjA5MTUxNjM2WhcNMjMwNjA5MTUzNjM2 WjARMQ8wDQYDVQQDDAZSb290Q0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK AoIBAQDsoEj+egKBEmhlPWJG3no/002aliyARJy85IoBmeucfdyjIVjw+7FEG0cC KfL7QiG0TvpapJ8I7+ABYfKc4YVNhNl+J8GT22GhBtZHTvO7H+cHOlYOo6uWKh+F oryvP48NMkkev3rkoYEKYM1ZYva4jSAZ/HajkmXv2i1Nn64FzWswS2pGLoPh5xnT NJGl9ngIKn5pQrpBKJfy8SyMJ21TNry9fPTTK3ccWJeL2RgMFFDU26WNmGeVznYb qzZwyVifxAAES7u5wI51iUHEIdlpsOMuVHCSRDeXCjoMnaggR9rsMU+0e0g+BJ5M bEi0NhWyRE/93zFpHjeVvoBZ4txJAgMBAAGjdDByMA4GA1UdDwEB/wQEAwIBhjAd BgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwEwEQYDVR0RBAowCIIGUm9vdENB MA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFOOMEEZOZFMT3QNJQfs6ixFW/jxv MA0GCSqGSIb3DQEBCwUAA4IBAQCYk0e9naJV/oab1ebdMRz5ky2Owv5N8MyIEoo5 lwDLcs4tcnq7+smkCah0EivJYDtfSJpyMITsjfLrpaw+Pfy2dlFsah1R6ogOPJ/r n2nX0suaD92LWx8L6zU6lglYs4ESbThIu9kvg+qCiDZom6KEvIliaLQepJUdBJPm Y83oCJOLo7TLwah/bJIJe1b2Qr+UdkeKYS4TVQ0fgQzwuDwNofjNYKqt/BMYDoAz L9zoArQrEi2RoRPpm11WsBcZ+0/M9mdNjOYQhyy3CEEaoNI9A3AVTLceNsfo/Jig ymtX1CqDvTTA0pL2WjBtjpoPgC3KxuSMZN1Nn1kIqODVPKnb"
+                            }
+                        }
+                    ],
+                    "vpnClientRevokedCertificates": [],
+                    "radiusServers": [],
+                    "vpnClientIpsecPolicies": []
+                },
+                "bgpSettings": {
+                    "asn": 65515,
+                    "bgpPeeringAddress": "10.0.3.254",
+                    "peerWeight": 0,
+                    "bgpPeeringAddresses": [
+                        {
+                            "ipconfigurationId": "[concat(resourceId('Microsoft.Network/virtualNetworkGateways', parameters('virtualNetworkGateways_venky_virtual_network_gateway_name')), '/ipConfigurations/default')]",
+                            "customBgpIpAddresses": []
+                        }
+                    ]
+                },
+                "customRoutes": {
+                    "addressPrefixes": []
+                },
+                "vpnGatewayGeneration": "Generation2"
+            }
+        }
+    ]
+}

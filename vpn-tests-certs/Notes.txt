@@ -1,0 +1,43 @@
+1. HAVE TO BE LOGGED IN AS ADMIN 
+2. Need to open power shell in admin mode
+3. Generate a root certificate first
+
+$cert = New-SelfSignedCertificate -Type Custom -KeySpec Signature `
+-Subject "CN=P2SRootCert" -KeyExportPolicy Exportable `
+-HashAlgorithm sha256 -KeyLength 2048 `
+-CertStoreLocation "Cert:\CurrentUser\My" -KeyUsageProperty Sign -KeyUsage CertSign
+
+4. List the certs that are there
+Get-ChildItem -Path "Cert:\CurrentUser\My"
+
+Pick the thumbprint of the root ca
+PS C:\Venky\DP-203\Azure-DP-203\vpn-tests-certs> Get-ChildItem -Path "Cert:\CurrentUser\My"
+
+
+   PSParentPath: Microsoft.PowerShell.Security\Certificate::CurrentUser\My
+
+Thumbprint                                Subject
+----------                                -------
+C0678C7F17985D921AB0CEEE043849C8CB588AB6  CN=RootCA
+12D066FE9A5F759A58B5F17B0E47299043DC3309  CN=RootCA
+
+
+PS C:\Venky\DP-203\Azure-DP-203\vpn-tests-certs> $cert = Get-ChildItem -Path "Cert:\CurrentUser\My\12D066FE9A5F759A58B5F17B0E47299043DC3309"
+PS C:\Venky\DP-203\Azure-DP-203\vpn-tests-certs> New-SelfSignedCertificate -Type Custom -DnsName P2SChildCert -KeySpec Signature `
+>> -Subject "CN=P2SChildCert" -KeyExportPolicy Exportable `
+>> -HashAlgorithm sha256 -KeyLength 2048 `
+>> -CertStoreLocation "Cert:\CurrentUser\My" `
+>> -Signer $cert -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.2")
+
+
+   PSParentPath: Microsoft.PowerShell.Security\Certificate::CurrentUser\My
+
+Thumbprint                                Subject
+----------                                -------
+DD83F64F4CADADACA9BB41EC38EFEB33D71330B3  CN=P2SChildCert
+
+Once that is done, export the root.crt to root.pem file.
+Upload that to the vpn gateway.
+
+5. Then setup a VPN Connection as ADMIN
+6. Connect to VPN, It uses our personal client side cert to authenticate, and that will get approved as we uploaded the root cert.
