@@ -30,10 +30,6 @@
             "defaultValue": "venky-lb-pip",
             "type": "String"
         },
-        "publicIPAddresses_venky_vnet_1_ip_name": {
-            "defaultValue": "venky-vnet-1-ip",
-            "type": "String"
-        },
         "networkSecurityGroups_venkyvm1_nsg_name": {
             "defaultValue": "venkyvm1-nsg",
             "type": "String"
@@ -544,15 +540,6 @@
                 "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_venkylb_basic_name'))]"
             ],
             "properties": {
-                "subnet": {
-                    "id": "string"
-                },
-                "virtualNetwork": {
-                    "id": "string"
-                },
-                "loadBalancerFrontendIPConfiguration": {
-                    "id" : "string"
-                }
             }
         },
         {

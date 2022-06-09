@@ -9,6 +9,7 @@
 ### NEED TO FIGURE THIS OUT 
 ### I am not able to set the venky-lb-backend-pool correctly, need to manually set the VNET and 
 ### select the vms that are available to put that into the scope of the LB 
+## I had to write a PS script to update the NIC cards with the right configs.
 ######################################################################
 
 ####Venky Notes
@@ -31,6 +32,27 @@ New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
   -TemplateFile "arm-templates/basic-lb-with-vms/azuredeploy.json" `
   -Mode Complete `
   -Force
+
+# This part is a hack to get things to work since ARM template generated with the export 
+# is broken. This assigns the NIC's properties with the loadbalancer pool and nat rules to get 
+# them all linked up.
+
+$lb = Get-AzLoadBalancer -ResourceGroupName $resourceGroupName -Name "venkylb-basic"
+
+$bepool = $lb | Get-AzLoadBalancerBackendAddressPoolConfig
+
+$venkyvm1natrule = $lb.InboundNatRules[0]
+$venkyvm2natrule = $lb.InboundNatRules[1]
+
+$nicvenkyvm2 = Get-AzNetworkInterface -Name venkyvm2464
+$nicvenkyvm2.IpConfigurations[0].LoadBalancerBackendAddressPools.Add($bepool)
+$nicvenkyvm2.IpConfigurations[0].LoadBalancerInboundNatRules.Add($venkyvm2natrule)
+Set-AzNetworkInterface -NetworkInterface $nicvenkyvm2
+
+$nicvenkyvm1 = Get-AzNetworkInterface -Name venkyvm158
+$nicvenkyvm1.IpConfigurations[0].LoadBalancerBackendAddressPools.Add($bepool)
+$nicvenkyvm1.IpConfigurations[0].LoadBalancerInboundNatRules.Add($venkyvm1natrule)
+Set-AzNetworkInterface -NetworkInterface $nicvenkyvm1
 
 #Adter the VMs are provisioned, we need to run the flask scripts.
 $Params = @{

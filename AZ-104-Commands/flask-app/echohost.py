@@ -7,11 +7,11 @@ app = Flask(__name__)
 def return_hostname():
     return "This is an example wsgi app served from {} to {}".format(socket.gethostname(), request.remote_addr)
 
-@app.route("/vm1")
+@app.route("/vm1/testing")
 def return_vm1():
         return "This is VM1 wsgi app served from {} to {}".format(socket.gethostname(), request.remote_addr)
 
-@app.route("/vm2")
+@app.route("/vm2/testing")
 def return_vm2():
         return "This is VM2 wsgi app served from {} to {}".format(socket.gethostname(), request.remote_addr)
 

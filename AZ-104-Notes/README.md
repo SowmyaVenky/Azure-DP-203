@@ -23,6 +23,8 @@ Here are the steps:
 7. We will use ACI to push the yugabyte spring app to test 1008 script.
     http://venkyybtest.<region>.azurecontainer.io:8080/loaddb?amount=100 - Create 100 recs in yugabyte database.
     http://venkyybtest.<region>.azurecontainer.io:8080/showdb?page=0 - Show the data in the database. This demonstrates spring boot yugabyte
+8. Create a load balancer and put 2 ubuntu VMs behind it. The loadbalancer will allow for / on its public IP and redirect to one of the 2 VMs in the pool. A flask app runs on both VMs listening on 5000 and server a simple message. The load balancer is also setup with NAT rules, that allow us to SSH into the VMs via the load balancer, not exposing any public IPs. 
+9. Create an application gateway to demonstrate the user of layer-7 load balancing rather than lever-4 done by the network load balancer. We can redirect to different vms  based on a path pattern, or setup a multi-site infra to allow for us to do microsites.
 
 6. We will deploy a spring boot app on the k3s cluster that will talk to this Yugabyte DB, and test it out.
 
