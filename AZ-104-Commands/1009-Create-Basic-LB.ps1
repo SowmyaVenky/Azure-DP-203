@@ -6,10 +6,15 @@
 ## NSGS HAVE TO ALLOW 22 and 5000 on the individual NICs to make this thing work. Need to investigate
 ## why this is really the case since there is a default rule to allow all from a load balancer.
 
-### NEED TO FIGURE THIS OUT 
 ### I am not able to set the venky-lb-backend-pool correctly, need to manually set the VNET and 
 ### select the vms that are available to put that into the scope of the LB 
 ## I had to write a PS script to update the NIC cards with the right configs.
+
+### This will also deploy the app-gateway. The flask app runs on the 2 VMs and have 2 URLs we can test
+### http://<<app-gw-pip>>/vm1/testing - routes us to the vm1
+### http://<<app-gw-pip>>/vm2/testing - routes us to the vm2.
+### This demonstrates the power of the app gateway. Since it does load balancing at layer 7 
+### it understands the request paths etc. and route on basis of that.
 ######################################################################
 
 ####Venky Notes
@@ -76,3 +81,18 @@ $Params = @{
   Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/install-flaskapp.sh'); commandToExecute = 'sh install-flaskapp.sh'}
 }
 Set-AzVMExtension @Params
+
+## Show the public IP for the LB
+$lbpip = Get-AzPublicIpAddress -ResourceName "venky-lb-pip"
+Write-Host "The pip of LB is : " $lbpip.IpAddress
+
+## Now deploy the app gateway on the same set of linux vms.
+Write-Host "Now deploying app-gateway to the same VM set"
+New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
+  -TemplateFile "arm-templates/app-gateway/azuredeploy.json" `
+  -Mode Incremental `
+  -Force
+
+  $appgwpip = Get-AzPublicIpAddress -ResourceName "venky-app-gw-pip"
+  Write-Host "The pip of App Gateway is : " $appgwpip.IpAddress
+  
