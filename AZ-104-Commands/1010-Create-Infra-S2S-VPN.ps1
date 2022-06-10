@@ -120,7 +120,7 @@ $appvnet2 = Get-AzVirtualNetwork -Name 'app-vnet-2'
 $venkyappvm2nic = New-AzNetworkInterface -Name 'venkyappvm2nic' `
 -ResourceGroupName $ResourceGroupName `
 -Location $location `
--SubnetId $appvnet1.Subnets[0].Id
+-SubnetId $appvnet2.Subnets[0].Id
 
 # Create a VM, following this set various aspects by calling proper methods on the object.
 $venkyappvm2 = New-AzVMConfig -VMName 'venky-app-vm2' -VMSize $VMSize
@@ -150,6 +150,31 @@ New-AzVM -ResourceGroupName $ResourceGroupName `
 -VM $venkyappvm2 `
 -Verbose
 
+## This part will get the VM back into a new var and execute setup scripts
+## Both the scripts are pulled from storage account.
+$Params = @{
+  ResourceGroupName  = $resourceGroupName
+  VMName             = 'venky-app-vm1'
+  Name               = 'CustomScript'
+  Publisher          = 'Microsoft.Azure.Extensions'
+  ExtensionType      = 'CustomScript'
+  TypeHandlerVersion = '2.1'
+  Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/install-flaskapp.sh'); commandToExecute = 'sh install-flaskapp.sh'}
+}
+Set-AzVMExtension @Params
+
+#install maria db for testing 
+$Params = @{
+  ResourceGroupName  = $resourceGroupName
+  VMName             = "venky-app-vm2"
+  Name               = 'CustomScript'
+  Publisher          = 'Microsoft.Azure.Extensions'
+  ExtensionType      = 'CustomScript'
+  TypeHandlerVersion = '2.1'
+  Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/install-flaskapp.sh'); commandToExecute = 'sh install-flaskapp.sh'}
+}
+Set-AzVMExtension @Params
+
 # Create a VM, following this set various aspects by calling proper methods on the object.
 New-AzVm `
     -ResourceGroupName $resourceGroupName `
@@ -160,5 +185,4 @@ New-AzVm `
     -SecurityGroupName 'routervmnsg' `
     -PublicIpAddressName 'routervmpip' `
     -Credential $Credential `
-    -Size 'Standard_D2s_V3'
-    -OpenPorts 80,3389
+    -Size 'Standard_D2s_V3' -OpenPorts 80,3389
