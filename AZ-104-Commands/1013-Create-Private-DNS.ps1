@@ -34,3 +34,14 @@ $Params = @{
   Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/allow-ping-in-windows.ps1'); commandToExecute = 'powershell -ExecutionPolicy Unrestricted -File allow-ping-in-windows.ps1'}
 }
 Set-AzVMExtension @Params
+
+$Params = @{
+  ResourceGroupName  = $resourceGroupName
+  VMName             = "venky-vm-2"
+  Name               = 'AllowPing'
+  Publisher          = 'Microsoft.Compute'
+  ExtensionType      = 'CustomScriptExtension'
+  TypeHandlerVersion = '1.10'
+  Settings          = @{fileUris = @('https://raw.githubusercontent.com/SowmyaVenky/Azure-DP-203/main/AZ-104-Commands/shell-scripts/allow-ping-in-windows.ps1'); commandToExecute = 'powershell -ExecutionPolicy Unrestricted -File allow-ping-in-windows.ps1'}
+}
+Set-AzVMExtension @Params
