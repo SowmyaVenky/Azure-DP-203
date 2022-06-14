@@ -1,5 +1,5 @@
 ######################################################################
-##                Setup Spring container on a AKS.
+##                Azure firewall setup
 ######################################################################
 
 # DEFINE RESOURCE GROUP NAME AND LOCATION PARAMETERS

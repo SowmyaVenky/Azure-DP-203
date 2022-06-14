@@ -200,8 +200,7 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "StandardSSD_LRS",
-                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_venky_vm_1_name'), '_OsDisk_1_32e46d0e53fb43ff8d191c6e03d2bdd4'))]"
+                            "storageAccountType": "StandardSSD_LRS"
                         },
                         "deleteOption": "Delete",
                         "diskSizeGB": 127
@@ -211,6 +210,7 @@
                 "osProfile": {
                     "computerName": "[parameters('virtualMachines_venky_vm_1_name')]",
                     "adminUsername": "venkyuser",
+                    "adminPassword" : "Ganesh20022002",
                     "windowsConfiguration": {
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true,
@@ -221,8 +221,7 @@
                         }
                     },
                     "secrets": [],
-                    "allowExtensionOperations": true,
-                    "requireGuestProvisionSignal": true
+                    "allowExtensionOperations": true
                 },
                 "networkProfile": {
                     "networkInterfaces": [
@@ -261,8 +260,7 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "StandardSSD_LRS",
-                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_venky_vm_2_name'), '_OsDisk_1_fa2dc0bb336a4952839f385746b24ee4'))]"
+                            "storageAccountType": "StandardSSD_LRS"
                         },
                         "deleteOption": "Delete",
                         "diskSizeGB": 127
@@ -272,6 +270,7 @@
                 "osProfile": {
                     "computerName": "[parameters('virtualMachines_venky_vm_2_name')]",
                     "adminUsername": "venkyuser",
+                    "adminPassword" : "Ganesh20022002",
                     "windowsConfiguration": {
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true,
@@ -282,8 +281,7 @@
                         }
                     },
                     "secrets": [],
-                    "allowExtensionOperations": true,
-                    "requireGuestProvisionSignal": true
+                    "allowExtensionOperations": true
                 },
                 "networkProfile": {
                     "networkInterfaces": [
