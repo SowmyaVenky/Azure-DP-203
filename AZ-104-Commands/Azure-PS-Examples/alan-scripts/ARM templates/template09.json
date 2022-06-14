@@ -1,0 +1,28 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "variables": {
+        "resourceLocation" : "UK South"
+    },
+    "parameters": {
+            "storagesku": {
+                "type": "string",
+                "defaultValue":"Standard_LRS",
+                "allowedValues": [
+                    "Standard_LRS","Standard_GRS","Standard_RAGRS"
+                ]
+            }
+    },
+    "resources": [
+        {           
+            "name": "templatestore5000",
+            "type": "Microsoft.Storage/storageAccounts",
+            "location":"[variables('resourceLocation')]",
+            "apiVersion": "2021-06-01",
+            "sku" :{
+                "name": "[parameters('storagesku')]"
+            },
+            "kind": "StorageV2"
+        }
+            ]
+}
