@@ -1,0 +1,10 @@
+Connection troubleshoot enables you to test a connection between a VM and another VM, an FQDN, a URI, or an IPv4 address. The test returns similar information returned when using the connection monitor capability, but tests the connection at a point in time, rather than monitoring it over time.
+
+IP flow verify enables you to specify a source and destination IPv4 address, port, protocol (TCP or UDP), and traffic direction (inbound or outbound). IP flow verify then tests the communication and informs you if the connection succeeds or fails. If the connection fails, IP flow verify tells you which security rule allowed or denied the communication, so that you can resolve the problem. Hence it cannot be used here
+
+Next Hop helps to determine if traffic is being directed to the intended destination by showing the next hop. This will help determine if networking routing is correctly configured. Hence it cannot be used here.
+
+Traffic Analytics examines the raw NSG flow logs and captures reduced logs by aggregating common flows among the same source IP address, destination IP address, destination port, and protocol. Hence it cannot be used here.
+
+NSG flow logs is used simply to log information about IP traffic flowing through an NSG. Flow data is sent to Azure Storage accounts from where you can access it as well as export it to any visualization tool, SIEM, or IDS of your choice. Hence it cannot be used here.
+

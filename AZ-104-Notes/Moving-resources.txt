@@ -1,0 +1,1 @@
+https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/move-support-resources
