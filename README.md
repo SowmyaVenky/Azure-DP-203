@@ -22,7 +22,7 @@ For AZ-104 please see the AZ-104 commands folder
 This project shows some of the experiments we can do to get familiar with the aspects tested on the AZ-104 exam. Lot of fun things to create here and get our hands dirty! 
 
 <p align="center">
-  <img src="images/AZ-104-SampleArchitecture.png" title="Sample Architecure">
+  <img src="AZ-104-Notes/images/AZ-104-SampleArchitecture.png" title="Sample Architecure">
 </p>
 
 Here are the steps:
