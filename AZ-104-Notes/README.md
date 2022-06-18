@@ -3,7 +3,7 @@
 This project shows some of the experiments we can do to get familiar with the aspects tested on the AZ-104 exam. Lot of fun things to create here and get our hands dirty! 
 
 <p align="center">
-  <img src="AZ-104-SampleArchitecture.png" title="Sample Architecure">
+  <img src="images/AZ-104-SampleArchitecture.png" title="Sample Architecure">
 </p>
 
 Here are the steps:
@@ -25,6 +25,9 @@ Here are the steps:
     http://venkyybtest.<region>.azurecontainer.io:8080/showdb?page=0 - Show the data in the database. This demonstrates spring boot yugabyte
 8. Create a load balancer and put 2 ubuntu VMs behind it. The loadbalancer will allow for / on its public IP and redirect to one of the 2 VMs in the pool. A flask app runs on both VMs listening on 5000 and server a simple message. The load balancer is also setup with NAT rules, that allow us to SSH into the VMs via the load balancer, not exposing any public IPs. 
 9. Create an application gateway to demonstrate the user of layer-7 load balancing rather than lever-4 done by the network load balancer. We can redirect to different vms  based on a path pattern, or setup a multi-site infra to allow for us to do microsites.
-
-6. We will deploy a spring boot app on the k3s cluster that will talk to this Yugabyte DB, and test it out.
-
+10. We will deploy a spring boot app on the k3s cluster that will talk to this Yugabyte DB, and test it out.
+11. Test out AKS
+12. Test out ACI
+13. Establish P2S vpn between laptop and VNET.
+14. Deploy flask app to demonstrate route based load balancing across multiple VMs using app gateway.
+15. Private DNS zones and VNET linking.
