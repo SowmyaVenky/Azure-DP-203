@@ -48,9 +48,9 @@ public class MovieLensProcessing {
         ).na().drop();
 
         movies_df.printSchema();
-        System.out.println(movies_df.count());
-        movies_df.show();
-
+        System.out.println(movies_df.count() + " records, Writing movies file");
+        movies_df.write().json("movies");
+        
         // Maps genere_id = genre_name
         PairFlatMapFunction<Row, Integer, String> genremapper = new PairFlatMapFunction<Row, Integer, String>() {
             private static final long serialVersionUID = 1L;
@@ -63,7 +63,7 @@ public class MovieLensProcessing {
                 List<Tuple2<Integer, String>> toRet = new ArrayList<Tuple2<Integer, String>>();
                 //Get json array of genres.
                 String genrejson = t.getString(0);
-                if( genrejson != null && genrejson.trim().length() > 0  && genrejson.trim().startsWith("[")) {
+                if( genrejson != null && genrejson.trim().length() > 0 && genrejson.trim().startsWith("[")) {
                     List<Map<String, Object>> genereParsed = gson.fromJson(genrejson, List.class);
                     if( genereParsed.size() > 0 ) {
                         for(Map<String, Object> m : genereParsed) {
@@ -196,8 +196,8 @@ public class MovieLensProcessing {
         );
 
         ratingsdf.printSchema();
-        System.out.println(ratingsdf.count());
-        ratingsdf.show();
+        System.out.println(ratingsdf.count() + " records, Writing ratings file");
+        ratingsdf.write().json("ratings");
 
         spark.stop();
     }

@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_venky_dsvm_name": {
+            "value": "venky-dsvm"
+        },
+        "networkInterfaces_venky_dsvm379_name": {
+            "value": "venky-dsvm379"
+        },
+        "publicIPAddresses_venky_dsvm_ip_name": {
+            "value": "venky-dsvm-ip"
+        },
+        "networkSecurityGroups_venky_dsvm_nsg_name": {
+            "value": "venky-dsvm-nsg"
+        },
+        "dsvm_vnet_name": {
+            "value": "dsvm_vnet_name"
+        }
+    }
+}
