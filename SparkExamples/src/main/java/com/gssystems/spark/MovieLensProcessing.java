@@ -32,7 +32,7 @@ public class MovieLensProcessing {
         SparkSession spark = SparkSession.builder().appName("Simple Application").getOrCreate();
         spark.sparkContext().setLogLevel("ERROR");
 
-        Dataset moviesdf = spark.read().option("header","true").csv(moviesFile);
+		Dataset moviesdf = spark.read().option("header","true").csv(moviesFile);
        
         Dataset movies_df = moviesdf.select(
             moviesdf.col("id").alias("movie_id"),

@@ -29,7 +29,7 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2020-11-01",
             "name": "[parameters('networkSecurityGroups_venky_dsvm_nsg_name')]",
-            "location": "westus",
+            "location": "[resourceGroup().location]",
             "properties": {
                 "securityRules": [
                     {
@@ -90,7 +90,7 @@
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2020-11-01",
             "name": "[parameters('publicIPAddresses_venky_dsvm_ip_name')]",
-            "location": "westus",
+            "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Basic",
                 "tier": "Regional"
@@ -107,7 +107,7 @@
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2020-11-01",
             "name": "[parameters('dsvm_vnet_name')]",
-            "location": "westus",
+            "location": "[resourceGroup().location]",
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
@@ -133,7 +133,7 @@
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2022-03-01",
             "name": "[parameters('virtualMachines_venky_dsvm_name')]",
-            "location": "westus",
+            "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_venky_dsvm379_name'))]"
             ],
@@ -277,7 +277,7 @@
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2020-11-01",
             "name": "[parameters('networkInterfaces_venky_dsvm379_name')]",
-            "location": "westus",
+            "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_venky_dsvm_ip_name'))]",
                 "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('dsvm_vnet_name'), 'default')]",
