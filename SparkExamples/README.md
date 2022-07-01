@@ -14,7 +14,7 @@ SET HADOOP_HOME=C:\Venky\DP-203\Azure-DP-203\SparkExamples
 ## Computer-2 
 SET HADOOP_HOME=C:\Venky\DP-203\SowmyaVenkyRepo\Azure-DP-203\SparkExamples
 
-spark-submit --master local[4] --class com.gssystems.spark.MovieLensProcessing target\SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/movies_metadata.csv file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/ratings.csv
+spark-submit --master local[4] --class com.gssystems.spark.MovieLensExploration target\SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/movies_metadata.csv file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/ratings.csv
 
 spark-submit --master local[4] --class com.gssystems.spark.MovieLensProcessingWithSchema target\SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/movies_metadata.csv file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/ratings.csv
 

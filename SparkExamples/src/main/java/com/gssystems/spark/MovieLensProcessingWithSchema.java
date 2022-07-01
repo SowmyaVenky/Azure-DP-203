@@ -31,7 +31,7 @@ public class MovieLensProcessingWithSchema {
 
 		String moviesFile = args[0];
 		String ratingsFile = args[1];
-		SparkSession spark = SparkSession.builder().appName("Simple Application").getOrCreate();
+		SparkSession spark = SparkSession.builder().appName("Movielens Data wrangling").getOrCreate();
 		spark.sparkContext().setLogLevel("ERROR");
 
 		StructType moviesSchema = new StructType(

@@ -33,7 +33,7 @@ public class LoadMoviesIntoPostgres {
           .save();
 
         System.out.println("Loading table movies.movie_genre");
-        Dataset moviegenredf = spark.read().json("movie_genre");
+        Dataset moviegenredf = spark.read().json("movie_genre").dropDuplicates();
         moviegenredf.write()
           .mode(SaveMode.Overwrite)
           .format("jdbc")

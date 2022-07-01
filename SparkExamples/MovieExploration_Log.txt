@@ -1,0 +1,271 @@
+root
+ |-- adult: string (nullable = true)
+ |-- belongs_to_collection: string (nullable = true)
+ |-- budget: long (nullable = true)
+ |-- genres: string (nullable = true)
+ |-- homepage: string (nullable = true)
+ |-- id: integer (nullable = true)
+ |-- imdb_id: string (nullable = true)
+ |-- original_language: string (nullable = true)
+ |-- original_title: string (nullable = true)
+ |-- overview: string (nullable = true)
+ |-- popularity: double (nullable = true)
+ |-- poster_path: string (nullable = true)
+ |-- production_companies: string (nullable = true)
+ |-- production_countries: string (nullable = true)
+ |-- release_date: date (nullable = true)
+ |-- revenue: long (nullable = true)
+ |-- runtime: float (nullable = true)
+ |-- spoken_languages: string (nullable = true)
+ |-- status: string (nullable = true)
+ |-- tagline: string (nullable = true)
+ |-- title: string (nullable = true)
+ |-- video: boolean (nullable = true)
+ |-- vote_average: float (nullable = true)
+ |-- vote_count: integer (nullable = true)
+
++--------+-------------+
+|movie_id|collection_id|
++--------+-------------+
+|862     |10194        |
+|15602   |119050       |
+|11862   |96871        |
+|710     |645          |
+|21032   |117693       |
+|9273    |3167         |
+|8012    |91698        |
+|9598    |9435         |
+|9312    |9818         |
+|10530   |136214       |
+|11525   |124935       |
+|10634   |43563        |
+|755     |10924        |
+|10874   |256377       |
+|27793   |91430        |
+|9737    |14890        |
+|414     |120794       |
+|5894    |439053       |
+|8068    |9649         |
+|1572    |1570         |
++--------+-------------+
+only showing top 20 rows
+
+Movies with collections count : 3168
++-------------+---------------------------------------+--------------------------------+--------------------------------+
+|collection_id|collection_name                        |collection_poster_path          |collection_backdrop_path        |
++-------------+---------------------------------------+--------------------------------+--------------------------------+
+|53159        |The Santa Clause Collection            |/1h8iA6i2DpPhsHC65nUB2voVnm5.jpg|/jQiwVHJN1rsS4DqhF7hlYZTYCH.jpg |
+|2366         |The Jaws Collection                    |/fgraZdDCvAtBr0MHczmL6raonHd.jpg|/us13Po7SYoHl9wBNVcz04t0oh7F.jpg|
+|174218       |The Howling Collection                 |/ci6CZhFFLm0r3fDomXlRAmCEesr.jpg|/a0UuiTYxqMmj5Ll26rORaFoTKBc.jpg|
+|10522        |Starship Troopers Collection           |/uumu3Xj1ME1632SCsyVJwITgOKZ.jpg|/hwZXCuY6GVw50o17nDGbSR8WMFJ.jpg|
+|107725       |Creepshow Collection                   |/wvoSFYgc36Zz2j8eDvysKDW1FZ.jpg |/yGxQgs3qBfmKk7VKT8VfyLKkA1I.jpg|
+|2467         |Tomb Raider Collection                 |/sgaP4WtVlKzz8FIcjbkevOycJiq.jpg|/plM0vErSrAwT3tJldstB9bv2AyN.jpg|
+|104716       |Basket Case Collection                 |/6DdpgHlruy4h6tfpwctFUw0inVj.jpg|/1R3D39kne1LX2TYcsQ7kly8D9Zb.jpg|
+|261590       |Living Dead Collection                 |/mSJ20RTWWgtt3aTyn1iwNZ9fbYl.jpg|/inPPfnJ9Wzc9rg1MpkPm0P3D9rJ.jpg|
+|57971        |The Rescuers Collection                |/kTrFEqoVLEpw82bkxtRApD69dE1.jpg|/bR0XKmrmPZtHX6oQ1nH1DEPX08G.jpg|
+|57129        |Rugrats Collection                     |/zamw6yLqCFqAHG1HPSPOCws82Bb.jpg|/pFgV70FI1URDLFY3bllhPl6sC33.jpg|
+|9735         |Friday the 13th Collection             |/uobgqpLQff9WvxGKE2OSvXv1RHm.jpg|/c7pMKwv5NzIN6N3KM4L8fYMTtPw.jpg|
+|89264        |Romancing the Stone Collection         |/mHJHMng2y2jLHgz2S8AoACVgJMi.jpg|/kwgTcDfbrvVTqMOczKfFqJa3d7p.jpg|
+|110021       |The Magnificent Seven Collection       |/qI64OS0Mqloq3wm1x4TWxXEDnVQ.jpg|/jwevUd9BsWY9QTJZL5bFjWPoyqZ.jpg|
+|10893        |Critters Collection                    |/rWZytVHeFsADHeuoPCIf4c7Qepb.jpg|/9K0ycQWRv4vSL1oM8y7dOXwFpy6.jpg|
+|124916       |101 Dalmatians (Live-Action) Collection|/oSeIai1ioj4dbq7WgbPzpsSCzkS.jpg|/eTaNHqpi7VldgcrDetfTzk4FeDi.jpg|
+|294468       |Flubber Collection                     |/11Olg7cvRG9UcNGfbhEiyDKsbzE.jpg|/a8yIR6GefHgPMtOx0v4mdwCJGV4.jpg|
+|87250        |Bambi Collection                       |/b941y7oiWBXJZaoWemW4exlpDxf.jpg|/pdeV9HC6ECDvUfICMWeMHvWsCIa.jpg|
+|86307        |Cocoon Collection                      |/qKtNXCcY3DMJ8T7cs47yDwpU5fT.jpg|/o32F4wuQJPBnP5FVkOGP9DxGYJI.jpg|
+|8864         |Final Destination Collection           |/mZUyhsfIthTl5rfdeSox702Ircr.jpg|/y3aWOInifbGKXM34KjtcMITrZRZ.jpg|
+|11716        |Addams Family Collection               |/iqAjYCir8x2fc8eeQ2k4qZqOMP1.jpg|/gS5yZLrSJ6uNbsz17xoxf70X2Ws.jpg|
++-------------+---------------------------------------+--------------------------------+--------------------------------+
+only showing top 20 rows
+
+Unique collections count : 1078
+Analyzing production_companies
++--------+---------------------+
+|movie_id|production_company_id|
++--------+---------------------+
+|862     |3                    |
+|8844    |559                  |
+|8844    |2550                 |
+|8844    |10201                |
+|15602   |6194                 |
+|15602   |19464                |
+|11862   |5842                 |
+|11862   |9195                 |
+|949     |508                  |
+|949     |675                  |
+|949     |6194                 |
+|11860   |4                    |
+|11860   |258                  |
+|11860   |932                  |
+|11860   |5842                 |
+|11860   |14941                |
+|11860   |55873                |
+|11860   |58079                |
+|45325   |2                    |
+|9091    |33                   |
++--------+---------------------+
+only showing top 20 rows
+
+Movies with production company count: 63933
++---------------------+--------------------------------+
+|production_company_id|production_company_name         |
++---------------------+--------------------------------+
+|8989                 |Talisman Productions            |
+|36854                |Lee Rich Productions            |
+|36024                |British Columbia Film Commission|
+|635                  |Les Films Alain Sarde           |
+|1274                 |Clinica Estetico                |
+|7325                 |Icicle                          |
+|691                  |Cappa Productions               |
+|3901                 |Phoenician Films                |
+|960                  |L.A. Films                      |
+|41048                |Elysian Dreams                  |
+|3242                 |Base 12 Productions             |
+|881                  |Daiei Studios                   |
+|36859                |Capella Films                   |
+|3597                 |Dodi Fayed - Jack Wiener        |
+|89993                |Regal Films Inc.                |
+|25                   |20th Century Fox                |
+|42                   |Universal Pictures Corporation  |
+|87817                |Earthling Associates            |
+|33660                |Camp Hill                       |
+|5353                 |Fastnet Films                   |
++---------------------+--------------------------------+
+only showing top 20 rows
+
+Production company count: 22097
+Analyzing production_countries
++--------+---------------------+
+|movie_id|production_country_id|
++--------+---------------------+
+|862     |US                   |
+|8844    |US                   |
+|15602   |US                   |
+|11862   |US                   |
+|949     |US                   |
+|11860   |DE                   |
+|11860   |US                   |
+|45325   |US                   |
+|9091    |US                   |
+|710     |GB                   |
+|710     |US                   |
+|9087    |US                   |
+|12110   |FR                   |
+|12110   |US                   |
+|21032   |US                   |
+|10858   |US                   |
+|1408    |FR                   |
+|1408    |DE                   |
+|1408    |IT                   |
+|1408    |US                   |
++--------+---------------------+
+only showing top 20 rows
+
+Movies with production country count: 45210
++---------------------+-----------------------+
+|production_country_id|production_country_name|
++---------------------+-----------------------+
+|NO                   |Norway                 |
+|KZ                   |Kazakhstan             |
+|IR                   |Iran                   |
+|AR                   |Argentina              |
+|PK                   |Pakistan               |
+|CN                   |China                  |
+|SN                   |Senegal                |
+|MY                   |Malaysia               |
+|IL                   |Israel                 |
+|XC                   |Czechoslovakia         |
+|JP                   |Japan                  |
+|CL                   |Chile                  |
+|DZ                   |Algeria                |
+|TW                   |Taiwan                 |
+|HU                   |Hungary                |
+|TR                   |Turkey                 |
+|LU                   |Luxembourg             |
+|TH                   |Thailand               |
+|LI                   |Liechtenstein          |
+|VN                   |Vietnam                |
++---------------------+-----------------------+
+only showing top 20 rows
+
+Production country count: 158
+Analyzing spoken languages
++--------+------------------+--------------------+
+|movie_id|spoken_language_id|spoken_language_name|
++--------+------------------+--------------------+
+|862     |en                |English             |
+|8844    |en                |English             |
+|8844    |fr                |Français            |
+|15602   |en                |English             |
+|11862   |en                |English             |
+|949     |en                |English             |
+|949     |es                |Español             |
+|11860   |fr                |Français            |
+|11860   |en                |English             |
+|45325   |en                |English             |
+|45325   |de                |Deutsch             |
+|9091    |en                |English             |
+|710     |en                |English             |
+|710     |ru                |P??????             |
+|710     |es                |Español             |
+|9087    |en                |English             |
+|12110   |en                |English             |
+|12110   |de                |Deutsch             |
+|21032   |en                |English             |
+|10858   |en                |English             |
++--------+------------------+--------------------+
+only showing top 20 rows
+
++--------+------------------+
+|movie_id|spoken_language_id|
++--------+------------------+
+|862     |en                |
+|8844    |en                |
+|8844    |fr                |
+|15602   |en                |
+|11862   |en                |
+|949     |en                |
+|949     |es                |
+|11860   |fr                |
+|11860   |en                |
+|45325   |en                |
+|45325   |de                |
+|9091    |en                |
+|710     |en                |
+|710     |ru                |
+|710     |es                |
+|9087    |en                |
+|12110   |en                |
+|12110   |de                |
+|21032   |en                |
+|10858   |en                |
++--------+------------------+
+only showing top 20 rows
+
+Movies with spoken languages count: 48683
++------------------+--------------------+
+|spoken_language_id|spoken_language_name|
++------------------+--------------------+
+|la                |Latin               |
+|id                |Bahasa indonesia    |
+|ne                |                    |
+|ro                |Român?              |
+|lo                |                    |
+|mt                |Malti               |
+|gd                |                    |
+|si                |                    |
+|sk                |Sloven?ina          |
+|en                |English             |
+|xh                |                    |
+|nl                |Nederlands          |
+|bn                |?????               |
+|fi                |suomi               |
+|so                |Somali              |
+|es                |Español             |
+|cn                |??? / ???     |
+|nb                |Bokmål              |
+|pt                |Português           |
+|bo                |                    |
++------------------+--------------------+
+only showing top 20 rows
+
+Spoken Languages count: 129
