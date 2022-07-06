@@ -10,6 +10,7 @@ import org.apache.spark.api.java.function.PairFlatMapFunction;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.*;
 import scala.Tuple2;
@@ -21,6 +22,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class MovieLensExploration {
+	private static final boolean WRITE_FILE_OUTPUTS = true;
 	public static void main(String[] args) {
 		if (args == null || args.length != 2) {
 			System.out.println("Need to pass 2 parameters - movies_metadata.csv and ratings.csv for this to work!");
@@ -81,14 +83,25 @@ public class MovieLensExploration {
 		// movie_id -> collection_id
 		// collection_id with its attributes.
 
-		Dataset movie_collection_df = collectionsdf2.select("movie_id", "collection_id");
+		Dataset movie_collection_df = collectionsdf2.select("movie_id", "collection_id")
+				.withColumn("collection_id", collectionsdf2.col("collection_id").cast("int"));
 		movie_collection_df.show(false);
 		System.out.println("Movies with collections count : " + movie_collection_df.count());
+		if (WRITE_FILE_OUTPUTS) {
+			System.out.println("Writing movie_collection_df file...");
+			movie_collection_df.repartition(1).write().mode(SaveMode.Overwrite).option("encoding", "UTF-8").parquet("movie_collection");
+		}
 
-		Dataset collections_table_df = collectionsdf2.drop("movie_id").dropDuplicates();
+		Dataset collections_table_df = collectionsdf2.drop("movie_id").dropDuplicates()
+				.withColumn("collection_id", collectionsdf2.col("collection_id").cast("int"));
 		collections_table_df.show(false);
 		System.out.println("Unique collections count : " + collections_table_df.count());
+		if (WRITE_FILE_OUTPUTS) {
+			System.out.println("Writing collections_table_df file...");
+			collections_table_df.repartition(1).write().mode(SaveMode.Overwrite).option("encoding", "UTF-8").parquet("collections");
+		}
 
+		
 		// get production companies
 		System.out.println("Analyzing production_companies");
 		Dataset production_companies_df = moviesdf.select("id", "production_companies").withColumnRenamed("id",
@@ -106,13 +119,23 @@ public class MovieLensExploration {
 						production_companies_df1.col("companies_json.id").as("production_company_id"));
 
 		//Create two datasets to push to db/synapse.
-		Dataset movie_production_company = production_companies_df2.select("movie_id","production_company_id");
+		Dataset movie_production_company = production_companies_df2.select("movie_id","production_company_id")
+				.withColumn("production_company_id", production_companies_df2.col("production_company_id").cast("int"));
 		movie_production_company.show(false);
 		System.out.println("Movies with production company count: " + movie_production_company.count());
+		if (WRITE_FILE_OUTPUTS) {
+			System.out.println("Writing movie_production_company file...");
+			movie_production_company.repartition(1).write().mode(SaveMode.Overwrite).option("encoding", "UTF-8").parquet("movie_production_company");
+		}
 
-		Dataset production_company = production_companies_df2.select("production_company_id", "production_company_name").dropDuplicates();
+		Dataset production_company = production_companies_df2.select("production_company_id", "production_company_name").dropDuplicates()
+				.withColumn("production_company_id", production_companies_df2.col("production_company_id").cast("int"));				
 		production_company.show(false);
 		System.out.println("Production company count: " + production_company.count());
+		if (WRITE_FILE_OUTPUTS) {
+			System.out.println("Writing production_company file...");
+			production_company.repartition(1).write().mode(SaveMode.Overwrite).option("encoding", "UTF-8").parquet("production_company");
+		}
 		
 		// get production countries
 		System.out.println("Analyzing production_countries");
@@ -134,10 +157,19 @@ public class MovieLensExploration {
 		Dataset movie_production_country = production_countries_df2.filter("production_country_id is not null").select("movie_id","production_country_id");
 		movie_production_country.show(false);
 		System.out.println("Movies with production country count: " + movie_production_country.count());
+		if (WRITE_FILE_OUTPUTS) {
+			System.out.println("Writing movie_production_country file...");
+			movie_production_country.repartition(1).write().mode(SaveMode.Overwrite).option("encoding", "UTF-8").parquet("movie_production_country");
+		}
 
+		
 		Dataset production_country = production_countries_df2.drop("movie_id").filter("production_country_id is not null").dropDuplicates();
 		production_country.show(false);
 		System.out.println("Production country count: " + production_country.count());
+		if (WRITE_FILE_OUTPUTS) {
+			System.out.println("Writing production_country file...");
+			production_country.repartition(1).write().mode(SaveMode.Overwrite).option("encoding", "UTF-8").parquet("production_country");
+		}
 
 		//Languages
 		System.out.println("Analyzing spoken languages");
@@ -161,10 +193,18 @@ public class MovieLensExploration {
 		Dataset movie_spoken_lang = spoken_lang_df2.filter("spoken_language_id is not null").select("movie_id","spoken_language_id");
 		movie_spoken_lang.show(false);
 		System.out.println("Movies with spoken languages count: " + movie_spoken_lang.count());
+		if (WRITE_FILE_OUTPUTS) {
+			System.out.println("Writing movie_spoken_lang file...");
+			movie_spoken_lang.repartition(1).write().mode(SaveMode.Overwrite).option("encoding", "UTF-8").parquet("movie_spoken_lang");
+		}
 
 		Dataset spoken_language = spoken_lang_df2.drop("movie_id").filter("spoken_language_id is not null").dropDuplicates();
 		spoken_language.show(false);
 		System.out.println("Spoken Languages count: " + spoken_language.count());
+		if (WRITE_FILE_OUTPUTS) {
+			System.out.println("Writing spoken_language file...");
+			spoken_language.repartition(1).write().mode(SaveMode.Overwrite).option("encoding", "UTF-8").parquet("spoken_language");
+		}
 
 		spark.stop();
 	}

@@ -60,7 +60,7 @@ public class MovieLensProcessingWithSchema {
 						new StructField("vote_average", DataTypes.FloatType, false, Metadata.empty()),
 						new StructField("vote_count", DataTypes.IntegerType, false, Metadata.empty()) });
 		
-		Dataset moviesdf = spark.read().option("header", "true").schema(moviesSchema).csv(moviesFile);
+		Dataset moviesdf = spark.read().option("quote", "\"").option("escape", "\"").option("header", "true").schema(moviesSchema).csv(moviesFile);
 
 		Dataset movies_df = moviesdf.select(moviesdf.col("id").alias("movie_id"),
 				moviesdf.col("adult").alias("is_adult"), moviesdf.col("budget"), moviesdf.col("original_language"),
@@ -72,7 +72,7 @@ public class MovieLensProcessingWithSchema {
 
 		if (WRITE_FILE_OUTPUTS) {
 			System.out.println(movies_df.count() + " records, Writing movies file");
-			movies_df.write().json("movies");
+			movies_df.repartition(1).write().json("movies");
 		}
 
 		// Maps genere_id = genre_name
