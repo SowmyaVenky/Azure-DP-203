@@ -10,6 +10,7 @@ import org.apache.spark.api.java.function.PairFlatMapFunction;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.*;
 import scala.Tuple2;
@@ -72,7 +73,7 @@ public class MovieLensProcessingWithSchema {
 
 		if (WRITE_FILE_OUTPUTS) {
 			System.out.println(movies_df.count() + " records, Writing movies file");
-			movies_df.repartition(1).write().json("movies");
+			movies_df.repartition(1).write().mode(SaveMode.Overwrite).parquet("movies");
 		}
 
 		// Maps genere_id = genre_name
@@ -159,7 +160,7 @@ public class MovieLensProcessingWithSchema {
 		ratingsdf.printSchema();
 		if (WRITE_FILE_OUTPUTS) {
 			System.out.println(ratingsdf.count() + " records, Writing ratings file");
-			ratingsdf.write().json("ratings");
+			ratingsdf.repartition(1).write().mode(SaveMode.Overwrite).parquet("ratings");
 		}
 
 		// Now map movie_id to genres and de-dup that
