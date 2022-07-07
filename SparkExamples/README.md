@@ -25,8 +25,8 @@ spark-submit --master local[4] --class com.gssystems.spark.MovieLensProcessingWi
 # The default db is postgres, default schema is public 
 
 1. Copy the raw datasets over from local to the DSVM. Change the IP below to the right public IP
-scp -r c:\Venky\DP-203\SowmyaVenkyRepo\movielens venkyuser@40.112.52.61:/home/venkyuser/
-scp target\SparkExamples-1.0-SNAPSHOT.jar venkyuser@40.112.52.61:/home/venkyuser
+scp -r c:\Venky\DP-203\SowmyaVenkyRepo\movielens venkyuser@20.228.186.83:/home/venkyuser/
+scp target\SparkExamples-1.0-SNAPSHOT.jar venkyuser@20.228.186.83:/home/venkyuser
 
 wget https://jdbc.postgresql.org/download/postgresql-42.2.6.jar
 
@@ -37,5 +37,7 @@ spark-submit --master local[4] --class com.gssystems.spark.MovieLensProcessingWi
 spark-submit --master local[4] --class com.gssystems.spark.MovieLensExploration SparkExamples-1.0-SNAPSHOT.jar file:///home/venkyuser/movielens/movies_metadata.csv file:///home/venkyuser/movielens/ratings.csv
 
 spark-submit --master local[4] --class com.gssystems.spark.CreditsExploration SparkExamples-1.0-SNAPSHOT.jar file:///home/venkyuser/movielens/credits.csv
+
+spark-submit --master local[4] --class com.gssystems.spark.KeywordsExploration SparkExamples-1.0-SNAPSHOT.jar file:///home/venkyuser/movielens/keywords.csv
 
 spark-submit --master local[4] --class com.gssystems.spark.LoadMoviesIntoPostgres --jars postgresql-42.2.6.jar --driver-class-path postgresql-42.2.6.jar SparkExamples-1.0-SNAPSHOT.jar

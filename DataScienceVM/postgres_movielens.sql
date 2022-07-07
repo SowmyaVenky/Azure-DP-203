@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS movies.movies (
     original_language CHAR(2) NOT NULL,
     title VARCHAR(300) NOT NULL,
     popularity FLOAT,
-    release_date VARCHAR(10),
+    release_date DATE,
     revenue BIGINT NOT NULL,
     vote_count INT,
     vote_average FLOAT,
@@ -136,6 +136,21 @@ CREATE TABLE IF NOT EXISTS movies.date (
     year INT,
     primary key (release_date)
 );
+
+DROP TABLE IF EXISTS movies.movie_keywords;
+CREATE TABLE IF NOT EXISTS movies.movie_keywords (
+    movie_id INT NOT NULL,
+    keyword_id INT NOT NULL,
+    primary key (movie_id, keyword_id)
+);
+
+DROP TABLE IF EXISTS movies.keywords;
+CREATE TABLE IF NOT EXISTS movies.keywords (
+    keyword_id INT NOT NULL,
+    keyword VARCHAR(50) NOT NULL,
+    primary key (keyword_id)
+);
+
 END;
 
 SELECT COUNT(*) 
@@ -147,14 +162,15 @@ FROM
 movies.movie_crew;
 
 INSERT INTO movies.date 
-SELECT distinct(to_date(release_date,'YYYY-MM-DD')) as release_date,
-EXTRACT(DAY from to_date(release_date,'YYYY-MM-DD')) as day,
-EXTRACT(WEEK from to_date(release_date,'YYYY-MM-DD')) as week,
-EXTRACT(MONTH FROM to_date(release_date,'YYYY-MM-DD')) as month,
-EXTRACT(QUARTER FROM to_date(release_date,'YYYY-MM-DD')) as quarter,
-EXTRACT(YEAR FROM to_date(release_date,'YYYY-MM-DD')) as year
+SELECT distinct(release_date) as release_date,
+EXTRACT(DAY from release_date) as day,
+EXTRACT(WEEK from release_date) as week,
+EXTRACT(MONTH FROM release_date) as month,
+EXTRACT(QUARTER FROM release_date) as quarter,
+EXTRACT(YEAR FROM release_date) as year
 from 
-movies.movies;
+movies.movies
+where release_date is not null;
 
 select cast_name
 ,character_name
@@ -171,3 +187,21 @@ limit 10
 ) top_rated
 on movies.movie_cast.movie_id = top_rated.movie_id
 ;
+
+select 
+A.movie_id, 
+A.keyword_id,
+B.keyword
+from
+movies.movie_keywords A 
+inner join 
+movies.keywords B
+on A.keyword_id = B.keyword_id;
+
+Select movie_id,
+sum(rating) / count(user_id) as averating 
+from
+movies.ratings
+group by movie_id
+order by averating desc
+limit 10;

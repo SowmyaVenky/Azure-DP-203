@@ -9,10 +9,10 @@ public class LoadMoviesIntoPostgres {
         SparkSession spark = SparkSession.builder().appName("Movie Lens Data Load").getOrCreate();
         spark.sparkContext().setLogLevel("ERROR");
         
-        if( 1 != 1) {} // Move the braces to bypass sections as needed.
+        if( 1 != 1) {
         
         System.out.println("Loading table movies.movies");        
-        Dataset moviesdf = spark.read().json("movies");
+        Dataset moviesdf = spark.read().parquet("movies");
         moviesdf.write()
           .mode(SaveMode.Overwrite)
           .format("jdbc")
@@ -182,8 +182,35 @@ public class LoadMoviesIntoPostgres {
           .option("truncate", "true")
           .save();
 
+        System.out.println("Loading table movies.movie_keywords");
+        Dataset movie_keywords = spark.read().parquet("movie_keywords").filter("movie_id is not null").dropDuplicates();
+        movie_keywords.write()
+          .mode(SaveMode.Overwrite)
+          .format("jdbc")
+          .option("driver", "org.postgresql.Driver")
+          .option("url", "jdbc:postgresql://venkypg101.postgres.database.azure.com:5432/postgres?user=venkypg101@venkypg101&password=Ganesh20022002&sslmode=require")
+          .option("dbtable", "movies.movie_keywords")
+          .option("SaveMode", "OVERWRITE")
+          .option("batchSize", "100000")
+          .option("truncate", "true")
+          .save();
+        } // Move the braces to bypass sections as needed.
+        
+        System.out.println("Loading table movies.keywords");
+        Dataset keywords = spark.read().parquet("keywords").filter("keyword_id is not null").dropDuplicates();
+        keywords.write()
+          .mode(SaveMode.Overwrite)
+          .format("jdbc")
+          .option("driver", "org.postgresql.Driver")
+          .option("url", "jdbc:postgresql://venkypg101.postgres.database.azure.com:5432/postgres?user=venkypg101@venkypg101&password=Ganesh20022002&sslmode=require")
+          .option("dbtable", "movies.keywords")
+          .option("SaveMode", "OVERWRITE")
+          .option("batchSize", "100000")
+          .option("truncate", "true")
+          .save();
+
         System.out.println("Loading table movies.ratings");
-        Dataset ratingsdf = spark.read().json("ratings");
+        Dataset ratingsdf = spark.read().parquet("ratings");
         ratingsdf.write()
           .mode(SaveMode.Overwrite)
           .format("jdbc")
