@@ -25,8 +25,8 @@ spark-submit --master local[4] --class com.gssystems.spark.MovieLensProcessingWi
 # The default db is postgres, default schema is public 
 
 1. Copy the raw datasets over from local to the DSVM. Change the IP below to the right public IP
-scp -r c:\Venky\DP-203\SowmyaVenkyRepo\movielens venkyuser@20.228.186.83:/home/venkyuser/
-scp target\SparkExamples-1.0-SNAPSHOT.jar venkyuser@20.228.186.83:/home/venkyuser
+scp -r c:\Venky\DP-203\SowmyaVenkyRepo\movielens venkyuser@20.245.97.31:/home/venkyuser/
+scp target\SparkExamples-1.0-SNAPSHOT.jar venkyuser@20.245.97.31:/home/venkyuser
 
 wget https://jdbc.postgresql.org/download/postgresql-42.2.6.jar
 

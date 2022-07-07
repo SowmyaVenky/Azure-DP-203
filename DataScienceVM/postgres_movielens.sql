@@ -189,19 +189,20 @@ on movies.movie_cast.movie_id = top_rated.movie_id
 ;
 
 select 
-A.movie_id, 
-A.keyword_id,
-B.keyword
+distinct(B.keyword)
 from
 movies.movie_keywords A 
 inner join 
 movies.keywords B
-on A.keyword_id = B.keyword_id;
-
+on A.keyword_id = B.keyword_id
+left join (
 Select movie_id,
-sum(rating) / count(user_id) as averating 
+sum(rating) / count(user_id) as averating,
+count(user_id) as ratingcount 
 from
 movies.ratings
 group by movie_id
-order by averating desc
-limit 10;
+order by ratingcount desc
+limit 10 ) top_rated
+on A.movie_id = top_rated.movie_id
+limit 25;

@@ -20,7 +20,7 @@ $StagingStorageContainerName = "stage042772"
 $resourceGroupName = (Get-AzResourceGroup).ResourceGroupName
 
 #Login to Azure  - First pass uncomment to login to azure.
-Connect-AzAccount
+#Connect-AzAccount
 
 Write-Host "Here are your subscriptions..."
 Get-AzSubscription
