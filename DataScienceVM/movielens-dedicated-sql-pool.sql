@@ -92,7 +92,7 @@ DROP EXTERNAL table movie_keywords_ext;
 
 select count(*) 
 from movie_keywords;
-
+---
 CREATE EXTERNAL TABLE keywords_ext (
     keyword_id INT,
     keyword VARCHAR(50)
