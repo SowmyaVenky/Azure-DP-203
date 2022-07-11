@@ -9,7 +9,7 @@ public class LoadMoviesIntoPostgres {
         SparkSession spark = SparkSession.builder().appName("Movie Lens Data Load").getOrCreate();
         spark.sparkContext().setLogLevel("ERROR");
         
-        if( 1 != 1) {
+        if( 1 != 1) {} // Move the braces to bypass sections as needed.
         
         System.out.println("Loading table movies.movies");        
         Dataset moviesdf = spark.read().parquet("movies");
@@ -194,7 +194,7 @@ public class LoadMoviesIntoPostgres {
           .option("batchSize", "100000")
           .option("truncate", "true")
           .save();
-        } // Move the braces to bypass sections as needed.
+        
         
         System.out.println("Loading table movies.keywords");
         Dataset keywords = spark.read().parquet("keywords").filter("keyword_id is not null").dropDuplicates();
