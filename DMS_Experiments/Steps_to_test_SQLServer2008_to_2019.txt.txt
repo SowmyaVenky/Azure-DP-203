@@ -1,0 +1,10 @@
+This experiment will test out how the Azure Data Studio can assess the database in SQLServer 2008 and give us recommendations on what is the best configuration to use inside Azure. To do this we do the following things:
+
+1. Login into Azure portal and provision 2 SQL Servers as virtual machines. One is created with a Windows Server 2008 and Windows SQL Server 2008 R2. The second one is 2022 Windows Server running MSSQL 2019 version. Please see screen 1 for details on the provisioning. 
+2. Download the image for the Adventure works database and save it locally. 
+3. Login to the 2008 server VM and copy the image from the local computer to the server under C:\venky. 
+4. Do a restore of the database using the Azure Data Studio into the MSSQL 2008 version. 
+5. Install the extension to the Azure Data Studio that can help with the database migration assessments and migration. Follow docs here https://docs.microsoft.com/en-us/azure/dms/migration-using-azure-data-studio
+6. Use the migrate tool and run the assessment to get recommendations. See image002
+7. Select the database to migrate, and pick the 2019 VM as target. See screen shots. 
+8. Create a new DMS and start migration 

@@ -4,7 +4,10 @@ Installed docker on my local computer to make it easy to create databases with v
 
 docker pull mcr.microsoft.com/mssql/server:2017-CU29-GDR1-ubuntu-16.04
 
+## Primary server that has adventure works loaded.
 docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Ganesh20022002" -p 1433:1433 -d  mcr.microsoft.com/mssql/server:2017-CU29-GDR1-ubuntu-16.04
+## Secondary one to test data migration assistant.
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Ganesh20022002" -p 2433:1433 -d  mcr.microsoft.com/mssql/server:2017-CU29-GDR1-ubuntu-16.04
 
 
 docker cp C:\Venky\DP-203\SowmyaVenkyRepo\mssql-backups\AdventureWorks2017.bak hardcore_mayer:/var/opt/mssql/data/ 
@@ -37,3 +40,5 @@ mysql -t < mysql-sakila-sql-schema.sql  -p
 mysql -t < mysql-sakila-sql-schema.sql -u venkyuser@venkymysqldb -p'Ganesh20022002' -h venkymysqldb.mysql.database.azure.com -P 3306
 
 mysql -t < mysql-sakila-sql-data.sql -u venkyuser@venkymysqldb -p'Ganesh20022002' -h venkymysqldb.mysql.database.azure.com -P 3306
+
+
