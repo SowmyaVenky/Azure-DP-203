@@ -5,12 +5,9 @@ Installed docker on my local computer to make it easy to create databases with v
 docker pull mcr.microsoft.com/mssql/server:2017-CU29-GDR1-ubuntu-16.04
 
 ## Primary server that has adventure works loaded.
-docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Ganesh20022002" -p 1433:1433 -d  mcr.microsoft.com/mssql/server:2017-CU29-GDR1-ubuntu-16.04
-## Secondary one to test data migration assistant.
-docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Ganesh20022002" -p 2433:1433 -d  mcr.microsoft.com/mssql/server:2017-CU29-GDR1-ubuntu-16.04
+docker run --name venky-mssql -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Ganesh20022002" -p 1433:1433 -d  mcr.microsoft.com/mssql/server:2017-CU29-GDR1-ubuntu-16.04
 
-
-docker cp C:\Venky\DP-203\SowmyaVenkyRepo\mssql-backups\AdventureWorks2017.bak hardcore_mayer:/var/opt/mssql/data/ 
+docker cp C:\Venky\DP-203\SowmyaVenkyRepo\mssql-backups\AdventureWorks2017.bak venky-mssql:/var/opt/mssql/data/ 
 
 After this login to the Azure data studio, and go to connections -> Manage -> restore -> from backup and select the path where the backup is. Then restore. The screen showing the database restored is in the screenshots.
 
@@ -18,18 +15,18 @@ Download the data migration assistant from Azure website and install it.
 
 ####MySQL
 docker pull mysql
-docker run --name venky-mysql -e MYSQL_ROOT_PASSWORD=Ganesh20022002 -d mysql:latest
+docker run --name venky-mysql -e MYSQL_ROOT_PASSWORD=Ganesh20022002 -p 3306:3306 -d mysql:latest
 docker exec -it venky-mysql bash
 
 Download the schema and data sql
 https://raw.githubusercontent.com/datacharmer/test_db/master/sakila/sakila-mv-schema.sql
 
-docker cp mysql-sakila-sql-data.sql venky-mysql:/
-docker cp mysql-sakila-sql-schema.sql venky-mysql:/
+docker cp mysql\mysql-sakila-sql-data.sql venky-mysql:/
+docker cp mysql\mysql-sakila-sql-schema.sql venky-mysql:/
 docker exec -it venky-mysql bash
 
 mysql -p 
-enter password and login
+#enter password and login
 #see databases 
 show databases;
 
@@ -37,8 +34,26 @@ show databases;
 mysql -t < mysql-sakila-sql-schema.sql -p
 mysql -t < mysql-sakila-sql-schema.sql  -p
 
+#This is to push the data to the Postgres SQL hosted on Azure, deployed via the ARM template.
 mysql -t < mysql-sakila-sql-schema.sql -u venkyuser@venkymysqldb -p'Ganesh20022002' -h venkymysqldb.mysql.database.azure.com -P 3306
-
 mysql -t < mysql-sakila-sql-data.sql -u venkyuser@venkymysqldb -p'Ganesh20022002' -h venkymysqldb.mysql.database.azure.com -P 3306
 
+####Postgres
 
+docker run --name venky-postgres -e POSTGRES_PASSWORD=Ganesh20022002 -p 5432:5432 -d postgres
+docker cp postgres\sportsdb_sample_postgresql_20080304.sql venky-postgres:/
+##Load database.
+docker exec -it venky-postgres psql -U postgres -f /sportsdb_sample_postgresql_20080304.sql
+docker exec -it venky-postgres psql -U postgres
+
+\dt to list tables.
+select * from events;
+
+#### Integration runtime install and configure.
+Download and install the self host IR. 
+Create the Datafactory, and create a self hosted runtime. 
+Get one of the keys from the portal after we create the runtime.
+Register the integration runtime with the ADF to allow communication.
+
+cd C:\Program Files\Microsoft Integration Runtime\5.0\PowerShellScript
+ 
