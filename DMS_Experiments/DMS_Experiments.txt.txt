@@ -41,9 +41,10 @@ mysql -t < mysql-sakila-sql-data.sql -u venkyuser@venkymysqldb -p'Ganesh20022002
 ####Postgres
 
 docker run --name venky-postgres -e POSTGRES_PASSWORD=Ganesh20022002 -p 5432:5432 -d postgres
-docker cp postgres\sportsdb_sample_postgresql_20080304.sql venky-postgres:/
+docker cp postgres\pagila_insert_data.sql venky-postgres:/
+ 
 ##Load database.
-docker exec -it venky-postgres psql -U postgres -f /sportsdb_sample_postgresql_20080304.sql
+docker exec -it venky-postgres psql -U postgres -f /pagila_insert_data.sql 
 docker exec -it venky-postgres psql -U postgres
 
 \dt to list tables.
