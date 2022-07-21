@@ -11,3 +11,9 @@ SET PATH=%PATH%;C:\Program Files\PostgreSQL\14\bin;C:\Program Files\PostgreSQL\1
 cd C:\Venky\DP-203\SowmyaVenkyRepo\HammerDB-4.4
 hammerDBcli
 checklibrary
+
+## First point the test runs against docker containers and collect stats.
+Images are stored in the directory to show stats. Interesting that postgres performed way better than MSSQL and MYSQL. Same dataset, same load (10 users), and same computer. 
+
+## backups of databases.
+pg_dump -U postgres tpcc > tpcc_postgres.sql
