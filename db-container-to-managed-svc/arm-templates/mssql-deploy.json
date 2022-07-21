@@ -1,0 +1,405 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "networkInterfaceName": {
+            "type": "String"
+        },
+        "enableAcceleratedNetworking": {
+            "type": "Bool"
+        },
+        "networkSecurityGroupName": {
+            "type": "String"
+        },
+        "networkSecurityGroupRules": {
+            "type": "Array"
+        },
+        "subnetName": {
+            "type": "String"
+        },
+        "virtualNetworkName": {
+            "type": "String"
+        },
+        "addressPrefixes": {
+            "type": "Array"
+        },
+        "subnets": {
+            "type": "Array"
+        },
+        "publicIpAddressName": {
+            "type": "String"
+        },
+        "publicIpAddressType": {
+            "type": "String"
+        },
+        "publicIpAddressSku": {
+            "type": "String"
+        },
+        "pipDeleteOption": {
+            "type": "String"
+        },
+        "virtualMachineName": {
+            "type": "String"
+        },
+        "virtualMachineComputerName": {
+            "type": "String"
+        },
+        "virtualMachineRG": {
+            "type": "String"
+        },
+        "osDiskType": {
+            "type": "String"
+        },
+        "osDiskDeleteOption": {
+            "type": "String"
+        },
+        "dataDisks": {
+            "type": "Array"
+        },
+        "dataDiskResources": {
+            "type": "Array"
+        },
+        "virtualMachineSize": {
+            "type": "String"
+        },
+        "nicDeleteOption": {
+            "type": "String"
+        },
+        "adminUsername": {
+            "type": "String"
+        },
+        "adminPassword": {
+            "type": "String"
+        },
+        "patchMode": {
+            "type": "String"
+        },
+        "enableHotpatching": {
+            "type": "Bool"
+        },
+        "sqlVirtualMachineName": {
+            "type": "String"
+        },
+        "sqlConnectivityType": {
+            "type": "String"
+        },
+        "sqlPortNumber": {
+            "type": "Int"
+        },
+        "sqlStorageDisksCount": {
+            "type": "Int"
+        },
+        "sqlStorageWorkloadType": {
+            "type": "String"
+        },
+        "sqlStorageDisksConfigurationType": {
+            "type": "String"
+        },
+        "sqlStorageStartingDeviceId": {
+            "type": "Int"
+        },
+        "sqlStorageDeploymentToken": {
+            "type": "Int"
+        },
+        "sqlAutopatchingDayOfWeek": {
+            "type": "String"
+        },
+        "sqlAutopatchingStartHour": {
+            "type": "String"
+        },
+        "sqlAutopatchingWindowDuration": {
+            "type": "String"
+        },
+        "sqlAuthenticationLogin": {
+            "type": "String"
+        },
+        "sqlAuthenticationPassword": {
+            "type": "SecureString"
+        },
+        "dataPath": {
+            "type": "String"
+        },
+        "dataDisksLUNs": {
+            "type": "Array"
+        },
+        "logPath": {
+            "type": "String"
+        },
+        "logDisksLUNs": {
+            "type": "Array"
+        },
+        "tempDbPath": {
+            "type": "String"
+        },
+        "dataFileCount": {
+            "type": "Int"
+        },
+        "dataFileSize": {
+            "type": "Int"
+        },
+        "dataGrowth": {
+            "type": "Int"
+        },
+        "logFileSize": {
+            "type": "Int"
+        },
+        "logGrowth": {
+            "type": "Int"
+        },
+        "SQLSystemDbOnDataDisk": {
+            "type": "Bool"
+        },
+        "rServicesEnabled": {
+            "type": "String"
+        },
+        "maxdop": {
+            "type": "Int"
+        },
+        "isOptimizeForAdHocWorkloadsEnabled": {
+            "type": "Bool"
+        },
+        "collation": {
+            "type": "String"
+        },
+        "minServerMemoryMB": {
+            "type": "Int"
+        },
+        "maxServerMemoryMB": {
+            "type": "Int"
+        }
+    },
+    "variables": {
+        "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]",
+        "vnetName": "[parameters('virtualNetworkName')]",
+        "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-03-01",
+            "name": "[parameters('networkInterfaceName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName'))]",
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+                "[concat('Microsoft.Network/publicIpAddresses/', parameters('publicIpAddressName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIpAddress": {
+                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName'))]",
+                                "properties": {
+                                    "deleteOption": "[parameters('pipDeleteOption')]"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "enableAcceleratedNetworking": "[parameters('enableAcceleratedNetworking')]",
+                "networkSecurityGroup": {
+                    "id": "[variables('nsgId')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-02-01",
+            "name": "[parameters('networkSecurityGroupName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": "[parameters('networkSecurityGroupRules')]"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('virtualNetworkName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": "[parameters('addressPrefixes')]"
+                },
+                "subnets": "[parameters('subnets')]"
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2020-08-01",
+            "name": "[parameters('publicIpAddressName')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "[parameters('publicIpAddressSku')]"
+            },
+            "properties": {
+                "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
+            }
+        },
+        {
+            "type": "Microsoft.Compute/disks",
+            "apiVersion": "2020-12-01",
+            "name": "[parameters('dataDiskResources')[copyIndex()].name]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "[parameters('dataDiskResources')[copyIndex()].sku]"
+            },
+            "properties": "[parameters('dataDiskResources')[copyIndex()].properties]",
+            "copy": {
+                "name": "managedDiskResources",
+                "count": "[length(parameters('dataDiskResources'))]"
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "name": "[parameters('virtualMachineName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "managedDiskResources",
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('osDiskType')]"
+                        },
+                        "deleteOption": "[parameters('osDiskDeleteOption')]"
+                    },
+                    "imageReference": {
+                        "publisher": "microsoftsqlserver",
+                        "offer": "sql2019-ws2022",
+                        "sku": "web",
+                        "version": "latest"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[length(parameters('dataDisks'))]",
+                            "input": {
+                                "lun": "[parameters('dataDisks')[copyIndex('dataDisks')].lun]",
+                                "createOption": "[parameters('dataDisks')[copyIndex('dataDisks')].createOption]",
+                                "caching": "[parameters('dataDisks')[copyIndex('dataDisks')].caching]",
+                                "diskSizeGB": "[parameters('dataDisks')[copyIndex('dataDisks')].diskSizeGB]",
+                                "managedDisk": {
+                                    "id": "[coalesce(parameters('dataDisks')[copyIndex('dataDisks')].id, if(equals(parameters('dataDisks')[copyIndex('dataDisks')].name, json('null')), json('null'), resourceId('Microsoft.Compute/disks', parameters('dataDisks')[copyIndex('dataDisks')].name)))]",
+                                    "storageAccountType": "[parameters('dataDisks')[copyIndex('dataDisks')].storageAccountType]"
+                                },
+                                "deleteOption": "[parameters('dataDisks')[copyIndex('dataDisks')].deleteOption]",
+                                "writeAcceleratorEnabled": "[parameters('dataDisks')[copyIndex('dataDisks')].writeAcceleratorEnabled]"
+                            }
+                        }
+                    ]
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]",
+                            "properties": {
+                                "deleteOption": "[parameters('nicDeleteOption')]"
+                            }
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachineComputerName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]",
+                    "windowsConfiguration": {
+                        "enableAutomaticUpdates": true,
+                        "provisionVmAgent": true,
+                        "patchSettings": {
+                            "enableHotpatching": "[parameters('enableHotpatching')]",
+                            "patchMode": "[parameters('patchMode')]"
+                        }
+                    }
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.SqlVirtualMachine/SqlVirtualMachines",
+            "apiVersion": "2021-11-01-preview",
+            "name": "[parameters('sqlVirtualMachineName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines', parameters('sqlVirtualMachineName'))]"
+            ],
+            "properties": {
+                "virtualMachineResourceId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('sqlVirtualMachineName'))]",
+                "sqlManagement": "Full",
+                "SqlServerLicenseType": "PAYG",
+                "AutoPatchingSettings": {
+                    "Enable": true,
+                    "DayOfWeek": "[parameters('sqlAutopatchingDayOfWeek')]",
+                    "MaintenanceWindowStartingHour": "[parameters('sqlAutopatchingStartHour')]",
+                    "MaintenanceWindowDuration": "[parameters('sqlAutopatchingWindowDuration')]"
+                },
+                "KeyVaultCredentialSettings": {
+                    "Enable": false,
+                    "CredentialName": ""
+                },
+                "StorageConfigurationSettings": {
+                    "DiskConfigurationType": "[parameters('sqlStorageDisksConfigurationType')]",
+                    "StorageWorkloadType": "[parameters('sqlStorageWorkloadType')]",
+                    "SQLDataSettings": {
+                        "LUNs": "[parameters('dataDisksLUNs')]",
+                        "DefaultFilePath": "[parameters('dataPath')]"
+                    },
+                    "SQLLogSettings": {
+                        "LUNs": "[parameters('logDisksLUNs')]",
+                        "DefaultFilePath": "[parameters('logPath')]"
+                    },
+                    "SQLTempDbSettings": {
+                        "DefaultFilePath": "[parameters('tempDbPath')]",
+                        "DataFileCount": "[parameters('dataFileCount')]",
+                        "DataFileSize": "[parameters('dataFileSize')]",
+                        "DataGrowth": "[parameters('dataGrowth')]",
+                        "LogFileSize": "[parameters('logFileSize')]",
+                        "LogGrowth": "[parameters('logGrowth')]"
+                    },
+                    "SQLSystemDbOnDataDisk": "[parameters('SQLSystemDbOnDataDisk')]"
+                },
+                "ServerConfigurationsManagementSettings": {
+                    "SQLConnectivityUpdateSettings": {
+                        "ConnectivityType": "[parameters('sqlConnectivityType')]",
+                        "Port": "[parameters('sqlPortNumber')]",
+                        "SQLAuthUpdateUserName": "[parameters('sqlAuthenticationLogin')]",
+                        "SQLAuthUpdatePassword": "[parameters('sqlAuthenticationPassword')]"
+                    },
+                    "AdditionalFeaturesServerConfigurations": {
+                        "IsRServicesEnabled": "[parameters('rServicesEnabled')]"
+                    },
+                    "SQLInstanceSettings": {
+                        "maxDop": "[parameters('maxdop')]",
+                        "isOptimizeForAdHocWorkloadsEnabled": "[parameters('isOptimizeForAdHocWorkloadsEnabled')]",
+                        "collation": "[parameters('collation')]",
+                        "minServerMemoryMB": "[parameters('minServerMemoryMB')]",
+                        "maxServerMemoryMB": "[parameters('maxServerMemoryMB')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "adminUsername": {
+            "type": "String",
+            "value": "[parameters('adminUsername')]"
+        }
+    }
+}

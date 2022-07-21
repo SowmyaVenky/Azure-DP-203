@@ -1,0 +1,101 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "administratorLogin": {
+        "type": "String",
+        "defaultValue": "venkyuser"
+      },
+      "administratorLoginPassword": {
+        "type": "String",
+        "defaultValue": "Ganesh20022002"
+      },
+      "location": {
+        "type": "String",
+        "defaultValue": "[resourceGroup().location]"
+      },
+      "serverName": {
+        "type": "String",
+        "defaultValue": "venky-mysql-1001"
+      },
+      "skuCapacity": {
+        "type": "Int",
+        "defaultValue": 2
+      },
+      "skuFamily": {
+        "type": "String",
+        "defaultValue": "Gen5"
+      },
+      "skuName": {
+        "type": "String",
+        "defaultValue": "GP_Gen5_2"
+      },
+      "skuSizeMB": {
+        "type": "Int",
+        "defaultValue": 5120
+      },
+      "skuTier": {
+        "type": "String",
+        "defaultValue": "GeneralPurpose"
+      },
+      "version": {
+        "type": "String",
+        "defaultValue": "8.0"
+      },
+      "backupRetentionDays": {
+        "type": "Int",
+        "defaultValue": 7
+      },
+      "geoRedundantBackup": {
+        "type": "String",
+        "defaultValue": "Disabled"
+      },
+      "previewFeature": {
+        "defaultValue": "",
+        "type": "String"
+      },
+      "tags": {
+        "defaultValue": {},
+        "type": "Object"
+      },
+      "storageAutoGrow": {
+        "defaultValue": "Disabled",
+        "type": "String"
+      },
+      "infrastructureEncryption": {
+        "defaultValue": "Disabled",
+        "type": "String"
+      }
+    },
+    "variables": {},
+    "resources": [
+      {
+        "type": "Microsoft.DBforMySQL/servers",
+        "apiVersion": "2017-12-01-preview",
+        "name": "[parameters('serverName')]",
+        "location": "[parameters('location')]",
+        "tags": "[parameters('tags')]",
+        "sku": {
+          "name": "[parameters('skuName')]",
+          "tier": "[parameters('skuTier')]",
+          "capacity": "[parameters('skuCapacity')]",
+          "size": "[parameters('skuSizeMB')]",
+          "family": "[parameters('skuFamily')]"
+        },
+        "kind": "",
+        "properties": {
+          "version": "[parameters('version')]",
+          "administratorLogin": "[parameters('administratorLogin')]",
+          "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+          "storageProfile": {
+            "storageMB": "[parameters('skuSizeMB')]",
+            "backupRetentionDays": "[parameters('backupRetentionDays')]",
+            "geoRedundantBackup": "[parameters('geoRedundantBackup')]",
+            "storageAutoGrow": "[parameters('storageAutoGrow')]"
+          },
+          "previewFeature": "[parameters('previewFeature')]",
+          "infrastructureEncryption": "[parameters('infrastructureEncryption')]"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,13 @@
+In this experiment we are going to test the performance of 3 databases running as containers and as managed services or virtual machines. Here are the steps we are going to follow.
+1. Create a managed instance of postgres single server (2 core, 50 GB storage)
+2. Create a managed instance of mysql server (2 core, 50 GB storage)
+3. Create a virtual machine with the MSSQL 2019 enterprise loaded. 
+4. Load hammerDB on a windows VM, and fire the tests to see the TPS.  
+
+
+### 
+Set the path to allow for loading the postgres dlls.
+SET PATH=%PATH%;C:\Program Files\PostgreSQL\14\bin;C:\Program Files\PostgreSQL\14\lib;C:\Program Files\MySQL\MySQL Router 8.0\lib
+cd C:\Venky\DP-203\SowmyaVenkyRepo\HammerDB-4.4
+hammerDBcli
+checklibrary

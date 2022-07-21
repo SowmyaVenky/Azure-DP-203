@@ -1,0 +1,257 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "networkInterfaceName": {
+                "value": "venkysqlservervm347"
+        },
+        "enableAcceleratedNetworking": {
+                "value": true
+        },
+        "networkSecurityGroupName": {
+                "value": "venkysqlservervm-nsg"
+        },
+        "networkSecurityGroupRules": {
+                "value": [
+                    {
+                        "name": "RDP",
+                        "properties": {
+                            "priority": 300,
+                            "protocol": "TCP",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "3389"
+                        }
+                    },
+                    {
+                        "name": "default-allow-sql",
+                        "properties": {
+                            "priority": 1600,
+                            "protocol": "TCP",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "1433"
+                        }
+                    }
+                ]
+        },
+        "subnetName": {
+                "value": "default"
+        },
+        "virtualNetworkName": {
+                "value": "venky-sqlservervm-vnet"
+        },
+        "addressPrefixes": {
+                "value": [
+                    "10.0.0.0/16"
+                ]
+        },
+        "subnets": {
+                "value": [
+                    {
+                        "name": "default",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/24"
+                        }
+                    }
+                ]
+        },
+        "publicIpAddressName": {
+                "value": "venkysqlservervm-ip"
+        },
+        "publicIpAddressType": {
+                "value": "Dynamic"
+        },
+        "publicIpAddressSku": {
+                "value": "Basic"
+        },
+        "pipDeleteOption": {
+                "value": "Detach"
+        },
+        "virtualMachineName": {
+                "value": "venkysqlservervm"
+        },
+        "virtualMachineComputerName": {
+                "value": "venkysqlserverv"
+        },
+        "virtualMachineRG": {
+                "value": "1-0efd47f3-playground-sandbox"
+        },
+        "osDiskType": {
+                "value": "StandardSSD_LRS"
+        },
+        "osDiskDeleteOption": {
+                "value": "Delete"
+        },
+        "dataDisks": {
+                "value": [
+                    {
+                        "lun": 0,
+                        "createOption": "attach",
+                        "deleteOption": "Detach",
+                        "caching": "ReadOnly",
+                        "writeAcceleratorEnabled": false,
+                        "id": null,
+                        "name": "venkysqlservervm_DataDisk_0",
+                        "storageAccountType": null,
+                        "diskSizeGB": null,
+                        "diskEncryptionSet": null
+                    },
+                    {
+                        "lun": 1,
+                        "createOption": "attach",
+                        "deleteOption": "Detach",
+                        "caching": "None",
+                        "writeAcceleratorEnabled": false,
+                        "id": null,
+                        "name": "venkysqlservervm_DataDisk_1",
+                        "storageAccountType": null,
+                        "diskSizeGB": null,
+                        "diskEncryptionSet": null
+                    }
+                ]
+        },
+        "dataDiskResources": {
+                "value": [
+                    {
+                        "name": "venkysqlservervm_DataDisk_0",
+                        "sku": "Premium_LRS",
+                        "properties": {
+                            "diskSizeGB": 1024,
+                            "creationData": {
+                                "createOption": "empty"
+                            }
+                        }
+                    },
+                    {
+                        "name": "venkysqlservervm_DataDisk_1",
+                        "sku": "Premium_LRS",
+                        "properties": {
+                            "diskSizeGB": 1024,
+                            "creationData": {
+                                "createOption": "empty"
+                            }
+                        }
+                    }
+                ]
+        },
+        "virtualMachineSize": {
+                "value": "Standard_DS1_v2"
+        },
+        "nicDeleteOption": {
+                "value": "Detach"
+        },
+        "adminUsername": {
+                "value": "venkyuser"
+        },
+        "adminPassword": {
+                "value": "Ganesh20022002"
+        },
+        "patchMode": {
+                "value": "AutomaticByOS"
+        },
+        "enableHotpatching": {
+                "value": false
+        },
+        "sqlVirtualMachineName": {
+                "value": "venkysqlservervm"
+        },
+        "sqlConnectivityType": {
+                "value": "Public"
+        },
+        "sqlPortNumber": {
+                "value": 1433
+        },
+        "sqlStorageDisksCount": {
+                "value": 1
+        },
+        "sqlStorageWorkloadType": {
+                "value": "OLTP"
+        },
+        "sqlStorageDisksConfigurationType": {
+                "value": "NEW"
+        },
+        "sqlStorageStartingDeviceId": {
+                "value": 2
+        },
+        "sqlStorageDeploymentToken": {
+                "value": 68299
+        },
+        "sqlAutopatchingDayOfWeek": {
+                "value": "Sunday"
+        },
+        "sqlAutopatchingStartHour": {
+                "value": "2"
+        },
+        "sqlAutopatchingWindowDuration": {
+                "value": "60"
+        },
+        "sqlAuthenticationLogin": {
+                "value": "venkyuser"
+        },
+        "sqlAuthenticationPassword": {
+                "value": "Ganesh20022002"
+        },
+        "dataPath": {
+                "value": "F:\\data"
+        },
+        "dataDisksLUNs": {
+                "value": [
+                    0
+                ]
+        },
+        "logPath": {
+                "value": "G:\\log"
+        },
+        "logDisksLUNs": {
+                "value": [
+                    1
+                ]
+        },
+        "tempDbPath": {
+                "value": "D:\\tempDb"
+        },
+        "dataFileCount": {
+                "value": 1
+        },
+        "dataFileSize": {
+                "value": 8
+        },
+        "dataGrowth": {
+                "value": 64
+        },
+        "logFileSize": {
+                "value": 8
+        },
+        "logGrowth": {
+                "value": 64
+        },
+        "sqlSystemDbOnDataDisk": {
+                "value": false
+        },
+        "rServicesEnabled": {
+                "value": "false"
+        },
+        "maxdop": {
+                "value": 0
+        },
+        "isOptimizeForAdHocWorkloadsEnabled": {
+                "value": false
+        },
+        "collation": {
+                "value": "SQL_Latin1_General_CP1_CI_AS"
+        },
+        "minServerMemoryMB": {
+                "value": 0
+        },
+        "maxServerMemoryMB": {
+                "value": 2147483647
+        }
+    }
+}
