@@ -47,6 +47,9 @@ docker cp postgres\pagila_insert_data.sql venky-postgres:/
 docker exec -it venky-postgres psql -U postgres -f /pagila_insert_data.sql 
 docker exec -it venky-postgres psql -U postgres
 
+psql -U venkyuser@venky-pg-1001 -h venky-pg-1001.postgres.database.azure.com
+
+
 \dt to list tables.
 select * from events;
 

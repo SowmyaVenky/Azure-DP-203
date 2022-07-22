@@ -15,3 +15,26 @@ Here is the Postgres result:
 <p align="center">
   <img src="Postgres_Docker_TPM.PNG" title="Docker Containers">
 </p>
+Let is create the databases on Azure. Create the MSSQL database using the ARM template, by executing 1002-Create-MYSQLDB.ps1. After provisioning, make sure to go to connection settings, and allow connection from the local latpop by adding the IP address. I have tried to hit this small server from local and from a VM inside a VNET and the performance numbers were very similar. Here is the chart of how it performs with 50 users, 500 ms delay between queries. 
+<p align="center">
+  <img src="MYSQL_Azure_DB_From_Local.PNG" title="Docker Containers">
+</p>
+Now the same tests with a Postgres database.
+<p align="center">
+  <img src="Postgres_Azure_DB_From_AzureVM.PNG" title="Docker Containers">
+</p>
+<p align="center">
+  <img src="Postgres_Monitor_Graph_2vcpu.PNG" title="Docker Containers">
+</p>
+
+Now we scale up the number of CPUs from 2 vcore to 32 vcore.
+MYSQL
+<p align="center">
+  <img src="MYSQL_Azure_DB_From_Local.PNG" title="Docker Containers">
+</p>
+Postgres
+<p align="center">
+  <img src="Postgres_Azure_DB_From_AzureVM.PNG" title="Docker Containers">
+</p>
+
+
