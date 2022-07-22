@@ -29,12 +29,12 @@ Now the same tests with a Postgres database.
 
 Now we scale up the number of CPUs from 2 vcore to 32 vcore.
 MYSQL
-<p align="center">
-  <img src="MYSQL_Azure_DB_From_Local.PNG" title="Docker Containers">
-</p>
 Postgres
 <p align="center">
   <img src="Postgres_Azure_DB_From_AzureVM.PNG" title="Docker Containers">
+</p>
+<p align="center">
+  <img src="Postgres_Monitor_Graph_32vcpu.PNG" title="Docker Containers">
 </p>
 
 
