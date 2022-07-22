@@ -35,7 +35,8 @@ MYSQL
 <p align="center">
   <img src="MYSQL_Monitor_Graph_32vcpu.PNG" title="Docker Containers">
 </p>
-Postgres
+Postgres. Note how the CPU stays pretty put close to 100% for the entire 1/2 hr of the test. 
+Getting around 24K transactions per minute. 
 <p align="center">
   <img src="Postgres_Azure_DB_From_Local_32vcore.PNG" title="Docker Containers">
 </p>
