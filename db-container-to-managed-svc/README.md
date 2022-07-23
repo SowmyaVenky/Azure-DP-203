@@ -22,6 +22,14 @@ For each of these cases, we will fire HammerDB and test the TPCC workload with 1
 <td>Docker Containers</td>
 <td>The databases performed amazing. Postgres was the fastest among the three engines, with MSSQL being second, and MYSQL being the worst among the three. The memory used and CPU were also not high. Even with 10 users, the tps were pretty high as shown below. Since there was no network or I/O latency, the database engines, by themselves are pretty good when handling this workload.</td>
 </tr>
+<tr>
+<td>Azure database (PaaS)</td>
+<td>The PaaS offerings did not perform as great as the docker local versions. With MYSQL, the performance was pretty bad, and the bottleneck seemed to be at the I/O level. The remote storage probably hurt performance. The CPU and memory usages were pretty low. With the Postgres PaaS, the number of transactions were higher, and the CPU seemed to be the bottleneck.</td>
+</tr>
+<tr>
+<td>Postgres on AKS</td>
+<td>The AKS option performed consistently lower when compared to the PaaS offerings. Scaling up and down is very easy in PaaS and causes minimum downtime, but with the AKS option, we have to resort to Kubernetes native constructs to get the scaling to occur. I was not able to get the scaling to 32 vCPUs for the POD to do a comparable test. The managed disk (persistent volume claim) had no easy way to backup/restore, and we would be foregoing options like read replicas, geo-failover etc. that are native to the PaaS offering.</td>
+</tr>
 </table>
 I have setup docker on my computer, and started 3 containers running the 3 databases. 
 </p>
