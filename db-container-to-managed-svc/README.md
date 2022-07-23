@@ -1,4 +1,24 @@
 <p>
+This experiment is to determine whether databases are a good fit to run inside a Kubernetes cluster. We will try different database engines, deployed in multiple ways:
+
+<ul>
+<li>Deploy MSSQL, MYSQL, and Postgres in docker running locally.</li>
+<li>Deploy MySQL inside Azure with Basic configuration (2 vCPUs).</li>
+<li>Deploy MySQL inside Azure with General Purpose configuration (32 vCPUs).</li>
+<li>Deploy Postgres inside Azure with Basic configuration (2 vCPUs).</li>
+<li>Deploy Postgres inside Azure with General Purpose configuration (32 vCPUs).</li>
+<li>Deploy Postgres inside an AKS cluster with a SSD persistent volume.</li>
+</ul>
+
+For each of these cases, we will fire HammerDB and test the TPCC workload with 10 users, and expand it to 100 users. 
+
+<b>Summary</b>
+<table border="1">
+<tr>
+<td>Option</td>
+<td>Finding</td>
+</tr>
+</table>
 I have setup docker on my computer, and started 3 containers running the 3 databases. 
 </p>
 <p align="center">
