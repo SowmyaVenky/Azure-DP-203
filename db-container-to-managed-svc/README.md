@@ -45,12 +45,12 @@ Getting around 24K transactions per minute.
 </p>
 Kubernetes (AKS) deployment  
 <p align="center">
-  <img src="images/AKS_cluster_postgres_deployment.PNG" title="Docker Containers">
+  <img src="images/AKS_cluster_postgres_deployment.png" title="Docker Containers">
 </p>
 <p align="center">
-  <img src="images/AKS_cluster_postgres_pv.PNG" title="Docker Containers">
+  <img src="images/AKS_cluster_postgres_pv.png" title="Docker Containers">
 </p>
 <p align="center">
-  <img src="images/AKS_cluster_postgres_pv.PNG" title="Docker Containers">
+  <img src="images/AKS_cluster_postgres_Loadtest.PNG" title="Docker Containers">
 </p>
 
