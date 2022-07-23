@@ -13,10 +13,14 @@ This experiment is to determine whether databases are a good fit to run inside a
 For each of these cases, we will fire HammerDB and test the TPCC workload with 10 users, and expand it to 100 users. 
 
 <b>Summary</b>
-<table border="1">
+<table border="1" width="100%">
 <tr>
 <td>Option</td>
 <td>Finding</td>
+</tr>
+<tr>
+<td>Docker Containers</td>
+<td>The databases performed amazing. Postgres was the fastest among the three engines, with MSSQL being second, and MYSQL being the worst among the three. The memory used and CPU were also not high. Even with 10 users, the tps were pretty high as shown below. Since there was no network or I/O latency, the database engines, by themselves are pretty good when handling this workload.</td>
 </tr>
 </table>
 I have setup docker on my computer, and started 3 containers running the 3 databases. 
