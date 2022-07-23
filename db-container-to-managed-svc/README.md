@@ -68,13 +68,13 @@ Kubernetes (AKS) deployment
 </p>
 <p>
 <p>
-#Increasing the user load to 100 users.
+Increasing the user load to 100 users.
 </p>
 </p>
 <p align="center">
   <img src="images/AKS_cluster_postgres_Loadtest_100user.PNG" title="Docker Containers">
 </p>
 <p align="center">
-  <img src="images/AKS_cluster_postgres_Stats1.PNG" title="Docker Containers">
+  <img src="images/AKS_cluster_postgres_Stats1.png" title="Docker Containers">
 </p>
 
