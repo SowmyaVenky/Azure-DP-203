@@ -30,6 +30,10 @@ For each of these cases, we will fire HammerDB and test the TPCC workload with 1
 <td>Postgres on AKS</td>
 <td>The AKS option performed consistently lower when compared to the PaaS offerings. Scaling up and down is very easy in PaaS and causes minimum downtime, but with the AKS option, we have to resort to Kubernetes native constructs to get the scaling to occur. I was not able to get the scaling to 32 vCPUs for the POD to do a comparable test. The managed disk (persistent volume claim) had no easy way to backup/restore, and we would be foregoing options like read replicas, geo-failover etc. that are native to the PaaS offering.</td>
 </tr>
+<tr>
+<td>Thoughts</td>
+<td>The PaaS offerings are very easy to deploy, and offer way more configuration options. The actual database patching and maintenance are offloaded to Azure. The scaling up/down is automatic, and we can do read-replicas, and geo-replication. Point in time restores and integration to business continuity features like Azure Recovery vaults are available out of the box. AKS deployment is definitely a viable option for smaller use-cases where we do not care about read-scaling, and automatic backup and point in time restore. This option is pretty much IaaS with containers. Patching and upgrades are all on us, and new containers need to be built to address these things.</td>
+</tr>
 </table>
 I have setup docker on my computer, and started 3 containers running the 3 databases. 
 </p>
