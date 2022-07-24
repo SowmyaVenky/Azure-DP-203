@@ -1,4 +1,6 @@
 
+<p>
+For a video walkthrough of the various steps in this journey, please click <a href="https://www.youtube.com/watch?v=-ba02-rVJdo&list=PLfUOWCSAzqc9Ni4CNt8N51zvarygi06d5">on my YouTube playlist</a>
 <ul>
 <li>
 Azure gives us a pre-configured VM to allow us to launch a windows or linux vm with all the data science tools loaded and ready to go. This makes our life very easy to work and experiment, without worrying about python, installs etc. https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/linux-dsvm-walkthrough
