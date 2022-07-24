@@ -14,13 +14,13 @@ A certificate error is given, but can be ignored. Login with the same username/p
 Select azureml_py38 as the kernel to use. That has all the plotting libs needed.
 </li>
 <p align="center">
-  <img src="images/MovieLensProjectIntro.PNG" title="Docker Containers">
+  <img src="images/MovieLensProjectIntro.png" title="Docker Containers">
 </p>
 <p align="center">
-  <img src="images/MovieLensProjectDataset.PNG" title="Docker Containers">
+  <img src="images/MovieLensProjectDataset.png" title="Docker Containers">
 </p>
 <p align="center">
-  <img src="images/ProjectMotivations.PNG" title="Docker Containers">
+  <img src="images/ProjectMotivations.png" title="Docker Containers">
 </p>
 <p>
 For detailed notes please click <a href="MovieLensDemo.pdf">here</a>
