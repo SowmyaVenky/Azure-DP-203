@@ -61,3 +61,14 @@ Register the integration runtime with the ADF to allow communication.
 
 cd C:\Program Files\Microsoft Integration Runtime\5.0\PowerShellScript
  
+##### Yugabyte
+
+cd C:\Venky\DP-203\Azure-DP-203\DMS_Experiments
+
+docker pull yugabytedb/yugabyte:2.15.1.0-b175
+
+docker run -d --name yugabyte  -p7000:7000 -p9000:9000 -p5433:5433 -p9042:9042 -v C:\Venky\DP-203\Azure-DP-203\DMS_Experiments/yb_data:/home/yugabyte/yb_data yugabytedb/yugabyte:latest bin/yugabyted start  --daemon=false --ysql_enable_auth=true
+
+docker run -d --name yugabyte-2.8.0 -p7000:7000 -p9000:9000 -p5433:5433 -p9042:9042 yugabytedb/yugabyte:2.8.0.0-b37 bin/yugabyted start --base_dir=/home/yugabyte/yb_data --daemon=false
+
+Go to http://localhost:9000/

@@ -1,22 +1,25 @@
 set JAVA_HOME=c:\Venky\jdk-11.0.15.10-hotspot
-set PATH=%PATH%;c:\Venky\spark\bin;c:\Venky\apache-maven-3.8.6\bin
+set PATH=%PATH%;c:\Venky\spark\bin;c:\Venky\apache-maven-3.8.4\bin
 set SPARK_HOME=c:\Venky\spark
-
-## Computer-2
-set PATH=c:\Venky\spark\bin;c:\Venky\apache-maven-3.8.4\bin;%PATH%
-
-
-cd C:\Venky\DP-203\SowmyaVenkyRepo\Azure-DP-203\SparkExamples
-mvn clean package
-
 SET HADOOP_HOME=C:\Venky\DP-203\Azure-DP-203\SparkExamples
 
-## Computer-2 
-SET HADOOP_HOME=C:\Venky\DP-203\SowmyaVenkyRepo\Azure-DP-203\SparkExamples
+cd C:\Venky\DP-203\Azure-DP-203\SparkExamples
+mvn clean package
+
+Note that there is a problem when we are using windows 10 with spark. The hadoop.dll needs to be downloaded from 
+https://github.com/steveloughran/winutils/tree/master/hadoop-3.0.0/bin and put into C:\Windows\System32 folder. Then we need to have the winutils.exe in a folder and set that as HADOOP_HOME. See setting above. 
 
 spark-submit --master local[4] --class com.gssystems.spark.MovieLensExploration target\SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/movies_metadata.csv file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/ratings.csv
 
 spark-submit --master local[4] --class com.gssystems.spark.MovieLensProcessingWithSchema target\SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/movies_metadata.csv file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/ratings.csv
+
+spark-submit --master local[4] --class com.gssystems.spark.CreditsExploration SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/credits.csv
+
+spark-submit --master local[4] --class com.gssystems.spark.KeywordsExploration SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/keywords.csv
+
+docker run --name venky-postgres -e POSTGRES_PASSWORD=Ganesh20022002 -p 5432:5432 -d postgres
+
+spark-submit --master local[4] --class com.gssystems.spark.LoadMoviesIntoPostgres --jars postgresql-42.2.6.jar --driver-class-path postgresql-42.2.6.jar target\SparkExamples-1.0-SNAPSHOT.jar
 
 ## On DSVM
 #When connecting to the DB from the DSVM, we need to make sure we add the VNET that this VM is on to the allowed list on the postgres DB
