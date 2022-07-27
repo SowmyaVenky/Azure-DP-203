@@ -26,7 +26,7 @@ docker logs venky-notebook
 Get the token that we have from the URL printed in the logs 
 then go to http://localhost:10000/lab?token=XXXX
 
-docker cp -r C:\Venky\DP-203\Azure-DP-203\wwi-02\movielens venky-notebook:/movielens_processed/
+docker cp C:\Venky\DP-203\Azure-DP-203\wwi-02\movielens venky-notebook:/home/jovyan/movielens_processed/
 
 
 ## On DSVM
