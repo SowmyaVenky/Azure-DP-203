@@ -13,13 +13,21 @@ spark-submit --master local[4] --class com.gssystems.spark.MovieLensExploration 
 
 spark-submit --master local[4] --class com.gssystems.spark.MovieLensProcessingWithSchema target\SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/movies_metadata.csv file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/ratings.csv
 
-spark-submit --master local[4] --class com.gssystems.spark.CreditsExploration SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/credits.csv
+spark-submit --master local[4] --class com.gssystems.spark.CreditsExploration target\SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/credits.csv
 
-spark-submit --master local[4] --class com.gssystems.spark.KeywordsExploration SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/keywords.csv
+spark-submit --master local[4] --class com.gssystems.spark.KeywordsExploration target\SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/keywords.csv
 
 docker run --name venky-postgres -e POSTGRES_PASSWORD=Ganesh20022002 -p 5432:5432 -d postgres
 
 spark-submit --master local[4] --class com.gssystems.spark.LoadMoviesIntoPostgres --jars postgresql-42.2.6.jar --driver-class-path postgresql-42.2.6.jar target\SparkExamples-1.0-SNAPSHOT.jar
+
+docker run -d --name venky-notebook -p10000:8888 jupyter/all-spark-notebook
+docker logs venky-notebook
+Get the token that we have from the URL printed in the logs 
+then go to http://localhost:10000/lab?token=XXXX
+
+docker cp -r C:\Venky\DP-203\Azure-DP-203\wwi-02\movielens venky-notebook:/movielens_processed/
+
 
 ## On DSVM
 #When connecting to the DB from the DSVM, we need to make sure we add the VNET that this VM is on to the allowed list on the postgres DB

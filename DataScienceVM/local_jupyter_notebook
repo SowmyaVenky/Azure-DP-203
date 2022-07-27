@@ -1,0 +1,10 @@
+!pip install findspark
+
+import findspark
+findspark.init()
+
+import pyspark
+import random
+sc = pyspark.SparkContext(appName="MovieLens")
+print(sc)
+spark = SparkSession(sc)

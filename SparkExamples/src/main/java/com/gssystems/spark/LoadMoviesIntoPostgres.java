@@ -10,7 +10,7 @@ public class LoadMoviesIntoPostgres {
 	//base path where the spark shreadded out resides. on DSVM current folder.
 	//private static final String BASE_PATH = "";
 	//For local docker testing.
-	private static final String POSTGRES_JDBC_URL = "jdbc:postgresql://localhost:5432/postgres?user=root&password=Ganesh20022002&sslmode=prefer";
+	private static final String POSTGRES_JDBC_URL = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=Ganesh20022002&sslmode=prefer";
 	private static final String BASE_PATH = "C:/Venky/DP-203/Azure-DP-203/wwi-02/movielens/";
 	
 	public static void main(String[] args) {
