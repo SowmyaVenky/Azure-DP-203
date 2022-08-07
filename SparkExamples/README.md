@@ -17,6 +17,9 @@ spark-submit --master local[4] --class com.gssystems.spark.CreditsExploration ta
 
 spark-submit --master local[4] --class com.gssystems.spark.KeywordsExploration target\SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/SowmyaVenkyRepo/movielens/keywords.csv
 
+##ML data prep
+spark-submit --master local[4] --class com.gssystems.spark.MLDataPrepProcess target\SparkExamples-1.0-SNAPSHOT.jar file:///C:/Venky/DP-203/Azure-DP-203/wwi-02/movielens/
+
 docker run --name venky-postgres -e POSTGRES_PASSWORD=Ganesh20022002 -p 5432:5432 -d postgres
 
 spark-submit --master local[4] --class com.gssystems.spark.LoadMoviesIntoPostgres --jars postgresql-42.2.6.jar --driver-class-path postgresql-42.2.6.jar target\SparkExamples-1.0-SNAPSHOT.jar
