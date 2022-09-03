@@ -24,6 +24,24 @@ docker run --name venky-postgres -e POSTGRES_PASSWORD=Ganesh20022002 -p 5432:543
 
 spark-submit --master local[4] --class com.gssystems.spark.LoadMoviesIntoPostgres --jars postgresql-42.2.6.jar --driver-class-path postgresql-42.2.6.jar target\SparkExamples-1.0-SNAPSHOT.jar
 
+spark-submit --packages org.apache.spark:spark-avro_2.12:3.3.0 --master local[4] --class com.gssystems.spark.AvroInsideSynapse target\SparkExamples-1.0-SNAPSHOT.jar C:/Venky/DP-203/Azure-DP-203/wwi-02/avro/twitterdata C:/Venky/DP-203/Azure-DP-203/wwi-02/avro/twitteravro/ C:/Venky/DP-203/Azure-DP-203/wwi-02/avro/twitterparquet/
+
+Synapse upload file and submit spark job
+Get-AzSynapseSparkJob -WorkspaceName venkysynapseworkspace101 -SparkPoolName venkysparkpool
+
+https://venkydatalake101.blob.core.windows.net/files/jobjar/SparkExamples-1.0-SNAPSHOT.jar
+
+Synapse wants a jar with JDK 1.8 
+
+set JAVA_HOME=C:\Venky\jdk-8.0.342.07-hotspot
+set PATH=%PATH%;c:\Venky\spark\bin;c:\Venky\apache-maven-3.8.4\bin
+set SPARK_HOME=c:\Venky\spark
+SET HADOOP_HOME=C:\Venky\DP-203\Azure-DP-203\SparkExamples
+
+
+Submit-AzSynapseSparkJob -WorkspaceName venkysynapseworkspace101 -SparkPoolName venkysparkpool -Language Spark -Name TwitterDataPrep -MainDefinitionFile abfss://files@venkydatalake101.dfs.core.windows.net/jobjar/SparkExamples-1.0-SNAPSHOT.jar -MainClassName com.gssystems.spark.AvroInsideSynapse -CommandLineArgument abfss://files@venkydatalake101.dfs.core.windows.net/twitterdata,abfss://files@venkydatalake101.dfs.core.windows.net/twitterdataavro,abfss://files@venkydatalake101.dfs.core.windows.net/twitterdataparquet -ExecutorCount 2 -ExecutorSize Small
+                          
+
 docker run -d --name venky-notebook -p10000:8888 jupyter/all-spark-notebook
 docker logs venky-notebook
 Get the token that we have from the URL printed in the logs 
