@@ -29,8 +29,6 @@ spark-submit --packages org.apache.spark:spark-avro_2.12:3.3.0 --master local[4]
 Synapse upload file and submit spark job
 Get-AzSynapseSparkJob -WorkspaceName venkysynapseworkspace101 -SparkPoolName venkysparkpool
 
-https://venkydatalake101.blob.core.windows.net/files/jobjar/SparkExamples-1.0-SNAPSHOT.jar
-
 Synapse wants a jar with JDK 1.8 
 
 set JAVA_HOME=C:\Venky\jdk-8.0.342.07-hotspot
