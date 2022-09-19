@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+
+<!-- This is required for accessing the data via access key 
+	<property>
+	  <name>fs.azure.account.key.venkystorageacct0427001.blob.core.windows.net</name>
+	  <value>Nr0kXyXvWPfCYWLq2dliJQ//xz4uqKoQ6I+kCZiS4oYQ6B2jWS1jYDkkmE8PtVVq6tmJ1Z5x3mdK+ASthln4GQ==</value>
+	</property>	 
+-->
+
+<property>
+  <name>fs.azure.ssl.channel.mode</name>
+  <value>Default_JSSE</value>
+  <description>
+  Use Default_JSSE mode
+  </description>
+</property>
+<property>
+  <name>fs.azure.account.auth.type</name>
+  <value>OAuth</value>
+  <description>
+  Use OAuth authentication
+  </description>
+</property>
+<property>
+  <name>fs.azure.account.oauth.provider.type</name>
+  <value>org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider</value>
+  <description>
+  Use client credentials
+  </description>
+</property>
+<property>
+  <name>fs.azure.account.oauth2.client.endpoint</name>
+  <value>https://login.microsoftonline.com/09d574bb-d72e-416e-b11f-fd5a8bc97fcc/oauth2/v2.0/token</value>
+  <description>
+  URL of OAuth 2.0 endpoint
+  </description>
+</property>
+<property>
+  <name>fs.azure.account.oauth2.client.id</name>
+  <value>593a4477-e1ed-4db3-81ea-341b538d1028</value>
+  <description>
+  username
+  </description>
+</property>
+<property>
+  <name>fs.azure.account.oauth2.client.secret</name>
+  <value>k8T8Q~W.wAhAnuv2ypDGH4qLb46HTZxa75ZYya4~</value>
+  <description>
+  password for account
+  </description>
+</property>
+
+</configuration>
