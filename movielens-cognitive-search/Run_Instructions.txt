@@ -1,0 +1,8 @@
+1. Run the 1001 ps script. This will create an azure cognitive search deployment. This will take some time to deploy.
+2. Go to the portal and get the endpoint of the azure search index. 
+3. Go. to the keys section on the left nav, and get one of the keys. 
+4. We are going to use the data we got from the movielens shredding process before. 
+5. We have prepared the data to make sure we have denormalized the structures into a JSON format, and the 1:M 
+datasets have been merged as sets into the base data using spark's collect_set after aggregating by movie id. 
+This structure will make it easier for us to index the data. Please see json in the wwi-02/movielens/movies_cogsearch_file
+6. 
