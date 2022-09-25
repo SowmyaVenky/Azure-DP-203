@@ -1,0 +1,2 @@
+mvn exec:java -Dexec.mainClass="com.gssystems.movielens.cogsearch.CreateMovieLensIndex"
+mvn exec:java -Dexec.mainClass="com.gssystems.movielens.cogsearch.UploadMovieDocumentsToCogSearch" -Dexec.args="C:\Venky\DP-203\Azure-DP-203\wwi-02\movielens\movies_cogsearch_file\part-00000-b4c89ad8-1a13-4bce-85db-e5da40532599-c000.json"

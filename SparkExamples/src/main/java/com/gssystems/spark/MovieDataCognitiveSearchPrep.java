@@ -62,8 +62,11 @@ public class MovieDataCognitiveSearchPrep {
 		Dataset<Row> movie_cast1 = movie_cast.filter(movie_cast.col("movie_id_1").isNotNull())
 				.groupBy("movie_id_1").agg(org.apache.spark.sql.functions.collect_set("cast_name").as("cast"));
 
+		//movie_id needs to change to string to index in azure cog search.
 		Dataset<Row> moviesdf3 = moviesdf2.join(movie_cast1,
-				moviesdf2.col("movie_id").equalTo(movie_cast1.col("movie_id_1")), "leftouter").drop("movie_id_1");
+				moviesdf2.col("movie_id").equalTo(movie_cast1.col("movie_id_1")), "leftouter").drop("movie_id_1")
+				.withColumn("movie_id", moviesdf2.col("movie_id").cast("string"));
+		
 		moviesdf3.printSchema();
 		moviesdf3.show();
 		

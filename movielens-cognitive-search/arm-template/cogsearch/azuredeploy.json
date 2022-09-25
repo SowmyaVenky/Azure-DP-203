@@ -25,7 +25,7 @@
                 "name": "[parameters('sku')]"
             },
             "properties": {
-                "replicaCount": 3,
+                "replicaCount": 1,
                 "partitionCount": 1,
                 "hostingMode": "[parameters('hostingMode')]"
             }

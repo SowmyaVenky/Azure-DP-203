@@ -64,9 +64,21 @@ public class MovieLensProcessingWithSchema {
 		Dataset moviesdf = spark.read().option("quote", "\"").option("escape", "\"").option("header", "true").schema(moviesSchema).csv(moviesFile);
 
 		Dataset movies_df = moviesdf.select(moviesdf.col("id").alias("movie_id"),
-				moviesdf.col("adult").alias("is_adult"), moviesdf.col("budget"), moviesdf.col("original_language"),
-				moviesdf.col("title"), moviesdf.col("popularity"), moviesdf.col("release_date"),
-				moviesdf.col("revenue"), moviesdf.col("vote_count"), moviesdf.col("vote_average")).dropDuplicates(new String[] {"movie_id"}).na().drop();
+				moviesdf.col("adult").alias("is_adult"),
+				moviesdf.col("budget"), 
+				moviesdf.col("homepage"), 
+				moviesdf.col("original_language"),
+				moviesdf.col("original_title"),
+				moviesdf.col("overview"),
+				moviesdf.col("title"), 
+				moviesdf.col("popularity"), 
+				moviesdf.col("release_date"),
+				moviesdf.col("revenue"),
+				moviesdf.col("runtime"),
+				moviesdf.col("status"),
+				moviesdf.col("tagline"),
+				moviesdf.col("vote_count"), 
+				moviesdf.col("vote_average")).dropDuplicates(new String[] {"movie_id"}).na().drop();
 
 		movies_df.printSchema();
 		movies_df.show();

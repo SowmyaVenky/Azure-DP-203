@@ -5,4 +5,13 @@
 5. We have prepared the data to make sure we have denormalized the structures into a JSON format, and the 1:M 
 datasets have been merged as sets into the base data using spark's collect_set after aggregating by movie id. 
 This structure will make it easier for us to index the data. Please see json in the wwi-02/movielens/movies_cogsearch_file
-6. 
+6. We need to now switch to the java project movie-lens-cogsearch-mvn folder under here. 
+7. There is a run instructions file that we can use to submit to:
+    7a. Create an index based on the schema of the document we have created. Note that the IDs in our case were
+    numeric, but Azure Cognitive search does not allow the id to be numeric. I have used the cast to convert 
+    it into a string. 
+    7b. Upload the data from the JSON file to the index in batches of 100 documents. 
+8. Once the index is created, and the data uploaded, we can then query the documents using the search string.
+9. Every field in the configuration is setup with the end search query in mind, like do we need search, do 
+we need faceting etc. Note the JSON file that is exported, that shows the index structure. 
+
