@@ -20,3 +20,13 @@ Here is a screen-shot for showing the records that are stored in the index.
 <p align="center">
   <img src="/movielens-cognitive-search/cog-search-index-data.PNG" title="Records in the search index.">
 </p>
+
+Here is a screen-shot for showing the search results for titanic.
+<p align="center">
+  <img src="/movielens-cognitive-search/cog-search-titanic.PNG" title="Records in the search index.">
+</p>
+
+Here is a screen-shot for showing a more complex search use-case.
+<p align="center">
+  <img src="/movielens-cognitive-search/cog-search-complex-search.PNG" title="Records in the search index.">
+</p>
