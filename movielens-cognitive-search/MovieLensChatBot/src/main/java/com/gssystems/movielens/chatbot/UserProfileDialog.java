@@ -3,11 +3,15 @@
 
 package com.gssystems.movielens.chatbot;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.gssystems.movielens.cogsearch.MovieDTO;
 import com.gssystems.movielens.cogsearch.SearchMovies;
 import com.microsoft.bot.builder.MessageFactory;
 import com.microsoft.bot.builder.StatePropertyAccessor;
@@ -23,18 +27,20 @@ import com.microsoft.bot.dialogs.prompts.ChoicePrompt;
 import com.microsoft.bot.dialogs.prompts.ConfirmPrompt;
 import com.microsoft.bot.dialogs.prompts.PromptOptions;
 import com.microsoft.bot.dialogs.prompts.TextPrompt;
+import com.microsoft.bot.schema.Activity;
+import com.microsoft.bot.schema.Attachment;
 
 public class UserProfileDialog extends ComponentDialog {
 	private final StatePropertyAccessor<UserProfile> userProfileAccessor;
 	private static final Map<String, List<String>> facets = SearchMovies.getFacets();
-	
+
 	public UserProfileDialog(UserState withUserState) {
 		super("UserProfileDialog");
 
 		userProfileAccessor = withUserState.createProperty("UserProfile");
 
-		WaterfallStep[] waterfallSteps = { UserProfileDialog::topLevelSearchBasisStep, UserProfileDialog::searchTextStep,
-				this::searchTextConfirmStep, this::performSearchStep };
+		WaterfallStep[] waterfallSteps = { UserProfileDialog::topLevelSearchBasisStep,
+				UserProfileDialog::searchTextStep, this::searchTextConfirmStep, this::performSearchStep };
 
 		// Add named dialogs to the DialogSet. These names are saved in the dialog
 		// state.
@@ -60,31 +66,31 @@ public class UserProfileDialog extends ComponentDialog {
 
 		FoundChoice userSelectedItem = (FoundChoice) stepContext.getResult();
 		String userSelectedValue = userSelectedItem.getValue();
-		
+
 		PromptOptions promptOptions = new PromptOptions();
 
-		//Let us see if the person gets one of the faceted items.
-		if( userSelectedValue != null && userSelectedValue.equalsIgnoreCase("Cast")) {
+		// Let us see if the person gets one of the faceted items.
+		if (userSelectedValue != null && userSelectedValue.equalsIgnoreCase("Cast")) {
 			List<String> values = facets.get("cast");
-			if( values != null && values.size() > 0 ) {
+			if (values != null && values.size() > 0) {
 				promptOptions.setChoices(ChoiceFactory.toChoices(values));
 			}
 			return stepContext.prompt("ChoicePrompt", promptOptions);
 		}
 
-		//Let us see if the person gets one of the faceted items.
-		if( userSelectedValue != null && userSelectedValue.equalsIgnoreCase("Genre")) {
+		// Let us see if the person gets one of the faceted items.
+		if (userSelectedValue != null && userSelectedValue.equalsIgnoreCase("Genre")) {
 			List<String> values = facets.get("genres");
-			if( values != null && values.size() > 0 ) {
+			if (values != null && values.size() > 0) {
 				promptOptions.setChoices(ChoiceFactory.toChoices(values));
 			}
 			return stepContext.prompt("ChoicePrompt", promptOptions);
 		}
 
-		//Let us see if the person gets one of the faceted items.
-		if( userSelectedValue != null && userSelectedValue.equalsIgnoreCase("Language")) {
+		// Let us see if the person gets one of the faceted items.
+		if (userSelectedValue != null && userSelectedValue.equalsIgnoreCase("Language")) {
 			List<String> values = facets.get("original_language");
-			if( values != null && values.size() > 0 ) {
+			if (values != null && values.size() > 0) {
 				promptOptions.setChoices(ChoiceFactory.toChoices(values));
 			}
 			return stepContext.prompt("ChoicePrompt", promptOptions);
@@ -96,31 +102,33 @@ public class UserProfileDialog extends ComponentDialog {
 	}
 
 	private CompletableFuture<DialogTurnResult> searchTextConfirmStep(WaterfallStepContext stepContext) {
-		//When we get to this step, the user might have selected either options presented, or might have just typed in a keyword.
-		//The object returned will be either a FoundChoice or String.
-		
+		// When we get to this step, the user might have selected either options
+		// presented, or might have just typed in a keyword.
+		// The object returned will be either a FoundChoice or String.
+
 		String searchTermFromUser = "";
-		
+
 		Object userSelectedSearchTerm = stepContext.getResult();
-		if( userSelectedSearchTerm instanceof FoundChoice ) {
-			searchTermFromUser = ( (FoundChoice) userSelectedSearchTerm ).getValue();
-		}else {
+		if (userSelectedSearchTerm instanceof FoundChoice) {
+			searchTermFromUser = ((FoundChoice) userSelectedSearchTerm).getValue();
+		} else {
 			searchTermFromUser = userSelectedSearchTerm.toString();
 		}
-		
+
 		stepContext.getValues().put("searchTerm", searchTermFromUser);
-		
+
 		String searchBasis = "Unknown";
-		
+
 		Object userSelectedItem = stepContext.getValues().get("topLevelSearchBasis");
-		if( userSelectedItem != null ) {
+		if (userSelectedItem != null) {
 			searchBasis = userSelectedItem.toString();
 		}
-		
+
 		// We can send messages to the user at any point in the WaterfallStep.
 		return stepContext.getContext()
-				.sendActivity(MessageFactory.text(
-						String.format("Thanks will search for movies having \"%s\" in the \"%s\" field ", searchTermFromUser, searchBasis)))
+				.sendActivity(MessageFactory
+						.text(String.format("Thanks will search for movies having \"%s\" in the \"%s\" field ",
+								searchTermFromUser, searchBasis)))
 				.thenCompose(resourceResponse -> {
 					// WaterfallStep always finishes with the end of the Waterfall or with another
 					// dialog; here it is a Prompt Dialog.
@@ -128,13 +136,65 @@ public class UserProfileDialog extends ComponentDialog {
 					promptOptions.setPrompt(MessageFactory.text("Is this what you want to do?"));
 					return stepContext.prompt("ConfirmPrompt", promptOptions);
 				});
-				
+
 	}
 
 	private CompletableFuture<DialogTurnResult> performSearchStep(WaterfallStepContext stepContext) {
 		if ((Boolean) stepContext.getResult()) {
 			// User said "yes" so we will be perform the actual step here.
-			return stepContext.getContext().sendActivity(MessageFactory.text("Here are your search results! Top 10 results are shown. Type any message to restart"))
+			String searchBasis = "Unknown";
+
+			Object userSelectedItem = stepContext.getValues().get("topLevelSearchBasis");
+			if (userSelectedItem != null) {
+				searchBasis = userSelectedItem.toString();
+			}
+
+			String searchTermFromUser = "Unknown";
+			if (stepContext.getValues().get("searchTerm") != null) {
+				searchTermFromUser = stepContext.getValues().get("searchTerm").toString();
+			}
+
+			if (searchBasis != null && searchBasis.trim().equalsIgnoreCase("Cast")) {
+				searchBasis = "cast";
+			} else if (searchBasis != null && searchBasis.trim().equalsIgnoreCase("Title")) {
+				searchBasis = "title";
+			} else if (searchBasis != null && searchBasis.trim().equalsIgnoreCase("Language")) {
+				searchBasis = "original_language";
+			} else if (searchBasis != null && searchBasis.trim().equalsIgnoreCase("Genre")) {
+				searchBasis = "genres";
+			} else if (searchBasis != null && searchBasis.trim().equalsIgnoreCase("Keywords")) {
+				searchBasis = "keywords";
+			}
+
+			List<MovieDTO> moviesMatching = SearchMovies.searchForMovies(searchBasis, searchTermFromUser);
+
+			// Cards are sent as Attachments in the Bot Framework.
+			// So we need to create a list of attachments for the reply activity.
+			List<Attachment> attachments = new ArrayList<>();
+
+			// Reply to the activity we received with an activity.
+			Activity reply = MessageFactory.attachment(attachments);
+
+			// Get just movie titles
+			List<String> movieTitles = new ArrayList<String>();
+			for (MovieDTO a : moviesMatching) {
+				movieTitles.add(a.getTitle());
+				try {
+					reply.getAttachments().add(MovieAdaptiveCardBuilder.buildAdaptiveCard(a).toAttachment());
+				} catch (Exception ex) {
+					//Ignore that attachment and move on!
+					ex.printStackTrace();
+				}
+			}
+
+			/*
+			PromptOptions promptOptions = new PromptOptions();
+			promptOptions.setPrompt(MessageFactory
+					.text("Here are your search results! Top 10 results are shown. Type any message to restart"));
+			promptOptions.setChoices(ChoiceFactory.toChoices(movieTitles));
+			*/
+			
+			return stepContext.getContext().sendActivity(reply)
 					.thenCompose(resourceResponse -> stepContext.endDialog());
 		}
 

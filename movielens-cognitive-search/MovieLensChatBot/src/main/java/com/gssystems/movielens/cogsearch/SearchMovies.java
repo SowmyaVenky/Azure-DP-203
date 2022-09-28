@@ -30,40 +30,48 @@ public class SearchMovies {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Properties config = loadPropertiesFromResource("/com/gssystems/movielens/cogsearch/config.properties");
-		String endPoint = config.getProperty("ENDPOINT");
-		String serviceName = config.getProperty("SearchServiceName");
-		String searchServiceQueryKey = config.getProperty("SearchServiceQueryKey");
+		searchForMovies("genres", "comedy");
+	}
 
-		SearchClient searchClient = new SearchClientBuilder().endpoint(String.format(endPoint, serviceName))
-				.credential(new AzureKeyCredential(searchServiceQueryKey)).indexName(INDEX_NAME).buildClient();
+	public static List<MovieDTO> searchForMovies(String searchBasis, String textData) {
+		List<MovieDTO> toReturn = new ArrayList<MovieDTO>();
 
-		SearchOptions options = new SearchOptions().setFacets("cast", "original_language", "genres", "keywords")
-				.setSearchFields("genres").setTop(10);
+		try {
+			Properties config = loadPropertiesFromResource("/com/gssystems/movielens/cogsearch/config.properties");
+			String endPoint = config.getProperty("ENDPOINT");
+			String serviceName = config.getProperty("SearchServiceName");
+			String searchServiceQueryKey = config.getProperty("SearchServiceQueryKey");
 
-		SearchPagedIterable results = searchClient.search("comedy", options, Context.NONE);
+			SearchClient searchClient = new SearchClientBuilder().endpoint(String.format(endPoint, serviceName))
+					.credential(new AzureKeyCredential(searchServiceQueryKey)).indexName(INDEX_NAME).buildClient();
 
-		Map<String, List<FacetResult>> facets = results.getFacets();
-		System.out.println("Facets are: ");
-		Iterator<String> keys = facets.keySet().iterator();
-		while (keys.hasNext()) {
-			String aKey = keys.next();
-			System.out.println("Facet Key: " + aKey);
-			System.out.println("===========");
-			List<FacetResult> fr = facets.get(aKey);
-			for (FacetResult aFr : fr) {
-				System.out.println(aFr.getAdditionalProperties().get("value") + " (" + aFr.getCount() + ") ");
+			SearchOptions options = new SearchOptions().setSearchFields(searchBasis).setTop(10);
+
+			SearchPagedIterable results = searchClient.search(textData, options, Context.NONE);
+
+			for (SearchResult searchResult : results) {
+				SearchDocument doc = searchResult.getDocument(SearchDocument.class);
+				String title = (String) doc.get("title");
+				String tagline = (String) doc.get("tagline");
+				String isAdult = (String) doc.get("is_adult");
+				String overview = (String) doc.get("overview");
+				String homepage = (String) doc.get("homepage");
+				Double runtime = (Double) doc.get("runtime");
+				
+				MovieDTO aDto = new MovieDTO();
+				aDto.setTitle(title);
+				aDto.setTagLine(tagline);
+				aDto.setHomePage(homepage);
+				aDto.setIsAdult(isAdult);
+				aDto.setOverview(overview);
+				aDto.setRuntime(runtime);
+				
+				toReturn.add(aDto);
 			}
-			System.out.println("==========");
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-
-		for (SearchResult searchResult : results) {
-			SearchDocument doc = searchResult.getDocument(SearchDocument.class);
-			String title = (String) doc.get("title");
-			String tagline = (String) doc.get("tagline");
-			System.out.printf("Movie : %s, tagline:  %s.%n", title, tagline);
-		}
-
+		return toReturn;
 	}
 
 	public static final Map<String, List<String>> getFacets() {
@@ -79,9 +87,9 @@ public class SearchMovies {
 					.credential(new AzureKeyCredential(searchServiceQueryKey)).indexName(INDEX_NAME).buildClient();
 
 			SearchOptions options = new SearchOptions().setFacets("cast", "original_language", "genres", "keywords")
-					.setSearchFields("genres").setTop(1);
+					.setTop(1);
 
-			SearchPagedIterable results = searchClient.search("comedy", options, Context.NONE);
+			SearchPagedIterable results = searchClient.search("*", options, Context.NONE);
 
 			Map<String, List<FacetResult>> facets = results.getFacets();
 			Iterator<String> keys = facets.keySet().iterator();
@@ -98,7 +106,7 @@ public class SearchMovies {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
+
 		return toReturn;
 	}
 }
