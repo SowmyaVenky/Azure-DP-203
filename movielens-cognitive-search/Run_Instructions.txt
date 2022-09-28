@@ -15,3 +15,7 @@ This structure will make it easier for us to index the data. Please see json in 
 9. Every field in the configuration is setup with the end search query in mind, like do we need search, do 
 we need faceting etc. Note the JSON file that is exported, that shows the index structure. 
 
+Here are some examples showing queries
+
+# Facets
+search=america&%24count=true&%24select=title%2Ctagline&facet=cast&facet=original_language
