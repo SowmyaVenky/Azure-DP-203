@@ -2,8 +2,8 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
   <modelVersion>4.0.0</modelVersion>  
-  <groupId>com.microsoft.bot.sample</groupId>  
-  <artifactId>bot-multiturnprompt</artifactId>  
+  <groupId>com.gssystems.movielens.chatbot</groupId>  
+  <artifactId>movielens-bot-backend</artifactId>  
   <version>sample</version>  
   <packaging>jar</packaging>  
   <name>${project.groupId}:${project.artifactId}</name>  
@@ -23,8 +23,8 @@
     <jackson.version>2.12.1</jackson.version>  
     <auto-value.version>1.6.2</auto-value.version>  
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
-    <botname>bot-multiturnprompt-1664390867358</botname>
-    <groupname>bot-multiturnprompt-1664390867358-rg</groupname>
+    <botname>movielens-bot-backend-1001</botname>
+    <groupname>user64</groupname>
   </properties>  
   <repositories> 
     <repository> 
@@ -274,9 +274,9 @@
         <version>2.5.0</version>
         <configuration>
           <schemaVersion>v2</schemaVersion>
-          <subscriptionId>2530494b-6f1a-4cb8-9900-e0fb3d84586c</subscriptionId>
-          <resourceGroup>bot-multiturnprompt-1664390867358-rg</resourceGroup>
-          <appName>bot-multiturnprompt-1664390867358</appName>
+          <subscriptionId>f0beb3e8-8b48-4fa5-8b61-882f6fba2a4f</subscriptionId>
+          <resourceGroup>user64</resourceGroup>
+          <appName>movielens-bot-backend-1001</appName>
           <pricingTier>B1</pricingTier>
           <region>centralus</region>
           <runtime>

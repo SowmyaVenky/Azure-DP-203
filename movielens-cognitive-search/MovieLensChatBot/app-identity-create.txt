@@ -1,4 +1,79 @@
-#Create an app registration.
-az ad app create --display-name "movielens-app-registration" --sign-in-audience "AzureADandPersonalMicrosoftAccount"
-#Reset the password, and use this for the configurations later on.
-az ad app credential reset --id "8da27e43-758e-4562-a335-fd01b7b42726"
+C:\Venky\intellij-projects\MovieLensChatBot>az ad app create --display-name "movielens-bot-backend-app-registration" --sign-in-audience "AzureADandPersonalMicrosoftAccount"
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#applications/$entity",
+  "addIns": [],
+  "api": {
+    "acceptMappedClaims": null,
+    "knownClientApplications": [],
+    "oauth2PermissionScopes": [],
+    "preAuthorizedApplications": [],
+    "requestedAccessTokenVersion": 2
+  },
+  "appId": "d5ba2b73-79bf-4b45-b175-32db7e7dc2c7",
+  "appRoles": [],
+  "applicationTemplateId": null,
+  "certification": null,
+  "createdDateTime": "2022-09-29T01:25:50.9498749Z",
+  "defaultRedirectUri": null,
+  "deletedDateTime": null,
+  "description": null,
+  "disabledByMicrosoftStatus": null,
+  "displayName": "movielens-bot-backend-app-registration",
+  "groupMembershipClaims": null,
+  "id": "697d4050-6139-4408-8e07-1a0d35a6a111",
+  "identifierUris": [],
+  "info": {
+    "logoUrl": null,
+    "marketingUrl": null,
+    "privacyStatementUrl": null,
+    "supportUrl": null,
+    "termsOfServiceUrl": null
+  },
+  "isDeviceOnlyAuthSupported": null,
+  "isFallbackPublicClient": null,
+  "keyCredentials": [],
+  "notes": null,
+  "optionalClaims": null,
+  "parentalControlSettings": {
+    "countriesBlockedForMinors": [],
+    "legalAgeGroupRule": "Allow"
+  },
+  "passwordCredentials": [],
+  "publicClient": {
+    "redirectUris": []
+  },
+  "publisherDomain": "jennyal96outlook.onmicrosoft.com",
+  "requiredResourceAccess": [],
+  "samlMetadataUrl": null,
+  "serviceManagementReference": null,
+  "signInAudience": "AzureADandPersonalMicrosoftAccount",
+  "spa": {
+    "redirectUris": []
+  },
+  "tags": [],
+  "tokenEncryptionKeyId": null,
+  "verifiedPublisher": {
+    "addedDateTime": null,
+    "displayName": null,
+    "verifiedPublisherId": null
+  },
+  "web": {
+    "homePageUrl": null,
+    "implicitGrantSettings": {
+      "enableAccessTokenIssuance": false,
+      "enableIdTokenIssuance": false
+    },
+    "logoutUrl": null,
+    "redirectUriSettings": [],
+    "redirectUris": []
+  }
+}
+
+az ad app credential reset --id "d5ba2b73-79bf-4b45-b175-32db7e7dc2c7"
+
+C:\Venky\intellij-projects\MovieLensChatBot>az ad app credential reset --id "8da27e43-758e-4562-a335-fd01b7b42726"
+{
+  "appId": "d5ba2b73-79bf-4b45-b175-32db7e7dc2c7",
+  "password": "Jpz8Q~jPitjjhYFZzWEK~-PqO0MdTQQKoV3L7bVz",
+  "tenant": "6601fd5c-1786-4b69-90b9-8db643e16413"
+}

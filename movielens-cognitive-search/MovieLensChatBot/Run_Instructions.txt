@@ -1,14 +1,21 @@
+set JAVA_HOME=c:\Venky\jdk-11.0.15.10-hotspot
+set PATH=%PATH%;c:\Venky\spark\bin;c:\Venky\apache-maven-3.8.4\bin
+set SPARK_HOME=c:\Venky\spark
+SET HADOOP_HOME=C:\Venky\DP-203\Azure-DP-203\SparkExamples
+
+
 mvn exec:java -Dexec.mainClass="com.gssystems.movielens.cogsearch.CreateMovieLensIndex"
 mvn exec:java -Dexec.mainClass="com.gssystems.movielens.cogsearch.UploadMovieDocumentsToCogSearch" -Dexec.args="C:\Venky\DP-203\Azure-DP-203\wwi-02\movielens\movies_cogsearch_file\part-00000-b4c89ad8-1a13-4bce-85db-e5da40532599-c000.json"
 mvn exec:java -Dexec.mainClass="com.gssystems.movielens.cogsearch.SearchMovies"
 
 ##To deploy the app to azure app service.
+
+##This is the command we need to run to make sure that we can put the required configurations into the pom.xml.
 mvn com.microsoft.azure:azure-webapp-maven-plugin:2.5.0:config
 mvn package azure-webapp:deploy -DskipTests=true
 
-az ad app create --display-name "movielens-app-registration" --sign-in-audience "AzureADandPersonalMicrosoftAccount"
-
+az ad app create --display-name "movielens-bot-backend-app-registration" --sign-in-audience "AzureADandPersonalMicrosoftAccount"
+az ad app credential reset --id "8da27e43-758e-4562-a335-fd01b7b42726"
 
 https://bot-multiturnprompt-1664390867358.azurewebsites.net/api/messages
-
 https://bot-multiturnprompt-1664390867358.azurewebsites.net/index.html
