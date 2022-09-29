@@ -1,0 +1,82 @@
+C:\Venky\intellij-projects\MovieLensChatBot>az ad app create --display-name "movielens-app-registration" --sign-in-audience "AzureADandPersonalMicrosoftAccount"
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#applications/$entity",
+  "addIns": [],
+  "api": {
+    "acceptMappedClaims": null,
+    "knownClientApplications": [],
+    "oauth2PermissionScopes": [],
+    "preAuthorizedApplications": [],
+    "requestedAccessTokenVersion": 2
+  },
+  "appId": "8da27e43-758e-4562-a335-fd01b7b42726",
+  "appRoles": [],
+  "applicationTemplateId": null,
+  "certification": null,
+  "createdDateTime": "2022-09-28T19:06:35.1809007Z",
+  "defaultRedirectUri": null,
+  "deletedDateTime": null,
+  "description": null,
+  "disabledByMicrosoftStatus": null,
+  "displayName": "movielens-app-registration",
+  "groupMembershipClaims": null,
+  "id": "45752d45-1bd0-4514-bc5d-981607faff45",
+  "identifierUris": [],
+  "info": {
+    "logoUrl": null,
+    "marketingUrl": null,
+    "privacyStatementUrl": null,
+    "supportUrl": null,
+    "termsOfServiceUrl": null
+  },
+  "isDeviceOnlyAuthSupported": null,
+  "isFallbackPublicClient": null,
+  "keyCredentials": [],
+  "notes": null,
+  "optionalClaims": null,
+  "parentalControlSettings": {
+    "countriesBlockedForMinors": [],
+    "legalAgeGroupRule": "Allow"
+  },
+  "passwordCredentials": [],
+  "publicClient": {
+    "redirectUris": []
+  },
+  "publisherDomain": "venkyjagannathhotmail.onmicrosoft.com",
+  "requiredResourceAccess": [],
+  "samlMetadataUrl": null,
+  "serviceManagementReference": null,
+  "signInAudience": "AzureADandPersonalMicrosoftAccount",
+  "spa": {
+    "redirectUris": []
+  },
+  "tags": [],
+  "tokenEncryptionKeyId": null,
+  "verifiedPublisher": {
+    "addedDateTime": null,
+    "displayName": null,
+    "verifiedPublisherId": null
+  },
+  "web": {
+    "homePageUrl": null,
+    "implicitGrantSettings": {
+      "enableAccessTokenIssuance": false,
+      "enableIdTokenIssuance": false
+    },
+    "logoutUrl": null,
+    "redirectUriSettings": [],
+    "redirectUris": []
+  }
+}
+
+
+az ad app credential reset --id "8da27e43-758e-4562-a335-fd01b7b42726"
+
+C:\Venky\intellij-projects\MovieLensChatBot>az ad app credential reset --id "8da27e43-758e-4562-a335-fd01b7b42726"
+The output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. For more information, see https://aka.ms/azadsp-cli
+{
+  "appId": "8da27e43-758e-4562-a335-fd01b7b42726",
+  "password": "mBC8Q~q.3B.lsh4RmezhlDMChoCvitTHpjI3XaKd",
+  "tenant": "09d574bb-d72e-416e-b11f-fd5a8bc97fcc"
+}
+

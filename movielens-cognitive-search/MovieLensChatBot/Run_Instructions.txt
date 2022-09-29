@@ -1,3 +1,14 @@
 mvn exec:java -Dexec.mainClass="com.gssystems.movielens.cogsearch.CreateMovieLensIndex"
 mvn exec:java -Dexec.mainClass="com.gssystems.movielens.cogsearch.UploadMovieDocumentsToCogSearch" -Dexec.args="C:\Venky\DP-203\Azure-DP-203\wwi-02\movielens\movies_cogsearch_file\part-00000-b4c89ad8-1a13-4bce-85db-e5da40532599-c000.json"
 mvn exec:java -Dexec.mainClass="com.gssystems.movielens.cogsearch.SearchMovies"
+
+##To deploy the app to azure app service.
+mvn com.microsoft.azure:azure-webapp-maven-plugin:2.5.0:config
+mvn package azure-webapp:deploy -DskipTests=true
+
+az ad app create --display-name "movielens-app-registration" --sign-in-audience "AzureADandPersonalMicrosoftAccount"
+
+
+https://bot-multiturnprompt-1664390867358.azurewebsites.net/api/messages
+
+https://bot-multiturnprompt-1664390867358.azurewebsites.net/index.html

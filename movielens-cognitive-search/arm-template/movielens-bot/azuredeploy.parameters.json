@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appId": {
+            "value": "8da27e43-758e-4562-a335-fd01b7b42726"
+        },
+        "appSecret": {
+            "value": "mBC8Q~q.3B.lsh4RmezhlDMChoCvitTHpjI3XaKd"
+        },
+        "botId": {
+            "value": "movielens-bot-1002"
+        }
+    }
+}

@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "serviceName": {
-            "value": "movielens-cogsearch-1001"
+            "value": "movielens-cogsearch-1002"
         },
         "sku": {
             "value": "basic"
