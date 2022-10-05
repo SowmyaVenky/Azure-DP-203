@@ -42,7 +42,18 @@
          "size":"small",
          "text":"%s",
          "wrap":true
-      }
+      },
+       {
+            "type": "Media",
+            "size": "small",
+            "poster": "%s",
+            "sources": [
+                {
+                    "mimeType": "video/mp4",
+                    "url": "%s"
+                }
+            ]
+        }
    ],
    "actions":[
       {
@@ -57,7 +68,7 @@
       },
       {
          "type":"Action.OpenUrl",
-         "title":"Video Gallery",
+         "title":"Video Trailer",
          "url":"%s"
       }
    ],

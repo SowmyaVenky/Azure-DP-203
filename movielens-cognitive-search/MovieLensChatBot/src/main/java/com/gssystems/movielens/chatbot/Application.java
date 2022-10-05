@@ -70,7 +70,7 @@ public class Application extends BotDependencyConfiguration {
      */
     @Bean
     public Dialog getRootDialog(UserState userState) {
-        return new UserProfileDialog(userState);
+        return new MovieSearchDialog(userState);
     }
 
     /**

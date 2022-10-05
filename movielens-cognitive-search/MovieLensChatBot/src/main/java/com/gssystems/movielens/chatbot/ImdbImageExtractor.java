@@ -11,12 +11,14 @@ import org.jsoup.select.Elements;
 
 public class ImdbImageExtractor {
 	public static void main(String[] args) throws Exception {
-		String imdbId = "tt0241527";
-		String imageURL = extractImageURL(imdbId);
+		String imdbId = "tt0246460";
+		String imageURL = extractMoviePosterImageURL(imdbId);
 		System.out.println(imageURL);
+		String movieTrailerURL = extractMovieTrailerURL(imdbId);
+		System.out.println(movieTrailerURL);
 	}
 
-	public static String extractImageURL(String imdbId) throws Exception {
+	public static String extractMoviePosterImageURL(String imdbId) throws Exception {
 		URL url = new URL("https://www.imdb.com/title/" + imdbId + "/videogallery/");
 		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
@@ -38,4 +40,22 @@ public class ImdbImageExtractor {
 		return null;
 	}
 
+	public static String extractMovieTrailerURL(String imdbId) throws Exception {
+		URL url = new URL("https://www.imdb.com/title/" + imdbId + "/videogallery/");
+		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+		StringBuffer b = new StringBuffer();
+		String inputLine;
+		while ((inputLine = in.readLine()) != null)
+			b.append(inputLine);
+		in.close();
+
+		Document doc = Jsoup.parse(b.toString());
+		Elements image = doc.getElementsByClass("video-modal");
+
+		for (Element el : image) {
+			return "https://www.imdb.com" + el.attr("href");
+		}
+		return null;
+	}
 }
