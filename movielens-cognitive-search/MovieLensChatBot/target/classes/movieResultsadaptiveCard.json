@@ -1,0 +1,66 @@
+{
+   "type":"AdaptiveCard",
+   "body":[
+      {
+         "type":"ColumnSet",
+         "separator":true,
+         "columns":[
+            {
+               "type":"Column",
+               "width":3,
+               "items":[
+                  {
+                     "type":"TextBlock",
+                     "size":"large",
+                     "weight":"bolder",
+                     "text":"%s"
+                  },
+                  {
+                     "type":"TextBlock",
+                     "size":"medium",
+                     "text":"%s",
+                     "wrap":true
+                  }
+               ]
+            },
+            {
+               "type":"Column",
+               "width":1,
+               "items":[
+                  {
+                     "type":"Image",
+                     "url":"%s",
+                     "spacing":"none",
+                     "size": "medium"
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "type":"TextBlock",
+         "size":"small",
+         "text":"%s",
+         "wrap":true
+      }
+   ],
+   "actions":[
+      {
+         "type":"Action.OpenUrl",
+         "title":"Movie Details",
+         "url":"%s"
+      },
+      {
+         "type":"Action.OpenUrl",
+         "title":"Reviews",
+         "url":"%s"
+      },
+      {
+         "type":"Action.OpenUrl",
+         "title":"Video Gallery",
+         "url":"%s"
+      }
+   ],
+   "$schema":"http://adaptivecards.io/schemas/adaptive-card.json",
+   "version":"1.3"
+}

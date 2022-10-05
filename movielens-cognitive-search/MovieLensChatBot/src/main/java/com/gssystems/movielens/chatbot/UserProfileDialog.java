@@ -29,6 +29,7 @@ import com.microsoft.bot.dialogs.prompts.PromptOptions;
 import com.microsoft.bot.dialogs.prompts.TextPrompt;
 import com.microsoft.bot.schema.Activity;
 import com.microsoft.bot.schema.Attachment;
+import com.microsoft.bot.schema.AttachmentLayoutTypes;
 
 public class UserProfileDialog extends ComponentDialog {
 	private final StatePropertyAccessor<UserProfile> userProfileAccessor;
@@ -168,32 +169,35 @@ public class UserProfileDialog extends ComponentDialog {
 
 			List<MovieDTO> moviesMatching = SearchMovies.searchForMovies(searchBasis, searchTermFromUser);
 
+			if (moviesMatching.size() == 0) {
+				// There were no matches, send message to user.
+				return stepContext.getContext()
+						.sendActivity(MessageFactory
+								.text(String.format("NO MATCHES FOUND for movies having \"%s\" in the \"%s\" field ",
+										searchTermFromUser, searchBasis)))
+						.thenCompose(resourceResponse -> stepContext.endDialog());
+			}
+
 			// Cards are sent as Attachments in the Bot Framework.
 			// So we need to create a list of attachments for the reply activity.
 			List<Attachment> attachments = new ArrayList<>();
 
 			// Reply to the activity we received with an activity.
 			Activity reply = MessageFactory.attachment(attachments);
+			reply.setAttachmentLayout(AttachmentLayoutTypes.CAROUSEL);
 
 			// Get just movie titles
 			List<String> movieTitles = new ArrayList<String>();
 			for (MovieDTO a : moviesMatching) {
 				movieTitles.add(a.getTitle());
 				try {
-					reply.getAttachments().add(MovieAdaptiveCardBuilder.buildAdaptiveCard(a).toAttachment());
+					reply.getAttachments().add(MovieAdaptiveCardBuilder.buildAdaptiveCard(a));
 				} catch (Exception ex) {
-					//Ignore that attachment and move on!
+					// Ignore that attachment and move on!
 					ex.printStackTrace();
 				}
 			}
 
-			/*
-			PromptOptions promptOptions = new PromptOptions();
-			promptOptions.setPrompt(MessageFactory
-					.text("Here are your search results! Top 10 results are shown. Type any message to restart"));
-			promptOptions.setChoices(ChoiceFactory.toChoices(movieTitles));
-			*/
-			
 			return stepContext.getContext().sendActivity(reply)
 					.thenCompose(resourceResponse -> stepContext.endDialog());
 		}

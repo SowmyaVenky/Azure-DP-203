@@ -12,10 +12,15 @@ mvn exec:java -Dexec.mainClass="com.gssystems.movielens.cogsearch.SearchMovies"
 
 ##This is the command we need to run to make sure that we can put the required configurations into the pom.xml.
 mvn com.microsoft.azure:azure-webapp-maven-plugin:2.5.0:config
-mvn package azure-webapp:deploy -DskipTests=true
+mvn package azure-webapp:deploy -DskipTests=true 
 
 az ad app create --display-name "movielens-bot-backend-app-registration" --sign-in-audience "AzureADandPersonalMicrosoftAccount"
 az ad app credential reset --id "8da27e43-758e-4562-a335-fd01b7b42726"
 
 https://bot-multiturnprompt-1664390867358.azurewebsites.net/api/messages
 https://bot-multiturnprompt-1664390867358.azurewebsites.net/index.html
+
+Screen recording
+www.panopto.com
+
+ngrok http 3978 --host-header rewrite

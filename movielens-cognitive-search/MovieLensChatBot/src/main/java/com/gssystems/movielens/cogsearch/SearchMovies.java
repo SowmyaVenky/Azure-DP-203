@@ -45,7 +45,7 @@ public class SearchMovies {
 			SearchClient searchClient = new SearchClientBuilder().endpoint(String.format(endPoint, serviceName))
 					.credential(new AzureKeyCredential(searchServiceQueryKey)).indexName(INDEX_NAME).buildClient();
 
-			SearchOptions options = new SearchOptions().setSearchFields(searchBasis).setTop(10);
+			SearchOptions options = new SearchOptions().setSearchFields(searchBasis).setTop(5);
 
 			SearchPagedIterable results = searchClient.search(textData, options, Context.NONE);
 
@@ -57,6 +57,8 @@ public class SearchMovies {
 				String overview = (String) doc.get("overview");
 				String homepage = (String) doc.get("homepage");
 				Double runtime = (Double) doc.get("runtime");
+				String poster_path = (String) doc.get("poster_path");
+				String imdb_id = (String) doc.get("imdb_id");
 				
 				MovieDTO aDto = new MovieDTO();
 				aDto.setTitle(title);
@@ -65,6 +67,8 @@ public class SearchMovies {
 				aDto.setIsAdult(isAdult);
 				aDto.setOverview(overview);
 				aDto.setRuntime(runtime);
+				aDto.setImdbId(imdb_id);
+				aDto.setPoster_path(poster_path);
 				
 				toReturn.add(aDto);
 			}

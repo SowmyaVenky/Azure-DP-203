@@ -19,60 +19,49 @@ import java.util.concurrent.CompletableFuture;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * This IBot implementation can run any type of Dialog. The use of type parameterization is to
- * allows multiple different bots to be run at different endpoints within the same project. This
- * can be achieved by defining distinct Controller types each with dependency on distinct IBot
- * types, this way ASP Dependency Injection can glue everything together without ambiguity. The
- * ConversationState is used by the Dialog system. The UserState isn't, however, it might have
- * been used in a Dialog implementation, and the requirement is that all BotState objects are
- * saved at the end of a turn.
+ * This IBot implementation can run any type of Dialog. The use of type
+ * parameterization is to allows multiple different bots to be run at different
+ * endpoints within the same project. This can be achieved by defining distinct
+ * Controller types each with dependency on distinct IBot types, this way ASP
+ * Dependency Injection can glue everything together without ambiguity. The
+ * ConversationState is used by the Dialog system. The UserState isn't, however,
+ * it might have been used in a Dialog implementation, and the requirement is
+ * that all BotState objects are saved at the end of a turn.
  */
 public class DialogBot extends ActivityHandler {
-    protected final Dialog dialog;
-    protected final BotState conversationState;
-    protected final BotState userState;
+	protected final Dialog dialog;
+	protected final BotState conversationState;
+	protected final BotState userState;
 
-    private static final String WELCOME_MESSAGE = "Welcome! This bot will allow you to search for movies using various techniques. Please type any message to continue...";
-    public DialogBot(
-        ConversationState withConversationState,
-        UserState withUserState,
-        Dialog withDialog
-    ) {
-        dialog = withDialog;
-        conversationState = withConversationState;
-        userState = withUserState;
-    }
+	private static final String WELCOME_MESSAGE = "Welcome! This bot will allow you to search for movies using various techniques. Please type any message to continue...";
 
-    @Override
-    public CompletableFuture<Void> onTurn(
-        TurnContext turnContext
-    ) {
-        return super.onTurn(turnContext)
-            .thenCompose(result -> conversationState.saveChanges(turnContext))
-            // Save any state changes that might have occurred during the turn.
-            .thenCompose(result -> userState.saveChanges(turnContext));
-    }
+	public DialogBot(ConversationState withConversationState, UserState withUserState, Dialog withDialog) {
+		dialog = withDialog;
+		conversationState = withConversationState;
+		userState = withUserState;
+	}
 
-    @Override
-    protected CompletableFuture<Void> onMessageActivity(
-        TurnContext turnContext
-    ) {
-        LoggerFactory.getLogger(DialogBot.class).info("Running dialog with Message Activity.");
+	@Override
+	public CompletableFuture<Void> onTurn(TurnContext turnContext) {
+		return super.onTurn(turnContext).thenCompose(result -> conversationState.saveChanges(turnContext))
+				// Save any state changes that might have occurred during the turn.
+				.thenCompose(result -> userState.saveChanges(turnContext));
+	}
 
-        // Run the Dialog with the new message Activity.
-        return Dialog.run(dialog, turnContext, conversationState.createProperty("DialogState"));
-    }
-    
-    @Override
-    protected CompletableFuture<Void> onMembersAdded(
-        List<ChannelAccount> membersAdded,
-        TurnContext turnContext
-    ) {        
-        return membersAdded.stream()
-            .filter(
-                member -> !StringUtils
-                    .equals(member.getId(), turnContext.getActivity().getRecipient().getId())
-            ).map(channel -> turnContext.sendActivity(MessageFactory.text(WELCOME_MESSAGE, WELCOME_MESSAGE, null)))
-            .collect(CompletableFutures.toFutureList()).thenApply(resourceResponses -> null);
-    }
+	@Override
+	protected CompletableFuture<Void> onMessageActivity(TurnContext turnContext) {
+		LoggerFactory.getLogger(DialogBot.class).info("Running dialog with Message Activity.");
+
+		// Run the Dialog with the new message Activity.
+		return Dialog.run(dialog, turnContext, conversationState.createProperty("DialogState"));
+	}
+
+	@Override
+	protected CompletableFuture<Void> onMembersAdded(List<ChannelAccount> membersAdded, TurnContext turnContext) {
+		return membersAdded.stream()
+				.filter(member -> !StringUtils.equals(member.getId(), turnContext.getActivity().getRecipient().getId()))
+				.map(channel -> {
+					return Dialog.run(dialog, turnContext, conversationState.createProperty("DialogState"));
+				}).collect(CompletableFutures.toFutureList()).thenApply(resourceResponses -> null);
+	}
 }
