@@ -43,17 +43,17 @@ We could do one subscription for each business unit and that way we get just 2 b
 
 To be absolutely safe we could go with 6 subscriptions one for each sub-unit and start grouping these into management groups for easy RBAC and Policy assignments. Since there are 6 bills, we will definitely need to do some automated way of aggregations across these 6 bills to produce company wide cost reporting. 
 
-Tenant Root management Group 
+* Tenant Root management Group 
 
-BU1 Management Group.
-    Product Development. (sub1)
-    Marketing (sub2)
-    Sales (sub3)
+* BU1 Management Group.
+  *   Product Development. (sub1)
+  *   Marketing (sub2)
+  *   Sales (sub3)
 
-BU2 Management Group.
-    Product Development. (sub4)
-    Marketing (sub5)
-    Sales (sub6)
+* BU2 Management Group.
+  *   Product Development. (sub4)
+  *   Marketing (sub5)
+  *   Sales (sub6)
 
 New Development Project 
 Testing & Development - use low cost machines, should be able to identify machines part of project.
