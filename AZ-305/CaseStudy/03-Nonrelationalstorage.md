@@ -15,7 +15,14 @@ Tailwind Traders wants to reduce storage costs by reducing duplicate content and
 
 * **Media files**. Media files include product photos and feature videos that are displayed on the company’s public website, which is developed and maintained in house. When a customer browses to an item, the corresponding media files are displayed. The media files are in different formats, but JPEG and MP4 are the most common. 
 
+* **Considerations**
+* Media files are being served to customers of the website. Since these files need to be served at scale, it is better to host them in a blob storage account. Since the website can be accessed from any geographic location, it is better to store the files in a RA-GZRS / RA-GRS type storage. As an additional performance booster we can consider using a CDN to cache files at the edge. 
+* It says that most of the files are JPEG and MP4. It is definitely possible that non-standard formats need to be detected, and possily converted or scaled based on standards. This can be achieved using events from the storage account, and triggering functions to do the reformats. 
+
 * **Marketing literature**. The marketing literature includes customer stories, sales flyers, sizing charts, and eco-friendly manufacturing information. Internal marketing users access the literature via a mapped drive on their Windows workstations. Customers access the literature directly from the company’s public website.
+
+* **Considerations**
+* Since the internal customers access the files via a mapped shared drive, we can port this to use Azure File Shares and Azure File Sync. This architecture will allow the users to cache commonly used files in the company's File Sync Server End-point. Files are synchronized to the cloud File storage and allows for complex DR scenarios. Since these files eventually need to be exposed in the website, it is better to have a workflow to transfer the approved files to the blob storage similar to media files. 
 
 * **Corporate documents**. These are internal documents for departments such as human resources and finance. These documents are accessed and managed via an internally developed web application. Legal requires that various documents be retained for a specific period of time. Occasionally documents will need to be maintained longer when legal or HR issues are being investigated. Most corporate documents older than one year are only kept for compliance reasons and are seldom accessed.
 
