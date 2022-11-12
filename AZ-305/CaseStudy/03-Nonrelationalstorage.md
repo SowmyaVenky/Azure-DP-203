@@ -24,6 +24,8 @@ Tailwind Traders wants to reduce storage costs by reducing duplicate content and
 * **Considerations**
     *  Since the internal marketing users access the files via a mapped shared drive, we can port this to use Azure File Shares and Azure File Sync. This architecture will allow the users to cache commonly used files in the company's File Sync Server End-point. Files are synchronized to the cloud File storage and allows for complex DR scenarios. Since these files eventually need to be exposed in the website, it is better to have a workflow to transfer the approved files to the blob storage similar to media files. 
 
+![Non-relational storage architecture](media/hybrid-file-services.png)
+
 * **Corporate documents**. These are internal documents for departments such as human resources and finance. These documents are accessed and managed via an internally developed web application. Legal requires that various documents be retained for a specific period of time. Occasionally documents will need to be maintained longer when legal or HR issues are being investigated. Most corporate documents older than one year are only kept for compliance reasons and are seldom accessed.
 
 * **Considerations**
