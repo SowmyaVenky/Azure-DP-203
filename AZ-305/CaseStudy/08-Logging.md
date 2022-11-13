@@ -67,16 +67,28 @@ The **Home Technology software** is currently provided and hosted by third parti
 - Add a new solution to collect data continuously from the home monitoring sensors.
   - Database some sensor readings for trend analysis and reporting.
   - Provide configurable real-time alerting based on owner needs.
+
+  * There are various solutions to this problem and each has its own strengths and weaknesses. 
+    * The IOT devices that are deployed at each customer's home can be equipped with IoT edge processing. This brings intelligence to the IoT device itself, and will result in huge savings of bandwith in some cases where we are focussed on just alerts and trends vs raw data analysis. 
+    * The new application will allow users to login, and adjust their preferences. These preferences can be pushed down to the device via IoT Hub and can become parameters for what alerts the edge has to raise. 
+    * If we feel that the raw data coming from the sensor is critical for some deep analysis, then we can stream the raw data points to central and do analytics on the stream following the hot, warm and cold paths similar to the ref-arch below.
   
 - Design a relational database solution to hold homeowner preferences and settings.
   - System must be scalable.
   - Redundancy is critical.
+    * This is specifically asking for a relational database system, so Azure SQL, business critical tier will do the trick and meet all these requirements that have been noted. 
   
 - The new unified website will be developed in house and hosted on Linux.  This website will be used to view monitors and change preferences for items such as temperature or alert thresholds. Loads can vary widely, and the system must be able to scale quickly.
+    * The system being written is dependent on linux. 
+    * There is no specific mention of any custom components being needed, or access to the OS to configure the web app. 
+    * To reduce maintenance, we can therefore go with the Azure App Service to host the webapp. 
+    * We need to pick a Standard or Premium plan to make sure we get dedicated compute, and also scaling capability.
 
 -	Provide users a way to sign into the system without creating another user account and password.
+    * This application needs to allow the users of the app to be able to login. This is a classic case of Azure AD B2C integration. With this feature enabled, the users of the app can use social accounts and login without having to create a new login with the site. 
 
 - Implement security controls and provide weekly reports outlining how the company matches up against industry standard best practices.
+    * We can establish many of the policies that Azure provides using an initiative and the status of our infrastructure is evaluated and reported inside Security Center. 
 
 ## Tasks 
 
@@ -89,3 +101,7 @@ How are you incorporating the Well Architected Framework pillars to produce a hi
 ## IOT Reference Arch
 
 ![IOT ref arch](media/iot-refarch.svg)
+
+## IOT Edge Arch
+
+![IOT ref arch](media/data-storage-edge.png)
