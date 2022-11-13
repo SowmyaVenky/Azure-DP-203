@@ -4,4 +4,4 @@
 
 ## Decision tree for choosing the AD deployment needed. 
 
-![AD decision tree](azure-ad-authn-image.PNG)
+![AD decision tree](azure-ad-authn-image.png)
