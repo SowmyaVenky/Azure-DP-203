@@ -1,6 +1,9 @@
----
-casestudy:
-    title: 'No formal case study'
-    module: 'Data integration solutions'
----
-This module does not have a formal case study. 
+## Enterprise BI Landscape
+
+![BI Landscape](enterprise-bi-scoped-architecture.png)
+
+## ETL with integration runtimes.
+
+![Integration runtime](ETL_with_integration_runtime.png)
+
+
