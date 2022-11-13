@@ -45,4 +45,16 @@ Design an architecture for the customer images to be added to the company websit
 
 How are you incorporating the Well Architected Framework pillars to produce a high quality, stable, and efficient cloud architecture?
 
- 
+ ## More reference diagrams
+
+ * How to use app service to build a web app that can be in 2 regions. Note how we are using the Azure Front Door for load balancing the traffic across both regions.
+
+![App architecture](media/multi-region-web-app-diagram.png)
+
+* How to use app service to build a web app that can be in 2 availabilty zones in the same region. Note how we are using the Azure Front Door for load balancing the traffic across both AZs. This can be combined with the option 1 before to get super resilient.
+
+![App architecture](media/zone-redundant-web-app-diagram.png)
+
+* This is a good digram that shows how we can do multi-region active/DR. Note how the system can go from 99.95 to 99.99 by deploying the virtual machines across 2 AZs using a VMSS. Note how the disks are getting replicated via the ASR service to allow the quick recovery in the DR site.
+
+![App architecture](media/architecture-disaster-recovery-multi-tier-app.png)
