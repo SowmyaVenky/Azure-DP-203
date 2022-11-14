@@ -9,17 +9,39 @@ casestudy:
 
 As the Tailwind Traders Enterprise IT team prepares to define the strategy to migrate some of company’s workloads to Azure, it must identify the required networking components and design a network infrastructure necessary to support them. Considering the global scope of its operations, Tailwind Traders will be using multiple Azure regions to host its applications. Most of these applications have dependencies on infrastructure and data services, which will also reside in Azure. Internal applications migrated to Azure must remain accessible to Tailwind Traders users. Internet-facing applications migrated to Azure must remain accessible to any external customer. 
 
+## Key takeaways
+    * Multiple regions are used to deploy the solution. 
+    * Multiple data services native to Azure could be used in the solution.
+    * There are 2 types of applications that are being migrated. Some are internal only apps that need connectivity from the on-premises locations, and external apps that are exposed to customers via the Internet. 
+    
 To put together the initial networking design, the Tailwind Traders Enterprise IT team chose two key applications, which are representative of the most common categories of workloads that are expected to be migrated to Azure.  
 
 ## Design - BI enterprise application 
 
 ![BI enterprise application architecture](media/compute.png)
 
+##Key takeaways
+    * IIS is used to host the applications. Clearly scaling these is a problem. The fact that servers are idle off-hours and can't handle load during peak usage suggests using an autoscaling solution when we move to Azure. 
+    * The front end layer is separated from the API layer and can be hosted/scaled separate from the front-end tier. Since we have an API layer, the Azure solution can leverage capabilities like APIM (API Management). 
+    * The database layer seems to have two types of use-cases - Transactional workloads that cater to the usage of the web-application, and data-warehouse type workloads since there us usage of SSAS (Sql Server Analysis Services).
+    
 -	An internal, Windows-based, three-tier business intelligence (BI) enterprise application with the front-end tier running IIS web servers, the middle tier hosting .NET Framework-based business logic, and the back-end tier implemented as a SQL Server Always On Availability Group database. 
 
 -	This application is categorized as mission-critical and requires high availability provisions with the availability SLA of 99.99% and disaster recovery provisions, with 10-minute RPO and 2-hour RTO.
 
+    * Since the SLAs are pretty high, we need to have a deployment in multiple regions. 
+    * Azure Site Recovery with Recovery Services vault is a requirement to meet the RPO / RTO requirements. 
+    * Since we have to support the database in 2 separate regions, we can use auto-failover groups and active geo-replication.
+    * Since performance is a pretty high concern, we need to use the Business Critical Tier. 
+    * The transactional workloads can be supported in the SQL Server as it is fit for purpose. It might be better to move the data from this transactional store to an analytical store to support analytical workloads. Azure Synapse might be a good candidate for this use-case. 
+    
 -	To provide connectivity to internal apps migrated to Azure, Tailwind Traders will need to establish hybrid connectivity from their on-premises datacenters. The Enterprise IT group already established that such connectivity will be implemented by using ExpressRoute circuit from its main Seattle datacenter, however, at this point it is not clear yet what would be failover solution in case that circuit becomes unavailable. The Tailwind Traders CFO wants to avoid paying for another, redundant ExpressRoute circuit. 
+
+    * The on-premise network has been connected to Azure via the Express route circuit. 
+    * As we can see from the diagram below, Express route can be setup to have a redundant VPN pathway. If the connection via Express route has an issue, then the VPN pathway will act as a redundant path for traffic. 
+    * This is a simple case where the deployment is with one region. Since this is a more complex deployment where we need to support multiple regions with express route, we need to take a more elaborate approach as shown here https://learn.microsoft.com/en-us/azure/expressroute/designing-for-disaster-recovery-with-expressroute-privatepeering
+
+![Express Route and VPN](media/expressroute-vpn-failover.png)
 
 - There are additional considerations that apply to on-premises connectivity to internal apps migrated to Azure. Since the Tailwind Traders Azure environment will consist of multiple subscriptions and, effectively, multiple virtual networks, to minimize cost, it is important to minimize the number of Azure resources required to implement core networking capabilities. Such capabilities include hybrid connectivity to on-premises locations as well as traffic filtering. Incidentally, this need to minimize cost aligns with the Information Security and Risk requirements, which state that all traffic between on-premises locations and Azure virtual networks must flow via a single virtual network, which will be hosting components responsible for hybrid connectivity and traffic filtering. 
 
