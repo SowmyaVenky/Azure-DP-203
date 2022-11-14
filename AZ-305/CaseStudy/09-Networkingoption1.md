@@ -48,3 +48,4 @@ How are you incorporating the Well Architected Framework pillars to produce a hi
 * Solution influenced heavily by these articles
 * https://learn.microsoft.com/en-us/azure/architecture/example-scenario/private-web-app/private-web-app
 * https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/app-service-web-app/multi-region
+* https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/app-service-web-app/zone-redundant
