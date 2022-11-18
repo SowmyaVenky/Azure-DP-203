@@ -1,3 +1,5 @@
+** Note - This is a case study I got from a google search. This may or may not be a real question. I will try my best to not give solutions to problems that might come in the exam, but will try to comment on how I analyzed the problem as I read the case study. If this bothers you, please do not continue.
+
 **Overview**
 
 Contoso, Ltd, is a US-based financial services company that has a main office in New York and a branch office in San Francisco.
