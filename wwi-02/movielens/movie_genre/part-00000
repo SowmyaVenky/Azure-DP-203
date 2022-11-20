@@ -20139,8 +20139,6 @@
 {"genre_id":35,"movie_id":33049}
 {"genre_id":10749,"movie_id":33049}
 {"genre_id":99,"movie_id":41355}
-{"genre_id":6308}
-{"genre_id":9386}
 {"genre_id":35,"movie_id":47352}
 {"genre_id":10749,"movie_id":47352}
 {"genre_id":35,"movie_id":43518}
@@ -26099,9 +26097,6 @@
 {"genre_id":18,"movie_id":32446}
 {"genre_id":35,"movie_id":80919}
 {"genre_id":18,"movie_id":80919}
-{"genre_id":2957}
-{"genre_id":3279}
-{"genre_id":3459}
 {"genre_id":18,"movie_id":15366}
 {"genre_id":35,"movie_id":53905}
 {"genre_id":18,"movie_id":53905}
@@ -38250,8 +38245,6 @@
 {"genre_id":18,"movie_id":37086}
 {"genre_id":35,"movie_id":38023}
 {"genre_id":18,"movie_id":108869}
-{"genre_id":219}
-{"genre_id":13993}
 {"genre_id":18,"movie_id":43781}
 {"genre_id":10402,"movie_id":43781}
 {"genre_id":10749,"movie_id":43781}
@@ -44577,9 +44570,6 @@
 {"genre_id":28,"movie_id":82663}
 {"genre_id":53,"movie_id":82663}
 {"genre_id":18,"movie_id":82663}
-{"genre_id":11176}
-{"genre_id":11602}
-{"genre_id":29812}
 {"genre_id":18,"movie_id":82693}
 {"genre_id":35,"movie_id":82693}
 {"genre_id":10749,"movie_id":82693}
@@ -50679,7 +50669,6 @@
 {"genre_id":35,"movie_id":242042}
 {"genre_id":18,"movie_id":242042}
 {"genre_id":10749,"movie_id":242042}
-{"genre_id":60250}
 {"genre_id":18,"movie_id":38049}
 {"genre_id":99,"movie_id":118769}
 {"genre_id":35,"movie_id":177494}
@@ -54850,10 +54839,6 @@
 {"genre_id":35,"movie_id":238222}
 {"genre_id":18,"movie_id":75364}
 {"genre_id":14,"movie_id":75364}
-{"genre_id":6003}
-{"genre_id":7850}
-{"genre_id":8453}
-{"genre_id":11687}
 {"genre_id":35,"movie_id":299618}
 {"genre_id":18,"movie_id":253331}
 {"genre_id":18,"movie_id":268386}
@@ -60552,9 +60537,6 @@
 {"genre_id":18,"movie_id":43584}
 {"genre_id":18,"movie_id":265226}
 {"genre_id":35,"movie_id":252838}
-{"genre_id":14}
-{"genre_id":3287}
-{"genre_id":34034}
 {"genre_id":53,"movie_id":53882}
 {"genre_id":10770,"movie_id":134746}
 {"genre_id":80,"movie_id":134746}
@@ -62885,11 +62867,6 @@
 {"genre_id":18,"movie_id":73529}
 {"genre_id":16,"movie_id":122662}
 {"genre_id":878,"movie_id":122662}
-{"genre_id":2883}
-{"genre_id":7759}
-{"genre_id":7760}
-{"genre_id":7761}
-{"genre_id":33751}
 {"genre_id":10770,"movie_id":50794}
 {"genre_id":35,"movie_id":50794}
 {"genre_id":10751,"movie_id":50794}
@@ -63338,8 +63315,6 @@
 {"genre_id":18,"movie_id":275601}
 {"genre_id":10402,"movie_id":275601}
 {"genre_id":18,"movie_id":44720}
-{"genre_id":7105}
-{"genre_id":7106}
 {"genre_id":99,"movie_id":284581}
 {"genre_id":99,"movie_id":113374}
 {"genre_id":28,"movie_id":182228}
@@ -69335,7 +69310,6 @@
 {"genre_id":28,"movie_id":84584}
 {"genre_id":12,"movie_id":84584}
 {"genre_id":14,"movie_id":84584}
-{"genre_id":8424}
 {"genre_id":878,"movie_id":22726}
 {"genre_id":53,"movie_id":22726}
 {"genre_id":878,"movie_id":35611}
@@ -74055,10 +74029,6 @@
 {"genre_id":28,"movie_id":249260}
 {"genre_id":27,"movie_id":249260}
 {"genre_id":878,"movie_id":249260}
-{"genre_id":17161}
-{"genre_id":18012}
-{"genre_id":18013}
-{"genre_id":23822}
 {"genre_id":10752,"movie_id":151911}
 {"genre_id":18,"movie_id":151911}
 {"genre_id":99,"movie_id":163890}
@@ -90179,8 +90149,6 @@
 {"genre_id":27,"movie_id":326446}
 {"genre_id":9648,"movie_id":326446}
 {"genre_id":18,"movie_id":453354}
-{"genre_id":11778}
-{"genre_id":89695}
 {"genre_id":16,"movie_id":32534}
 {"genre_id":28,"movie_id":32534}
 {"genre_id":53,"movie_id":32534}

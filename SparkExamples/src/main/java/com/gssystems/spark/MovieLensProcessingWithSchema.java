@@ -81,7 +81,8 @@ public class MovieLensProcessingWithSchema {
 				moviesdf.col("status"),
 				moviesdf.col("tagline"),
 				moviesdf.col("vote_count"), 
-				moviesdf.col("vote_average")).dropDuplicates(new String[] {"movie_id"}).na().drop();
+				moviesdf.col("vote_average"));
+				//.dropDuplicates(new String[] {"movie_id"}).na().drop();
 
 		movies_df.printSchema();
 		movies_df.show();
