@@ -1,0 +1,22 @@
+SET PATH=%PATH%;C:\venky\nvm;c:\Program Files\nodejs;C:\venky\DP-203
+nvm -v
+npm -v
+node -v
+npx -v
+
+# Start mysql in docker.
+docker run --name mysql -d  -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Ganesh20022002 --restart unless-stopped  mysql:8
+
+## Start server
+npm install
+npm start
+
+## Call these to craete the database, and the data required.
+curl http://localhost:3000/createdb
+curl http://localhost:3000/createemployeetable
+curl http://localhost:3000/createemployees
+curl http://localhost:3000/listemployees
+curl http://localhost:3000/deleteemployees
+curl http://localhost:3000/listemployees
+curl http://localhost:3000/createcustomertable
+curl http://localhost:3000/createfakecustomers
