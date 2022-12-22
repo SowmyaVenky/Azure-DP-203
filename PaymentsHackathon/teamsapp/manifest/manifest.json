@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.12/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.12",
+  "version": "1.0.0",
+  "id": "382b8f83-12e6-4ae6-84b9-fdbaa9fed689",
+  "packageName": "com.autorepair.app",
+  "developer": {
+    "name": "Venkata Jagannath",
+    "websiteUrl": "https://www.microsoft.com",
+    "privacyUrl": "https://www.microsoft.com/privacy",
+    "termsOfUseUrl": "https://www.microsoft.com/termsofuse"
+  },
+  "name": {
+    "short": "Autorepair",
+    "full": "AutoRepair App"
+  },
+  "description": {
+    "short": "Auto Repair App for Microsoft Teams",
+    "full": "Auto Repair app for use by customers and service admins."
+  },
+  "icons": {
+    "outline": "outline.png",
+    "color": "color.png"
+  },
+  "accentColor": "#60A18E",
+  "staticTabs": [
+    {
+      "entityId": "com.autorepair.hometab",
+      "name": "Hello Tab",
+      "contentUrl": "https://a924-2601-2c3-780-51f0-dc24-38ff-dca9-ebe0.ngrok.io/",
+      "scopes": [
+        "personal"
+      ]
+    }
+  ],
+  "permissions": [],
+  "validDomains": [
+    "a924-2601-2c3-780-51f0-dc24-38ff-dca9-ebe0.ngrok.io"
+  ]
+}

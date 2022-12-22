@@ -39,3 +39,11 @@ curl "http://localhost:3000/searchservicerecords?firstName=irwin&lastName=larson
 
 ## The second piece of the app is the UI layer that can display and render the app. 
 npm run startapp
+
+## Check validity of manifest zip 
+https://dev.teams.microsoft.com/appvalidation.html
+
+## Upload the manifest pointing to ngrok here
+https://dev.teams.microsoft.com/apps
+
+ngrok http 8080 --host-header rewrite
