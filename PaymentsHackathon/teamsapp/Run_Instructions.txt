@@ -20,3 +20,17 @@ curl http://localhost:3000/deleteemployees
 curl http://localhost:3000/listemployees
 curl http://localhost:3000/createcustomertable
 curl http://localhost:3000/createfakecustomers
+
+##Jump 20 rows return next 10.
+curl http://localhost:3000/listcustomers/20
+## Search customer 
+curl "http://localhost:3000/searchcustomers?firstName=Rosalind&lastName=Quitzon"
+curl "http://localhost:3000/searchcustomers?firstName=irwin&lastName=larson"
+
+## Create service records 
+curl http://localhost:3000/createservicerecordstable
+curl http://localhost:3000/createservicerecords
+
+## Service records 
+curl "http://localhost:3000/searchservicerecords?firstName=Rosalind&lastName=Quitzon"
+curl "http://localhost:3000/searchservicerecords?firstName=irwin&lastName=larson"
