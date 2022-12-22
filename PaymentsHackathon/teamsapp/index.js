@@ -1,6 +1,6 @@
 const express = require("express");
 const mysql = require("mysql2");
-const generator = require('creditcard-generator')
+const generator = require('creditcard-generator');
 const faker = require("faker");
 
 // Create connection

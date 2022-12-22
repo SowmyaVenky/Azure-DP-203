@@ -9,7 +9,9 @@ docker run --name mysql -d  -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Ganesh20022002 -
 
 ## Start server
 npm install
-npm start
+
+## This starts the API server and it runs on port 3000 - we can use all these curl commands to create and initialize the DB as needed.
+npm run startapi
 
 ## Call these to craete the database, and the data required.
 curl http://localhost:3000/createdb
@@ -34,3 +36,6 @@ curl http://localhost:3000/createservicerecords
 ## Service records 
 curl "http://localhost:3000/searchservicerecords?firstName=Rosalind&lastName=Quitzon"
 curl "http://localhost:3000/searchservicerecords?firstName=irwin&lastName=larson"
+
+## The second piece of the app is the UI layer that can display and render the app. 
+npm run startapp

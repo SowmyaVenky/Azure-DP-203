@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head'); %>
+</head>
+
+<body class="theme-light">
+  <div class="surface">
+    <div class="panel">
+      <div class="font-semibold font-title">Autorepair Specialists
+        <p> Service Records </p>
+      </div>
+      <table border="1">
+        <thead>
+            <tr>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Phone</td>
+                <td>Credit Card</td>
+                <td>Advisor</td>
+                <td>Color</td>
+                <td>VIN</td>
+                <td>Reg. #</td>
+                <td>Make</td>
+                <td>Model</td>
+                <td>Cost</td>
+                <td>Date</td>
+                <td>Status</td>
+            </tr>
+        </thead>
+        <% servicerecords.forEach(function(servicerecord) { %>
+          <tr>
+            <td><%= servicerecord.firstname %></td>
+            <td><%= servicerecord.lastname %></td>            
+            <td><%= servicerecord.phone %></td>
+            <td><%= servicerecord.creditcard %></td>
+            <td><%= servicerecord.name %></td>
+            <td><%= servicerecord.vehicle_color %></td>
+            <td><%= servicerecord.vehicle_vin %></td>
+            <td><%= servicerecord.vehicle_vrm %></td>
+            <td><%= servicerecord.vehicle_manufacturer %></td>
+            <td><%= servicerecord.vehicle_model %></td>
+            <td>$<%= servicerecord.vehicle_repair_cost %></td>
+            <td><%= servicerecord.vehicle_repair_date %></td>
+            <td><%= servicerecord.vehicle_repair_status %></td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+  </div>
+  </div>
+</body>
+</html>

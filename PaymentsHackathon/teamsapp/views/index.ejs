@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head'); %>
+</head>
+
+<body class="theme-light">
+  
+  <div class="surface">
+    <div class="panel">
+      <div class="font-semibold font-title">Autorepair Specialists
+        <p> Please search for service records by customer name (See below for examples)</p>
+      </div>
+
+      <form action="/records" method="get">
+        <label for="firstName">First Name: </label>
+        <input
+          id="firstName"
+          type="text"
+          name="firstName"
+          value="irwin" />
+        <label for="firstName">Last Name: </label>
+        <input
+          id="lastName"
+          type="text"
+          name="lastName"
+          value="larson" />
+        <input type="submit" value="OK" />
+      </form>
+      <table border="1" width="35%">
+        <thead>
+            <tr>
+                <td>First Name</td>
+                <td>Last Name</td>
+            </tr>
+        </thead>
+        <% customers.forEach(function(customers) { %>
+          <tr>
+            <td><%= customers.firstname %></td>
+            <td><%= customers.lastname %></td>
+          </tr>
+        <% }); %>
+      </table>      
+    </div>
+  </div>
+  </div>
+</body>
+</html>
