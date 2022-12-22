@@ -27,17 +27,18 @@
           value="larson" />
         <input type="submit" value="OK" />
       </form>
-      <table border="1" width="35%">
-        <thead>
-            <tr>
-                <td>First Name</td>
-                <td>Last Name</td>
-            </tr>
-        </thead>
+      <br />
+      <table id="customers">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Link</th>
+        </tr>
         <% customers.forEach(function(customers) { %>
           <tr>
             <td><%= customers.firstname %></td>
             <td><%= customers.lastname %></td>
+            <td><a href="records?firstName=<%= customers.firstname %>&lastName=<%= customers.lastname %>">Link</a></td>
           </tr>
         <% }); %>
       </table>      

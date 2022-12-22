@@ -10,24 +10,23 @@
       <div class="font-semibold font-title">Autorepair Specialists
         <p> Service Records </p>
       </div>
-      <table border="1">
-        <thead>
-            <tr>
-                <td>First Name</td>
-                <td>Last Name</td>
-                <td>Phone</td>
-                <td>Credit Card</td>
-                <td>Advisor</td>
-                <td>Color</td>
-                <td>VIN</td>
-                <td>Reg. #</td>
-                <td>Make</td>
-                <td>Model</td>
-                <td>Cost</td>
-                <td>Date</td>
-                <td>Status</td>
-            </tr>
-        </thead>
+      <table id="customers">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Credit Card</th>
+            <th>Advisor</th>
+            <th>Color</th>
+            <th>VIN</th>
+            <th>Reg. #</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Problem</th>
+            <th>Cost</th>
+            <th>Date</th>
+            <th>Status</th>
+        </tr>
         <% servicerecords.forEach(function(servicerecord) { %>
           <tr>
             <td><%= servicerecord.firstname %></td>
@@ -38,14 +37,16 @@
             <td><%= servicerecord.vehicle_color %></td>
             <td><%= servicerecord.vehicle_vin %></td>
             <td><%= servicerecord.vehicle_vrm %></td>
-            <td><%= servicerecord.vehicle_manufacturer %></td>
+            <td><%= servicerecord.vehicle_manufacturer %></td>                    
             <td><%= servicerecord.vehicle_model %></td>
+            <td><%= servicerecord.vehicle_problem %></td>    
             <td>$<%= servicerecord.vehicle_repair_cost %></td>
-            <td><%= servicerecord.vehicle_repair_date %></td>
+            <td><%= moment(servicerecord.vehicle_repair_date).format('MM/DD/YYYY'); %></td>
             <td><%= servicerecord.vehicle_repair_status %></td>
           </tr>
         <% }); %>
       </table>
+      <a href="/">Home</a>
     </div>
   </div>
   </div>

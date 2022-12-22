@@ -19,6 +19,7 @@ db.connect((err) => {
 
 const app = express();
 app.set("view-engine", "ejs");
+app.locals.moment = require('moment');
 
 app.use(express.static(__dirname + '/static'));
 
@@ -54,7 +55,7 @@ app.get('/records', function(req, res, next) {
       "on C.id = SR.customer_id " +
       "LEFT JOIN " +
       "autorepair.employee E " +
-      "on E.id = SR.employee_id WHERE upper(firstname) = ? and upper(lastname) = ?";
+      "on E.id = SR.employee_id WHERE upper(firstname) = ? and upper(lastname) = ? ORDER BY SR.vehicle_repair_date desc";
 
     db.query(sql, params, (err, rows) => {
         if(err) throw err;  
