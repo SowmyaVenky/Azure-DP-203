@@ -7,3 +7,5 @@
 ![App inside teams.](./autorepair_app_in_teams.png)
 ![App inside teams.](./autorepair_service_records.png)
 ![App inside teams.](./dev_portal_deployment.png)
+![App inside teams.](./autorepair_show_diagnostics_video.png)
+![App inside teams.](./autorepair_annotations_with_markerjs.png)
