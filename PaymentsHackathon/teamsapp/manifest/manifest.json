@@ -27,7 +27,7 @@
     {
       "entityId": "com.autorepair.hometab",
       "name": "Hello Tab",
-      "contentUrl": "https://a924-2601-2c3-780-51f0-dc24-38ff-dca9-ebe0.ngrok.io/",
+      "contentUrl": "https://39e9-2601-2c3-780-51f0-611c-a64a-f90d-9cee.ngrok.io",
       "scopes": [
         "personal"
       ]
@@ -35,6 +35,6 @@
   ],
   "permissions": [],
   "validDomains": [
-    "a924-2601-2c3-780-51f0-dc24-38ff-dca9-ebe0.ngrok.io"
+    "39e9-2601-2c3-780-51f0-611c-a64a-f90d-9cee.ngrok.io"
   ]
 }

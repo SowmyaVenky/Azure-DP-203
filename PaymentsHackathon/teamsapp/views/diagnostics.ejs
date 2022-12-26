@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head'); %>
+</head>
+
+<body class="theme-light">
+  <div class="surface">
+    <div class="panel">
+      <div class="font-semibold font-title">Autorepair Specialists
+        <p> Welcome to Car Diagnostics, <%=useremail %>. Please connect your phone to the diagnostics module in your car and press start. We will capture sensor readings remotely to diagnose issues and recommend solutions.</p>
+      </div>
+                
+        <a href="#" id="diagbtn" onclick="playVid()" type="button">Start Diagnostics</a>
+        <a href="diagnostics-results?email=<%=useremail %>" id="resultsbtn" onclick="hideVid()" type="button" hidden="true">Show Results</a>
+        <br />
+        <video id="myVideo" width="540" height="380" hidden="true">
+            <source src="/car-diagnostics.mp4" type="video/mp4">
+        </video>     
+        <a href="/">Home</a>&nbsp;       
+  </div>
+  </div>
+  
+  <script> 
+    var vid = document.getElementById("myVideo");
+    var resultsbtn = document.getElementById("resultsbtn");
+    function playVid() { 
+        vid.hidden = false;
+        vid.play();
+        resultsbtn.hidden = false;
+    }
+    
+    function hideVid() { 
+        vid.hidden = true;
+        resultsbtn.hidden = false;
+    }
+  </script>        
+</body>
+</html>

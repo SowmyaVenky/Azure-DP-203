@@ -26,6 +26,7 @@
             <th>Cost</th>
             <th>Date</th>
             <th>Status</th>
+            <th>Diagnostics</th>
         </tr>
         <% servicerecords.forEach(function(servicerecord) { %>
           <tr>
@@ -43,10 +44,11 @@
             <td>$<%= servicerecord.vehicle_repair_cost %></td>
             <td><%= moment(servicerecord.vehicle_repair_date).format('MM/DD/YYYY'); %></td>
             <td><%= servicerecord.vehicle_repair_status %></td>
+            <td><a href="/diagnostics?email=<%= servicerecord.email %>">Diagnose</a></td>
           </tr>
         <% }); %>
       </table>
-      <a href="/">Home</a>
+      <a href="/">Home</a>&nbsp;      
     </div>
   </div>
   </div>

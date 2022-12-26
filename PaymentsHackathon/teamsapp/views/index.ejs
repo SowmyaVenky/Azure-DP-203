@@ -9,36 +9,40 @@
   <div class="surface">
     <div class="panel">
       <div class="font-semibold font-title">Autorepair Specialists
-        <p> Please search for service records by customer name (See below for examples)</p>
+        <p> Please login with user email address (password is the lastname)</p>      
+        <% if (loginerror) { %>
+          <p>Incorrect Username and/or Password!</p>
+        <% } %>
       </div>
-
       <form action="/records" method="get">
-        <label for="firstName">First Name: </label>
+        <label for="email">Email Address: </label>
         <input
-          id="firstName"
+          id="email"
           type="text"
-          name="firstName"
-          value="irwin" />
-        <label for="firstName">Last Name: </label>
+          name="email"
+          value="" />
+        <label for="firstName">Password: </label>
         <input
-          id="lastName"
-          type="text"
-          name="lastName"
-          value="larson" />
-        <input type="submit" value="OK" />
+          id="password"
+          type="password"
+          name="password"
+          value="" />
+        <input type="submit" value="Login" />
       </form>
       <br />
       <table id="customers">
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Email</th>
             <th>Link</th>
         </tr>
         <% customers.forEach(function(customers) { %>
           <tr>
             <td><%= customers.firstname %></td>
             <td><%= customers.lastname %></td>
-            <td><a href="records?firstName=<%= customers.firstname %>&lastName=<%= customers.lastname %>">Link</a></td>
+            <td><%= customers.email %></td>
+            <td><a href="records?email=<%= customers.email %>&password=<%= customers.lastname %>">Login</a></td>
           </tr>
         <% }); %>
       </table>      

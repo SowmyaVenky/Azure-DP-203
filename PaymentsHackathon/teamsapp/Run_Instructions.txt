@@ -46,4 +46,4 @@ https://dev.teams.microsoft.com/appvalidation.html
 ## Upload the manifest pointing to ngrok here
 https://dev.teams.microsoft.com/apps
 
-ngrok http 8080 --host-header rewrite
+c:\venky\dp-203\ngrok http 8080 --host-header rewrite
