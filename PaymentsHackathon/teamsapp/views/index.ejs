@@ -4,24 +4,19 @@
   <%- include('./partials/head'); %>
 </head>
 
-<body class="theme-light">
-  
+<body class="theme-light">  
   <div class="surface">
     <div class="panel">
-      <div class="font-semibold font-title">Autorepair Specialists
-        <p> Please login with user email address (password is the lastname)</p>      
-        <% if (loginerror) { %>
-          <p>Incorrect Username and/or Password!</p>
-        <% } %>
-      </div>
+      <%- include('./partials/logo'); %> 
+      <p> <b>Please login with user email address (password is the lastname)</b> </p>
       <form action="/records" method="get">
-        <label for="email">Email Address: </label>
+        <label for="email"><b>Email Address:</b> </label>
         <input
           id="email"
           type="text"
           name="email"
           value="" />
-        <label for="firstName">Password: </label>
+        <label for="firstName"><b>Password:</b> </label>
         <input
           id="password"
           type="password"
