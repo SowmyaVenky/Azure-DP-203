@@ -66,6 +66,19 @@ app.get('/records', function(req, res, next) {
       "autorepair.employee E " +
       "on E.id = SR.employee_id WHERE upper(email) = ? and upper(lastname) = ? ORDER BY SR.vehicle_repair_date desc";
 
+    var customerFirstName = "";
+    var customerLastName = "";
+    var customerPhone = "";
+    var customerCreditCard = "";
+    var customerEmail = email;
+    var customerTitle = "";
+    var address = "";
+    var address2 = "";
+    var city = "";
+    var state = "";
+    var zip = "";
+    var vehicleVin = new Set();
+    
     db.query(sql, params, (err, rows) => {
         var numRows = rows.length;        
         if(err) throw err;  
@@ -74,7 +87,38 @@ app.get('/records', function(req, res, next) {
         }else {
           req.session.loggedin = true;
 				  req.session.email = email;
-          res.render('servicerecords.ejs', { servicerecords: rows});
+          rows.forEach(function(servicerecord) {
+            customerFirstName = servicerecord.firstname;
+            customerLastName = servicerecord.lastname;
+            customerPhone = servicerecord.phone;
+            customerCreditCard = servicerecord.creditcard;
+            customerTitle = servicerecord.title;
+            address = servicerecord.address;
+            address2 = servicerecord.address2;
+            city = servicerecord.city;
+            state = servicerecord.state;
+            zip = servicerecord.zip;
+            vehicleVin.add(servicerecord.vehicle_vin);
+          });
+
+          //console.log(customerFirstName);
+          //console.log(customerLastName);
+          //console.log(vehicleVin);
+
+          res.render('servicerecords.ejs', { 
+            "customerFirstName": customerFirstName,
+            "customerLastName": customerLastName,
+            "customerPhone": customerPhone,
+            "customerCreditCard": customerCreditCard,
+            "vehicles": vehicleVin,
+            "customerEmail": customerEmail, 
+            "customerTitle": customerTitle,
+            "address": address,
+            "address2": address2,
+            "city": city,
+            "state": state,
+            "zip": zip,
+            servicerecords: rows});
         }        
     });  
 });
@@ -110,6 +154,15 @@ app.get('/diagnostics-results', function(request, response, next) {
     response.redirect('/?loginerror=true');
 	}
 	response.end();  
+});
+
+app.get('/payment', function(request, response, next) {
+  var email = request.query.email;
+  var creditcard = request.query.cc;
+  var amount = request.query.amount;
+  var message = "This will process payment of $" + amount + ", with cc = " + creditcard + " and send invoice to customer email = " + email;
+  response.render('payments.ejs', { "message" : message });
+  response.send();
 });
 
 app.listen("8080", () => {

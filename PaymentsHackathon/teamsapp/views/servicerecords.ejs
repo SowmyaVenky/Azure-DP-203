@@ -7,33 +7,54 @@
 <body class="theme-light">
   <div class="surface">
     <div class="panel">
-      <div class="font-semibold font-title">Autorepair Specialists
-        <p> Service Records </p>
-      </div>
+      <div class="font-semibold font-title">Hello <%=customerFirstName %>, <%=customerLastName %> </div>
+      <p>Contact and Payment Information</p>
       <table id="customers">
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
             <th>Phone</th>
-            <th>Credit Card</th>
+            <th>Email</th>
+            <th>Title</th>
+            <th>Address</th>
+            <th>Credit Card #</th>
+         </tr>
+         <tr>
+          <td><%= customerPhone %></td>
+          <td><%= customerEmail %></td>
+          <td><%= customerTitle %></td>
+          <td><%= address %>, <%= address2 %>, <%= city %> <%= state %> <%= zip %></td>
+          <td><%= customerCreditCard %></td>
+         </tr>
+      </table> 
+      <p>Vehicles Registered</p>
+      <table id="customers">
+        <tr>
+            <th>Vehicle VIN</th>
+            <th>Diagnostics</th>
+         </tr>
+         <% vehicles.forEach(function(vin) { %>
+         <tr>
+            <td><%= vin %></td>
+            <td><a href="/diagnostics?email=<%= customerEmail %>">Diagnose</a></td>
+         </tr>
+         <% }); %>
+      </table>             
+      <p> Service Records </p>
+      <table id="customers">
+        <tr>
             <th>Advisor</th>
-            <th>Color</th>
+            <th>Vehicle Color</th>
             <th>VIN</th>
             <th>Reg. #</th>
             <th>Make</th>
             <th>Model</th>
-            <th>Problem</th>
+            <th>Problem Category</th>
             <th>Cost</th>
             <th>Date</th>
             <th>Status</th>
-            <th>Diagnostics</th>
+            <th>Payment</th>
         </tr>
         <% servicerecords.forEach(function(servicerecord) { %>
           <tr>
-            <td><%= servicerecord.firstname %></td>
-            <td><%= servicerecord.lastname %></td>            
-            <td><%= servicerecord.phone %></td>
-            <td><%= servicerecord.creditcard %></td>
             <td><%= servicerecord.name %></td>
             <td><%= servicerecord.vehicle_color %></td>
             <td><%= servicerecord.vehicle_vin %></td>
@@ -44,7 +65,11 @@
             <td>$<%= servicerecord.vehicle_repair_cost %></td>
             <td><%= moment(servicerecord.vehicle_repair_date).format('MM/DD/YYYY'); %></td>
             <td><%= servicerecord.vehicle_repair_status %></td>
-            <td><a href="/diagnostics?email=<%= servicerecord.email %>">Diagnose</a></td>
+            <% if (servicerecord.vehicle_repair_status != "Paid" && servicerecord.vehicle_repair_status != "Declined by customer" ) { %>
+            <td><a href="/payment?email=<%= customerEmail %>&cc=<%= customerCreditCard %>&amount=<%= servicerecord.vehicle_repair_cost %>">Payment</a></td>  
+            <%} else { %>
+              <td>No Payment Needed</td>
+            <% } %>  
           </tr>
         <% }); %>
       </table>
