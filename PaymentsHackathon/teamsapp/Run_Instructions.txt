@@ -46,4 +46,17 @@ https://dev.teams.microsoft.com/appvalidation.html
 ## Upload the manifest pointing to ngrok here
 https://dev.teams.microsoft.com/apps
 
-c:\venky\dp-203\ngrok http 8080 --host-header rewrite
+c:\venky\dp-203\ngrok http 3978 --host-header rewrite
+
+Before we can test this out we need to follow these steps to make sure.
+1. Start the ngrok and get the URL for the tunnel. 
+2. Open the dev.teams.microsoft.com.
+3. Go to Pencil icon in the left nav.
+4. Open the Bot Management.
+5. Open the completeappbot. 
+6. Click on the configure button. 
+7. Add the ngrok url from the copy and append /api/messages to the end. 
+8. Then go to apps.
+9. Go to the Autorepair app.
+10. Click on the ... of the personal tab, and adjust the URL to match the new ngrok tunnel URL.
+11. Click on preview in teams. That will connect back to both the bot and the app running on our local and work.

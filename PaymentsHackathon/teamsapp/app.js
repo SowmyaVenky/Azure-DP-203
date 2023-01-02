@@ -2,6 +2,38 @@ const express = require("express");
 const mysql = require("mysql2");
 const faker = require("faker");
 const session = require('express-session');
+const path = require('path');
+const app = express();
+const cors = require('cors');
+const ENV_FILE = path.join(__dirname, '.env');
+require('dotenv').config({ path: ENV_FILE });
+const PORT = process.env.PORT || 3978;
+
+app.set("view-engine", "ejs");
+app.locals.moment = require('moment');
+
+app.use(express.static(__dirname + '/static'));
+app.use(session({
+	secret: 'secret',
+  name: 'deloreansauto',
+	resave: true,
+	saveUninitialized: true
+}));
+app.set('trust proxy', 1);
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
+
+const {
+  CloudAdapter,
+  ConversationState,
+  MemoryStorage,
+  UserState,
+  ConfigurationBotFrameworkAuthentication
+} = require('botbuilder');
 
 // Create connection
 const db = mysql.createConnection({
@@ -18,18 +50,6 @@ db.connect((err) => {
     console.log("MySql Connected");
   });
 
-const app = express();
-app.set("view-engine", "ejs");
-app.locals.moment = require('moment');
-
-app.use(express.static(__dirname + '/static'));
-app.use(session({
-	secret: 'secret',
-  name: 'deloreansauto',
-	resave: true,
-	saveUninitialized: true
-}));
-app.set('trust proxy', 1);
 
 app.get('/', function(req, res) {
     var loginerror = req.query.loginerror;
@@ -165,6 +185,58 @@ app.get('/payment', function(request, response, next) {
   response.send();
 });
 
-app.listen("8080", () => {
-    console.log("Server started on port 8080");
+// Import our custom bot class that provides a turn handling function.
+const { DialogBot } = require('./bots/dialogBot');
+const { UserProfileDialog } = require('./dialogs/userProfileDialog');
+
+const botFrameworkAuthentication = new ConfigurationBotFrameworkAuthentication(process.env);
+
+// Create the adapter. See https://aka.ms/about-bot-adapter to learn more about using information from
+// the .bot file when configuring your adapter.
+const adapter = new CloudAdapter(botFrameworkAuthentication);
+
+// Catch-all for errors.
+adapter.onTurnError = async (context, error) => {
+    // This check writes out errors to console log .vs. app insights.
+    // NOTE: In production environment, you should consider logging this to Azure
+    //       application insights. See https://aka.ms/bottelemetry for telemetry
+    //       configuration instructions.
+    console.error(`\n [onTurnError] unhandled error: ${ error }`);
+
+    // Send a trace activity, which will be displayed in Bot Framework Emulator
+    await context.sendTraceActivity(
+        'OnTurnError Trace',
+        `${ error }`,
+        'https://www.botframework.com/schemas/error',
+        'TurnError'
+    );
+
+    // Send a message to the user
+    await context.sendActivity('The bot encountered an error or bug.');
+    await context.sendActivity('To continue to run this bot, please fix the bot source code.');
+    // Clear out state
+    await conversationState.delete(context);
+};
+
+// Define the state store for your bot.
+// See https://aka.ms/about-bot-state to learn more about using MemoryStorage.
+// A bot requires a state storage system to persist the dialog and user state between messages.
+const memoryStorage = new MemoryStorage();
+
+// Create conversation state with in-memory storage provider.
+const conversationState = new ConversationState(memoryStorage);
+const userState = new UserState(memoryStorage);
+
+// Create the main dialog.
+const dialog = new UserProfileDialog(userState);
+const bot = new DialogBot(conversationState, userState, dialog);
+
+app.listen(PORT, () => {
+    console.log("Server started on port " + PORT);
+});
+
+// Listen for incoming requests.
+app.post('/api/messages', async (req, res) => {
+  // Route received a request to adapter for processing
+  await adapter.process(req, res, (context) => bot.run(context));
 });

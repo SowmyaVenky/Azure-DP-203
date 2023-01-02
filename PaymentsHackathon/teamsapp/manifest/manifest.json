@@ -16,7 +16,7 @@
   },
   "description": {
     "short": "Auto Repair App for Microsoft Teams",
-    "full": "Auto Repair app for use by customers and service admins."
+    "full": "Auto Repair app for use by customers."
   },
   "icons": {
     "outline": "outline.png",
@@ -27,14 +27,22 @@
     {
       "entityId": "com.autorepair.hometab",
       "name": "Deloreans Auto",
-      "contentUrl": "https://39e9-2601-2c3-780-51f0-611c-a64a-f90d-9cee.ngrok.io",
+      "contentUrl": "https://bc21-2601-2c3-780-51f0-15d-7d28-9394-8f94.ngrok.io",
       "scopes": [
         "personal"
       ]
     }
   ],
+  "bots": [
+    {
+      "botId": "facd64c7-54af-4067-b941-97168e0a19a2",
+      "scopes": [ "team", "personal", "groupchat" ],
+      "needsChannelSelector": false,
+      "isNotificationOnly": false
+    }
+  ],
   "permissions": [],
   "validDomains": [
-    "39e9-2601-2c3-780-51f0-611c-a64a-f90d-9cee.ngrok.io"
+    "bc21-2601-2c3-780-51f0-15d-7d28-9394-8f94.ngrok.io"
   ]
 }
