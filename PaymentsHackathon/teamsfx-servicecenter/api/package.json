@@ -1,0 +1,22 @@
+{
+  "name": "teamsapp",
+  "version": "1.0.0",
+  "description": "This is a teams app for use in payments ",
+  "main": "index.js",
+  "author": "Venkata Jagannath",
+  "license": "ISC",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "faker": "^5.5.3",
+    "mysql2": "^2.3.3",
+    "creditcard-generator": "0.0.7",
+    "ejs":"^3.1.8",
+    "moment": "^2.29.4",
+    "express-session": "^1.17.3",
+    "markerjs2": "^2.28.1",
+    "cors": "2.8.5"
+  }
+}

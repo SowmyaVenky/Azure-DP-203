@@ -1,0 +1,2 @@
+curl -X POST http://localhost:3000/api/Save  -H "Content-Type: application/json" -d '{100: [ { "questionId": "1", "value": "What is your name?" },{ "questionId": "2", value: "What is your age?" },{ questionId: "3", value: "What is your birth city?" }]}'
+curl -X POST http://localhost:3000/api/Save  -H -H "Content-Type: application/x-www-form-urlencoded"  -d "question=3&meetingId=100&editorData={100: [ { 'questionId': '1', 'value': 'What is your name?' },{ 'questionId': '2', 'value': 'What is your age?' },{ 'questionId': '3', 'value': 'What is your birth city?' }]}"
