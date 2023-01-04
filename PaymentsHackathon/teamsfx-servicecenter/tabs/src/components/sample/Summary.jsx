@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import "./Summary.css";
 import { useData } from "@microsoft/teamsfx-react";
 import { TeamsFxContext } from "../Context";
-import { getEmployeeSummaries } from "./DataService.js";
+import { getEmployeeSummaries, getEmployeeCustomers } from "./DataService.js";
 import { Table } from "@fluentui/react-northstar";
 
 export function Summary(props) {
@@ -26,15 +26,32 @@ export function Summary(props) {
        });
     }, [userName]);
 
-    const summaryheader = {
-        items: ['Customer Count', 'Service Reqs', 'Revenue'],
-      }
+  const summaryheader = {
+      items: ['Customer Count', 'Service Reqs', 'Revenue']
+    }
 
+  const [customers, setCustomers] = useState([userName]);
+  useEffect(() => {
+    getEmployeeCustomers(userName)
+        .then((data) => {
+          setCustomers(data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }, [userName]);
+
+  const customersheader = {
+    items: ['First Name', 'Last Name', 'Address 1', 'Phone', 'Email']
+  }
+  
   return (
     <div className="welcome page">
         <h3 className="center">Welcome {userName ? ", " + userName : ""}!</h3>
         <h3 className="center">Here are your sales summaries</h3>
         <Table header={summaryheader} rows={summaries} />
+        <br />
+        <Table header={customersheader} rows={customers} />
     </div>
   );
 }

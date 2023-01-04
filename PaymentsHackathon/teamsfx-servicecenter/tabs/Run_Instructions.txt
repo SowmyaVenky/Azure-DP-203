@@ -5,8 +5,3 @@ teamsfx -h
 
 Then we can just lauch a local debug with this command.
 teamsfx preview --local
-
-This project contains 2 parts. Server component that is under the api folder. 
-We need to start the server from the api directory with npm start.
-
-After this we can use the teamsfx preview --local from the project root folder and it will start up the client side. 

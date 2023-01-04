@@ -71,6 +71,36 @@ app.get('/monthlysummary', function(req, res) {
     });     
 });
 
+app.get('/mycustomers', function(req, res) {
+  var username = req.query.username;
+  var params = [username];
+  
+  let sql =  
+  "select distinct " +
+  " firstname, " + 
+  " lastname, " +
+  " address," +
+  " address2, " +
+  " city, " +
+  " state, " +
+  " zip, " +
+  " phone, " +
+  " email, " + 
+  " creditcard " +
+  "from " +
+  "autorepair.customer C " +
+  "LEFT JOIN " +
+  "autorepair.service_records SR " + 
+  "on C.id = SR.customer_id " +
+  "LEFT JOIN  " +
+  "autorepair.employee E " +
+  "on E.id = SR.employee_id where E.name = ? ";
+  
+  db.query(sql, params, (err, rows) => {
+    if(err) throw err;
+    res.send(rows);
+    });     
+});
 
 app.listen("8080", () => {
   console.log("Server started on port 8080");

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { MonthlySummary } from "./sample/MonthlySummary";
 import { TeamsFxContext } from "./Context";
+
 import config from "./sample/lib/config";
 
 const showFunction = Boolean(config.apiName);
