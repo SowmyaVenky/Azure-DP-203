@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require("mysql2");
 const faker = require("faker");
+const bodyParser = require('body-parser');
 
 // Create connection
 const db = mysql.createConnection({
@@ -22,6 +23,11 @@ const cors = require('cors');
 app.use(cors({
   origin: '*'
 }));
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
 
 app.get('/summary', function(req, res) {
     var username = req.query.username;
@@ -100,6 +106,11 @@ app.get('/mycustomers', function(req, res) {
     if(err) throw err;
     res.send(rows);
     });     
+});
+
+app.post('/inspectionsubmit', function(req, res) {
+  console.log(req.body);
+  res.send({'message': 'Inspection report accepted!'});
 });
 
 app.listen("8080", () => {

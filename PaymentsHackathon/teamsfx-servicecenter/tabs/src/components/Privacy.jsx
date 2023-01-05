@@ -1,17 +1,15 @@
-import React from "react";
-/**
- * This component is used to display the required
- * privacy statement which can be found in a link in the
- * about tab.
- */
-class Privacy extends React.Component {
-  render() {
-    return (
-      <div>
-        <center><h1>Privacy Statement</h1></center>
-      </div>
-    );
-  }
-}
+import { useContext } from "react";
+import { Inspection } from "./sample/Inspection";
+import { TeamsFxContext } from "./Context";
+import config from "./sample/lib/config";
 
-export default Privacy;
+const showFunction = Boolean(config.apiName);
+
+export default function Privacy() {
+  const { themeString } = useContext(TeamsFxContext);
+  return (
+    <div className={themeString === "default" ? "" : "dark"}>
+      <Inspection showFunction={showFunction} />
+    </div>
+  );
+}
