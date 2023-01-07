@@ -113,6 +113,102 @@ app.post('/inspectionsubmit', function(req, res) {
   res.send({'message': 'Inspection report accepted!'});
 });
 
+app.get('/vehiclebyvin', function(req, res) {
+  var vin = req.query.vin;
+  var params = [vin];
+
+  let sql =  
+  "select " + 
+  "vehicle_color, " +
+  "vehicle_fuel, " +
+  "vehicle_manufacturer, " +
+  "vehicle_model, " +
+  "vehicle_type, " +
+  "vehicle_vrm, " +
+  "vehicle_problem, " +
+  "vehicle_repair_cost, " +
+  "vehicle_repair_date, " +
+  "vehicle_repair_status, " +
+  "vehicle_vin " +
+  "from " +
+  "autorepair.customer C " +
+  "LEFT JOIN " +
+  "autorepair.service_records SR " + 
+  "on C.id = SR.customer_id " +
+  "LEFT JOIN  " +
+  "autorepair.employee E " +
+  "on E.id = SR.employee_id where vehicle_vin = ?";
+
+  db.query(sql, params, (err, rows) => {
+    if(err) throw err;  
+    res.send(rows);
+  });      
+});
+
+app.get('/vehiclebyvrm', function(req, res) {
+  var vrm = req.query.vrm;
+  var params = [vrm];
+
+  let sql =  
+  "select " + 
+  "vehicle_color, " +
+  "vehicle_fuel, " +
+  "vehicle_manufacturer, " +
+  "vehicle_model, " +
+  "vehicle_type, " +
+  "vehicle_vrm, " +
+  "vehicle_problem, " +
+  "vehicle_repair_cost, " +
+  "vehicle_repair_date, " +
+  "vehicle_repair_status, " +
+  "vehicle_vin " +
+  "from " +
+  "autorepair.customer C " +
+  "LEFT JOIN " +
+  "autorepair.service_records SR " + 
+  "on C.id = SR.customer_id " +
+  "LEFT JOIN  " +
+  "autorepair.employee E " +
+  "on E.id = SR.employee_id where vehicle_vrm = ?";
+
+  db.query(sql, params, (err, rows) => {
+    if(err) throw err;  
+    res.send(rows);
+  });      
+});
+
+app.get('/vehiclebyemail', function(req, res) {
+  var email = req.query.email;
+  var params = [email];
+
+  let sql =  
+  "select " + 
+  "vehicle_color, " +
+  "vehicle_fuel, " +
+  "vehicle_manufacturer, " +
+  "vehicle_model, " +
+  "vehicle_type, " +
+  "vehicle_vrm, " +
+  "vehicle_problem, " +
+  "vehicle_repair_cost, " +
+  "vehicle_repair_date, " +
+  "vehicle_repair_status, " +
+  "vehicle_vin " +
+  "from " +
+  "autorepair.customer C " +
+  "LEFT JOIN " +
+  "autorepair.service_records SR " + 
+  "on C.id = SR.customer_id " +
+  "LEFT JOIN  " +
+  "autorepair.employee E " +
+  "on E.id = SR.employee_id where email = ?";
+
+  db.query(sql, params, (err, rows) => {
+    if(err) throw err;  
+    res.send(rows);
+  });      
+});
+
 app.listen("8080", () => {
   console.log("Server started on port 8080");
 });

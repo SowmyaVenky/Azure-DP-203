@@ -1,0 +1,106 @@
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.4",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "Vehicle Inspection Form",
+            "size": "Large",
+            "wrap": true,
+            "weight": "Bolder"
+        },
+        {
+            "id": "firstname",
+            "type": "Input.Text",
+            "placeholder": "First Name"
+        },
+        {
+            "id": "lastname",
+            "type": "Input.Text",
+            "placeholder": "Last Name"
+        },
+        {
+            "id": "vin",
+            "type": "Input.Text",
+            "placeholder": "VIN"
+        },
+        {
+            "id": "inspectiondate",
+            "type": "Input.Date",
+            "placeholder": "Inspection Date"
+        },
+        {
+            "id": "engineoillevellow",
+            "type": "Input.Toggle",
+            "title": "Engine Oil Level Low"
+        },
+        {
+            "id": "brakeoillevellow",
+            "type": "Input.Toggle",
+            "title": "Brake Oil Level Low"
+        },
+        {
+            "id": "radiatorfluidlevellow",
+            "type": "Input.Toggle",
+            "title": "Radiator Fluid Level Low"
+        },
+        {
+            "id": "batterywaterlevellow",
+            "type": "Input.Toggle",
+            "title": "Battery Water Level Low"
+        },
+        {
+            "id": "windowwasherlevellow",
+            "type": "Input.Toggle",
+            "title": "Window Washer Level Low"
+        },
+        {
+            "id": "fuellevellow",
+            "type": "Input.Toggle",
+            "title": "Fuel Level Low"
+        },
+        {
+            "id": "interiorbad",
+            "type": "Input.Toggle",
+            "title": "Vehicle Interior Issues"
+        },
+        {
+            "id": "exteriorbad",
+            "type": "Input.Toggle",
+            "title": "Vehicle Exterior Issues"
+        },
+        {
+            "id": "brakes",
+            "type": "Input.Toggle",
+            "title": "Replace Brakes"
+        },
+        {
+            "id": "tires",
+            "type": "Input.Toggle",
+            "title": "Replace Tires"
+        },
+        {
+            "id": "transmission",
+            "type": "Input.Toggle",
+            "title": "Transmission Issues"
+        },
+        {
+            "id": "mechissues",
+            "type": "Input.Toggle",
+            "title": "Mechanical Issues (Struts, Mounts, Shocks etc.)"
+        },
+        {
+            "id": "lightissues",
+            "type": "Input.Toggle",
+            "title": "Lighting Issues (Turn, Headlights etc.)"
+        }
+    ],
+    "actions": [
+        {
+            "type": "Action.Execute",
+            "verb": "submitinspection",
+            "title": "Submit Report"
+        }
+    ]
+}

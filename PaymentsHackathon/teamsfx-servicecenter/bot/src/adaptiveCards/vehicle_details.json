@@ -1,0 +1,64 @@
+{
+    "type": "AdaptiveCard",
+    "body": [
+      {
+        "type": "TextBlock",
+        "size": "Medium",
+        "weight": "Bolder",
+        "text": "Color : ${vehicle_color}"
+      },
+      {
+        "type": "TextBlock",
+        "text": "Fuel : ${vehicle_fuel}",
+        "wrap": true
+      },
+      {
+        "type": "TextBlock",
+        "text": "Manufactured by: ${vehicle_manufacturer}",
+        "wrap": true
+      },
+      {
+        "type": "TextBlock",
+        "text": "Model : ${vehicle_model}",
+        "wrap": true
+      },
+      {
+        "type": "TextBlock",
+        "text": "Vehicle Type: ${vehicle_type}",
+        "wrap": true
+      },
+      {
+        "type": "TextBlock",
+        "text": "Registration # : ${vehicle_vrm}",
+        "wrap": true
+      },
+      {
+        "type": "TextBlock",
+        "text": "Detected issue: ${vehicle_problem}",
+        "wrap": true
+      },
+      {
+        "type": "TextBlock",
+        "text": "Repair Cost : ${vehicle_repair_cost}",
+        "wrap": true
+      },
+      {
+        "type": "TextBlock",
+        "text": "Repair Date: ${vehicle_repair_date}",
+        "wrap": true
+      },
+      {
+        "type": "TextBlock",
+        "text": "Vehicle Repair Status: ${vehicle_repair_status}",
+        "wrap": true
+      },
+      {
+        "type": "TextBlock",
+        "text": "Vehicle VIN: ${vehicle_vin}",
+        "wrap": true
+      }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.4"
+  }
+  
