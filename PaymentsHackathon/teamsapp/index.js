@@ -44,7 +44,7 @@ app.get("/createdb", (req, res) => {
   });
 
   app.get("/createemployees", (req, res) => {
-    let post = { name: "Jake Smith", designation: "Service Advisor" };
+    let post = { id : 1, name: "Venky Jagannath", designation: "Service Advisor" };
     let sql = "INSERT INTO autorepair.employee SET ?";
     let query = db.query(sql, post, (err) => {
         if (err) {
@@ -52,28 +52,70 @@ app.get("/createdb", (req, res) => {
         }
     });  
 
-    post = { name: "Jim Barton", designation: "Service Advisor" };
+    post = { id : 2, name: "Sowmya Sridhar", designation: "Service Advisor" };
     query = db.query(sql, post, (err) => {
         if (err) {
             throw err;
         }
     });  
 
-    post = { name: "Greg Abbot", designation: "Service Advisor" };
+    post = { id : 3, name: "Ganesh Jagannath", designation: "Service Advisor" };
     query = db.query(sql, post, (err) => {
         if (err) {
             throw err;
         }
     });  
 
-    post = { name: "Michelle Smith", designation: "Service Advisor" };
+    post = { id : 4, name: "Trey Hayden", designation: "Service Advisor" };
     query = db.query(sql, post, (err) => {
         if (err) {
             throw err;
         }
     });  
 
-    post = { name: "Mary Adams", designation: "Service Advisor" };
+    post = { id : 5, name: "Todd Morgan", designation: "Service Advisor" };
+    query = db.query(sql, post, (err) => {
+        if (err) {
+            throw err;
+        }
+    });  
+    
+    post = { id : 6, name: "Shishupal Negi", designation: "Service Advisor" };
+    query = db.query(sql, post, (err) => {
+        if (err) {
+            throw err;
+        }
+    });
+        
+    post = { id : 7, name: "Dhiraj Patel", designation: "Service Advisor" };
+    query = db.query(sql, post, (err) => {
+        if (err) {
+            throw err;
+        }
+    });  
+        
+    post = { id : 8, name: "Kerry Faine", designation: "Service Advisor" };
+    query = db.query(sql, post, (err) => {
+        if (err) {
+            throw err;
+        }
+    });  
+        
+    post = { id : 9, name: "Matthew Funkhouser", designation: "Service Advisor" };
+    query = db.query(sql, post, (err) => {
+        if (err) {
+            throw err;
+        }
+    });  
+        
+    post = { id : 10, name: "Oliver Yuan", designation: "Service Advisor" };
+    query = db.query(sql, post, (err) => {
+        if (err) {
+            throw err;
+        }
+    });  
+        
+    post = { id : 11, name: "Siva Kumar", designation: "Service Advisor" };
     query = db.query(sql, post, (err) => {
         if (err) {
             throw err;
@@ -129,7 +171,7 @@ app.get("/createdb", (req, res) => {
  
   app.get("/createfakecustomers", (req, res) => {
     let sql = "INSERT INTO autorepair.customer SET ?";
-    for (i = 0; i < 20; i++) {
+    for (i = 0; i < 200; i++) {
         var firstName = faker.name.firstName();
         var lastName = faker.name.lastName();
         var title = faker.name.title();
@@ -232,11 +274,11 @@ var vehicle_repair_statuses = [
     "Paid"
 ];
 
-var employee_id_min = 6;
-var employee_id_max = 10;
+var employee_id_min = 1;
+var employee_id_max = 11;
 
 var customer_id_min = 1;
-var customer_id_max = 100;
+var customer_id_max = 200;
 
 app.get("/createservicerecordstable", (req, res) => {
     let sql =  
@@ -263,11 +305,11 @@ app.get("/createservicerecordstable", (req, res) => {
     
         res.send("Service Records table created");
     });  
-    });
+});
     
 app.get("/createservicerecords", (req, res) => {     
     let sql = "INSERT INTO autorepair.service_records SET ?";
-    for (i = 0; i < 200; i++) {
+    for (i = 0; i < 2000; i++) {
         var random_customer_id =  Math.floor(Math.random() * (customer_id_max - customer_id_min) + customer_id_min);
         var random_employee_id =  Math.floor(Math.random() * (employee_id_max - employee_id_min) + employee_id_min);
         var random_problem_index =  Math.floor(Math.random() * (car_problems_list.length));
@@ -280,35 +322,39 @@ app.get("/createservicerecords", (req, res) => {
         var vehicle_type = faker.vehicle.type();
         var vehicle_vin = faker.vehicle.vin();
         var vehicle_vrm = faker.vehicle.vrm();
-        var vehicle_problem = car_problems_list[random_problem_index];
-        var vehicle_repair_cost = faker.commerce.price(100, 200);
-        var vehicle_repair_date = faker.date.between("2022-01-01T00:00:00.000Z", "2024-01-01T00:00:00.000Z");        
-        var vehicle_repair_status = vehicle_repair_statuses[random_status_index];
 
-        post = { 
-            "employee_id": random_employee_id, 
-            "customer_id": random_customer_id,
-            "vehicle_color": vehicle_color,
-            "vehicle_fuel": vehicle_fuel,
-            "vehicle_manufacturer": vehicle_manufacturer,
-            "vehicle_model": vehicle_model,
-            "vehicle_type": vehicle_type,
-            "vehicle_vin": vehicle_vin,
-            "vehicle_vrm": vehicle_vrm,
-            "vehicle_problem": vehicle_problem,
-            "vehicle_repair_cost": vehicle_repair_cost,
-            "vehicle_repair_date": vehicle_repair_date,
-            "vehicle_repair_status": vehicle_repair_status
-        };
+        // Service records for the same vehicle. 
+        for( let x = 0 ; x < 3; x++) {
+          var vehicle_problem = car_problems_list[random_problem_index];
+          var vehicle_repair_cost = faker.commerce.price(100, 200);
+          var vehicle_repair_date = faker.date.between("2022-01-01T00:00:00.000Z", "2024-01-01T00:00:00.000Z");        
+          var vehicle_repair_status = vehicle_repair_statuses[random_status_index];
 
-        query = db.query(sql, post, (err) => {
-            if (err) {
-                throw err;
-            }
-        });  
+          post = { 
+              "employee_id": random_employee_id, 
+              "customer_id": random_customer_id,
+              "vehicle_color": vehicle_color,
+              "vehicle_fuel": vehicle_fuel,
+              "vehicle_manufacturer": vehicle_manufacturer,
+              "vehicle_model": vehicle_model,
+              "vehicle_type": vehicle_type,
+              "vehicle_vin": vehicle_vin,
+              "vehicle_vrm": vehicle_vrm,
+              "vehicle_problem": vehicle_problem,
+              "vehicle_repair_cost": vehicle_repair_cost,
+              "vehicle_repair_date": vehicle_repair_date,
+              "vehicle_repair_status": vehicle_repair_status
+          };
+
+          query = db.query(sql, post, (err) => {
+              if (err) {
+                  throw err;
+              }
+          });  
+        }
     }
-        res.send("Fake service records are created!"); 
-    });
+  res.send("Fake service records are created!"); 
+});
 
 app.get("/searchservicerecords", (req, res) => {
         var lastName = req.query.lastName
@@ -332,6 +378,6 @@ app.get("/searchservicerecords", (req, res) => {
           });  
 });
 
-  app.listen("3000", () => {
-    console.log("Server started on port 3000");
-  });
+app.listen("3000", () => {
+  console.log("Server started on port 3000");
+});

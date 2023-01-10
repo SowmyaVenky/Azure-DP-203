@@ -21,7 +21,6 @@
     "cors": "2.8.5",
     "dotenv": "16.0.3",
     "botbuilder": "4.18.0",
-    "botbuilder-dialogs": "4.18.0",
-    "axios": "1.2.2"
+    "botbuilder-dialogs": "4.18.0"
   }
 }

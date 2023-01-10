@@ -18,16 +18,14 @@ curl http://localhost:3000/createdb
 curl http://localhost:3000/createemployeetable
 curl http://localhost:3000/createemployees
 curl http://localhost:3000/listemployees
-curl http://localhost:3000/deleteemployees
-curl http://localhost:3000/listemployees
 curl http://localhost:3000/createcustomertable
 curl http://localhost:3000/createfakecustomers
 
 ##Jump 20 rows return next 10.
 curl http://localhost:3000/listcustomers/20
+
 ## Search customer 
-curl "http://localhost:3000/searchcustomers?firstName=Rosalind&lastName=Quitzon"
-curl "http://localhost:3000/searchcustomers?firstName=irwin&lastName=larson"
+curl "http://localhost:3000/searchcustomers?firstName=Hadley&lastName=Ryan"
 
 ## Create service records 
 curl http://localhost:3000/createservicerecordstable
@@ -36,6 +34,8 @@ curl http://localhost:3000/createservicerecords
 ## Service records 
 curl "http://localhost:3000/searchservicerecords?firstName=Rosalind&lastName=Quitzon"
 curl "http://localhost:3000/searchservicerecords?firstName=irwin&lastName=larson"
+
+curl http://localhost:3000/deleteemployees
 
 ## The second piece of the app is the UI layer that can display and render the app. 
 npm run startapp
@@ -46,7 +46,12 @@ https://dev.teams.microsoft.com/appvalidation.html
 ## Upload the manifest pointing to ngrok here
 https://dev.teams.microsoft.com/apps
 
+## Run ngrok to show how this works. 
 c:\venky\dp-203\ngrok http 3978 --host-header rewrite
+
+## I have created a new app id and secret for use with the MS sub.
+App ID = d8bead4b-27e3-4874-ba67-aacb5bc80e56
+Secret = 31l8Q~~iadBHfuZBSkKNbEW9c4iWHytcNFE6WcCy
 
 Before we can test this out we need to follow these steps to make sure.
 1. Start the ngrok and get the URL for the tunnel. 

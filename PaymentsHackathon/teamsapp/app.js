@@ -9,7 +9,6 @@ const ENV_FILE = path.join(__dirname, '.env');
 require('dotenv').config({ path: ENV_FILE });
 const PORT = process.env.PORT || 3978;
 const webhookURL = 'https://6g2rrf.webhook.office.com/webhookb2/18556687-90ae-4e12-93ad-f033a4f45a9d@de8bd1e0-78f7-4cd0-aeff-73e09d462d5c/IncomingWebhook/cf5e120fd89348a897c09588947fc9b2/579c7f37-c7d1-4869-89a8-906ad6f02c02';
-const {  CardFactory } = require('botbuilder');
 
 app.set("view-engine", "ejs");
 app.locals.moment = require('moment');
@@ -185,43 +184,19 @@ app.get('/payment', function(request, response, next) {
   var creditcard = request.query.cc;
   var amount = request.query.amount;
   
-  const paymentCard = CardFactory.adaptiveCard(
-    {
-        type: 'AdaptiveCard',
-        body: [
-            {
-                type: 'TextBlock',
-                size: 'Large',
-                weight: 'Bolder',
-                text: 'Customer with email ' + email + ' and cc ' + creditcard  + ' has submitted a payment of ' + amount
-            }
-        ],
-        $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
-        version: '1.0'
-    }
-  );
-
-  //This will send message to teams from outside teams! Cool.
   axios.post(
-        webhookURL,
-        {
-          type: "message",
-          attachments: [
-            {
-              contentType: "application/vnd.microsoft.card.adaptive",
-              contentUrl: null,
-              content: paymentCard,
-            },
-          ],
-        },
-        {
-          headers: { "content-type": "application/json" },
-        }
+    webhookURL,
+    {
+      text: 'Customer with email ' + email + ' and credit card ' + creditcard  + ' has submitted a payment of $' + amount,
+    },
+    {
+      headers: { "content-type": "application/json" },
+    }
   );
 
   var message = "This will process payment of $" + amount + ", with cc = " + creditcard + " and send invoice to customer email = " + email;
   response.render('payments.ejs', { "message" : message });
-  response.send();
+  response.end();
 });
 
 // Import our custom bot class that provides a turn handling function.
