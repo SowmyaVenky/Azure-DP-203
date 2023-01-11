@@ -65,3 +65,25 @@ Before we can test this out we need to follow these steps to make sure.
 9. Go to the Autorepair app.
 10. Click on the ... of the personal tab, and adjust the URL to match the new ngrok tunnel URL.
 11. Click on preview in teams. That will connect back to both the bot and the app running on our local and work.
+
+## Docker run steps.
+1. build the docker image from the current directory. 
+docker build . -t "sowmyavenky/autoconsumer:1.0"
+
+2. Check to make sure the image is there.
+C:\Venky\DP-203\PaymentsTeamsApp\teamsapp>docker images
+
+REPOSITORY                TAG   IMAGE ID       CREATED         SIZE
+sowmyavenky/autoconsumer  1.0   c0b45865f7f8   3 minutes ago   1.04GB
+
+3. Run the container locally 
+docker run -p 3978:3978 -d sowmyavenky/autoconsumer:1.0
+
+4. Push image to docker
+docker image push sowmyavenky/autoconsumer:1.0
+
+4. App service does not like 3978
+az login
+az webapp config appsettings set --resource-group user73 --name autorepair1001 --settings WEBSITES_PORT=3978
+
+

@@ -14,8 +14,10 @@ const {
 
 const mysql = require('mysql2/promise');
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
+    host: "autorepairdb1001.mysql.database.azure.com",  
+    user: "autoadmin",    
+    //host: 'localhost',
+    //user: 'root',
     password: 'Ganesh20022002',
     database: 'autorepair',
     waitForConnections: true,
@@ -129,6 +131,7 @@ class UserProfileDialog extends ComponentDialog {
     async lookupCustomerStep(step) {
         if (step.result) {
             const params = [step.values.email.toUpperCase(), step.values.name.toUpperCase()];
+            // console.log(params);
             const sql = 'SELECT * FROM autorepair.customer WHERE upper(email) = ? and upper(lastname) = ?';
             let customerFirstName = '';
             let customerLastName = '';

@@ -38,10 +38,12 @@ const {
 
 // Create connection
 const db = mysql.createConnection({
-    host: "localhost",  
-    user: "root",  
-    password: "Ganesh20022002"
-  });
+  //host: "localhost",  
+  //user: "root",  
+  host: "autorepairdb1001.mysql.database.azure.com",  
+  user: "autoadmin",  
+  password: "Ganesh20022002"
+});
 
 // Connect to MySQL
 db.connect((err) => {  

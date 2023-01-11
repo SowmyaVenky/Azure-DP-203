@@ -5,8 +5,10 @@ const faker = require("faker");
 
 // Create connection
 const db = mysql.createConnection({
-    host: "localhost",  
-    user: "root",  
+    //host: "localhost",  
+    //user: "root",  
+    host: "autorepairdb1001.mysql.database.azure.com",  
+    user: "autoadmin",  
     password: "Ganesh20022002"
   });
 
@@ -315,16 +317,15 @@ app.get("/createservicerecords", (req, res) => {
         var random_problem_index =  Math.floor(Math.random() * (car_problems_list.length));
         var random_status_index =  Math.floor(Math.random() * (vehicle_repair_statuses.length));
 
-        var vehicle_color = faker.vehicle.color();
-        var vehicle_fuel = faker.vehicle.fuel();
-        var vehicle_manufacturer = faker.vehicle.manufacturer();
-        var vehicle_model = faker.vehicle.model();
-        var vehicle_type = faker.vehicle.type();
-        var vehicle_vin = faker.vehicle.vin();
-        var vehicle_vrm = faker.vehicle.vrm();
-
         // Service records for the same vehicle. 
         for( let x = 0 ; x < 3; x++) {
+          var vehicle_color = faker.vehicle.color();
+          var vehicle_fuel = faker.vehicle.fuel();
+          var vehicle_manufacturer = faker.vehicle.manufacturer();
+          var vehicle_model = faker.vehicle.model();
+          var vehicle_type = faker.vehicle.type();
+          var vehicle_vin = faker.vehicle.vin();
+          var vehicle_vrm = faker.vehicle.vrm();
           var vehicle_problem = car_problems_list[random_problem_index];
           var vehicle_repair_cost = faker.commerce.price(100, 200);
           var vehicle_repair_date = faker.date.between("2022-01-01T00:00:00.000Z", "2024-01-01T00:00:00.000Z");        
