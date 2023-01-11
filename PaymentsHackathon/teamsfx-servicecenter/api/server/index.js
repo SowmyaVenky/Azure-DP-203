@@ -5,8 +5,10 @@ const bodyParser = require('body-parser');
 
 // Create connection
 const db = mysql.createConnection({
-    host: "localhost",  
-    user: "root",  
+    //host: "localhost",  
+    //user: "root",  
+    host: "autorepairdb1001.mysql.database.azure.com",  
+    user: "autoadmin",  
     password: "Ganesh20022002"
   });
 

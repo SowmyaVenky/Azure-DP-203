@@ -12,6 +12,7 @@ import { TeamsFxContext } from "./Context";
 import config from "./sample/lib/config";
 
 /**
+ * Comments
  * The main app which handles the initialization and routing
  * of the app.
  */

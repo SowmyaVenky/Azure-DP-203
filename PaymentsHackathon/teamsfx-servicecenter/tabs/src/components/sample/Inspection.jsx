@@ -43,7 +43,7 @@ export function Inspection(props) {
     */
 
     try {
-        let res = await fetch("http://localhost:8080/inspectionsubmit", {
+        let res = await fetch("https://autosvcenterapi1001.azurewebsites.net/inspectionsubmit", {
           method: "POST",
           headers: {
             'Accept': 'application/json',

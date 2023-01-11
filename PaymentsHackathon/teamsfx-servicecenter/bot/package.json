@@ -19,7 +19,7 @@
     "dependencies": {
         "@microsoft/teamsfx": "^2.0.0",
         "restify": "^10.0.0",
-        "node-fetch": "3.3.0"
+        "node-fetch": "2.6.1"
     },
     "devDependencies": {
         "env-cmd": "^10.1.0",

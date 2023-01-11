@@ -1,5 +1,29 @@
-curl -X POST http://localhost:3000/api/Save  -H "Content-Type: application/json" -d '{100: [ { "questionId": "1", "value": "What is your name?" },{ "questionId": "2", value: "What is your age?" },{ questionId: "3", value: "What is your birth city?" }]}'
-curl -X POST http://localhost:3000/api/Save  -H "Content-Type: application/x-www-form-urlencoded"  -d "question=3&meetingId=100&editorData={100: [ { 'questionId': '1', 'value': 'What is your name?' },{ 'questionId': '2', 'value': 'What is your age?' },{ 'questionId': '3', 'value': 'What is your birth city?' }]}"
+## Docker run steps.
+1. build the docker image from the current directory. 
+docker build . -t "sowmyavenky/autosvcenterapi:1.0"
 
-curl -X POST http://localhost:8080/inspectionsubmit -H "Content-Type: application/json" -d "{}"
+2. Check to make sure the image is there.
+C:\Venky\DP-203\PaymentsTeamsApp\teamsapp>docker images
+
+REPOSITORY                TAG   IMAGE ID       CREATED         SIZE
+sowmyavenky/autoconsumer  1.0   c0b45865f7f8   3 minutes ago   1.04GB
+
+3. Run the container locally 
+docker run -p 8080:8080 --name autosvcenterapi -d sowmyavenky/autosvcenterapi:1.0
+
+4. Push image to docker
+docker image push sowmyavenky/autosvcenterapi:1.0
+
+5. App service does not like 8080
+az login
+az webapp config appsettings set --resource-group user73 --name autosvcenterapi1001 --settings WEBSITES_PORT=8080
+Restart the webapp for this port change to take effect.
+
+Test with these URLs
+https://autosvcenterapi1001.azurewebsites.net/
+https://autosvcenterapi1001.azurewebsites.net/monthlysummary?username=Venky+Jagannath
+https://autosvcenterapi1001.azurewebsites.net/summary?username=Venky+Jagannath
+https://autosvcenterapi1001.azurewebsites.net/vehiclebyvin?vin=EZVFJ2PBS4RR59594
+https://autosvcenterapi1001.azurewebsites.net/vehiclebyvrm?vrm=DD11UHX
+https://autosvcenterapi1001.azurewebsites.net/vehiclebyemail?email=Paul46@gmail.com
 

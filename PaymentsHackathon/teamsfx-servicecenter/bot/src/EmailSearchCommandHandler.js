@@ -8,7 +8,7 @@ class EmailSearchCommandHandler {
   triggerPatterns = "email";
   
   async getVehicleByEmail(email) {
-    const response = await fetch (`http://localhost:8080/vehiclebyemail?email=` + email, {
+    const response = await fetch (`https://autosvcenterapi1001.azurewebsites.net/vehiclebyemail?email=` + email, {
           "method": "get",
           "cache": "default"
       });
@@ -41,7 +41,9 @@ class EmailSearchCommandHandler {
           //In this case, we are going to get many service records for the customer.
           //We need to create attachment array and display as carousal.
           const attachments = [];
-          for( let x = 0; x < response.length; x++ ) {
+          //Some people have a lot of service records, carousal does not like it, 
+          //So we are limiting to just 10 
+          for( let x = 0; x < 10; x++ ) {
             const cardJson = AdaptiveCards.declare(vehicleCard).render(response[x]);
             attachments.push(CardFactory.adaptiveCard(cardJson));
           }     
