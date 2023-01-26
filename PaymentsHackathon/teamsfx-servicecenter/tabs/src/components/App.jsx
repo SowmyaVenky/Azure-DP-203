@@ -2,7 +2,6 @@
 import { Provider, teamsTheme, Loader } from "@fluentui/react-northstar";
 import { HashRouter as Router, Redirect, Route } from "react-router-dom";
 import { useTeamsUserCredential } from "@microsoft/teamsfx-react";
-import Privacy from "./Privacy";
 import TermsOfUse from "./TermsOfUse";
 import TabSummary from "./TabSummary";
 import TabMonthlySummary from "./TabMonthlySummary";
@@ -10,6 +9,8 @@ import "./App.css";
 import TabConfig from "./TabConfig";
 import { TeamsFxContext } from "./Context";
 import config from "./sample/lib/config";
+import InspectionContainer from "./InspectionContainer";
+import Photos from "./Photos";
 
 /**
  * Comments
@@ -32,9 +33,10 @@ export default function App() {
             <Loader style={{ margin: 100 }} />
           ) : (
             <>
-              <Route exact path="/privacy" component={Privacy} />
+              <Route exact path="/inspection" component={InspectionContainer} />
+              <Route exact path="/photos" component = {Photos} />
               <Route exact path="/termsofuse" component={TermsOfUse} />
-              <Route exact path="/tab" component={TabSummary} />
+              <Route exact path="/summary" component={TabSummary} />
               <Route exact path="/monthly" component={TabMonthlySummary} />
               <Route exact path="/config" component={TabConfig} />
             </>

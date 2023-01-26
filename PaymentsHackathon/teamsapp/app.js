@@ -74,12 +74,16 @@ app.get('/', function(req, res) {
 });
 
 app.get('/records', function(req, res, next) {
+  console.log("hit records call");
     var email = req.query.email
     var password = req.query.password
 
     var params = [email.trim().toUpperCase(), password.trim().toUpperCase()];
+
+    console.log("parms " + params);
     let sql =  
-      "select * " +
+      "select SR.id as id, E.name, SR.vehicle_color, SR.vehicle_vin, SR.vehicle_vrm, SR.vehicle_manufacturer, " +
+      "SR.vehicle_model, SR.vehicle_problem, SR.vehicle_repair_cost, SR.vehicle_repair_date, SR.vehicle_repair_status " +
       "from " +
       "autorepair.customer C " +
       "LEFT JOIN " +
@@ -103,6 +107,7 @@ app.get('/records', function(req, res, next) {
     var vehicleVin = new Set();
     
     db.query(sql, params, (err, rows) => {
+        console.log("Here's your rows: " + err);
         var numRows = rows.length;        
         if(err) throw err;  
         if( numRows == 0 ) {
