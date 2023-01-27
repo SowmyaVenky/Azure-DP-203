@@ -4,12 +4,11 @@ import engine from './engine.jpg';
 import car1 from './car1.jpg';
 import car2 from './car2.jpg';
 import car3 from './car3.jpg';
-import "./App.css";
 import {
-    Grid,
+    Carousel,
     Image,
   } from '@fluentui/react-northstar'
-
+import style from './Photos.module.css'
 
 export default function Photos(props) {
 
@@ -18,157 +17,106 @@ export default function Photos(props) {
     const car2Ref = createRef();
     const car3Ref = createRef();
 
-    const showMarkerArea = ()  => {
-        if (imgRef.current !== null) {
-            const markerArea = new markerjs2.MarkerArea(imgRef.current);
-            // attach an event handler to assign annotated image back to our image element
+    const showMarkerArea = (ref)  => {
+        if (ref.current !== null) {
+            const markerArea = new markerjs2.MarkerArea(ref.current);
             markerArea.addEventListener('render', event => {
-              if (imgRef.current) {
-                imgRef.current.src = event.dataUrl;
+              if (ref.current) {
+                ref.current.src = event.dataUrl;
               }
             });
-            // launch marker.js
+            markerArea.settings.displayMode = 'popup';
             markerArea.show();
         }
     }
 
-    const imageButtonStyles = {
-        minWidth: '72px',
-        maxWidth: '72px',
-        height: '72px',
-        padding: '0',
-        margin: '0',
-      }
-
-    // const renderImages = () => {
-    //     return  (
-    //       <>
-    //         <Image
-    //             ref={imgRef} 
-    //             key="engine"
-    //             src={engine}
-    //             data-is-focusable="true"
-    //             onClick={showMarkerArea}
-    //             styles={imageButtonStyles}
-    //         />
-    //         <Image
-    //             ref={car1Ref} 
-    //             key="car1"
-    //             src={car1}
-    //             data-is-focusable="true"
-    //             onClick={showMarkerArea}
-    //             styles={imageButtonStyles}
-    //         />
-    //         <Image
-    //             ref={car2Ref} 
-    //             key="car2"
-    //             src={car2}
-    //             data-is-focusable="true"
-    //             onClick={showMarkerArea}
-    //             styles={imageButtonStyles}
-    //         />
-    //         <Image
-    //             ref={car3Ref} 
-    //             key="car3"
-    //             src={car3}
-    //             data-is-focusable="true"
-    //             onClick={showMarkerArea}
-    //             styles={imageButtonStyles}
-    //         />
-    //       </>
-    //     )
-    // }
-
-    const renderImages = () => {
-        return (
-            <>
-            <img 
-                ref={imgRef} 
+    const carouselItems = [
+        {
+            key: 'engine',
+            id: 'engine',
+            content: (
+              <Image
+                ref={imgRef}
                 src={engine}
-                alt="engine" 
-                style={{ maxWidth: '90%' }} 
-                onClick={showMarkerArea}
-            />
-            <img 
-                ref={car1Ref} 
+                fluid
+                alt='engine'
+                onClick={() => showMarkerArea(imgRef)}
+                className={style.image}
+              />
+            ),
+            'aria-label': 'engine',
+          },
+          {
+            key: 'car1',
+            id: 'car1',
+            content: (
+              <Image
+                ref={car1Ref}
                 src={car1}
-                alt="car1" 
-                style={{ maxWidth: '90%' }} 
-                onClick={showMarkerArea}
-            /> 
-            <img 
-                ref={car2Ref} 
+                fluid
+                alt='car1'
+                className={style.image}
+                onClick={() => showMarkerArea(car1Ref)}
+              />
+            ),
+            'aria-label': 'car1',
+          },
+          {
+            key: 'car2',
+            id: 'car2',
+            content: (
+              <Image
+                ref={car2Ref}
                 src={car2}
-                alt="car2" 
-                style={{ maxWidth: '90%' }} 
-                onClick={showMarkerArea}
-            />
-            <img 
-                ref={car3Ref} 
+                fluid
+                alt='car2'
+                className={style.image}
+                onClick={() => showMarkerArea(car2Ref)}
+              />
+            ),
+            'aria-label': 'car2',
+          },
+          {
+            key: 'car3',
+            id: 'car3',
+            content: (
+              <Image
+                ref={car3Ref}
                 src={car3}
-                alt="car3" 
-                style={{ maxWidth: '90%' }} 
-                onClick={showMarkerArea}
-            />
-            </>
-        )
-    }
+                fluid
+                alt='car3'
+                className={style.image}
+                onClick={() => showMarkerArea(car3Ref)}
+              />
+            ),
+            'aria-label': 'car3',
+          },
+          
+    ]
 
     return (
 
-            <div className="page padding" > 
-            {/* style="text-align:center" */}
-            <div>
-                <h3 className="header">Your Vehicle Images</h3>
+        <div className={style.page} > 
+            <div className={style.header}>
+                <h3 className={style.header}>Your Vehicle Images</h3>
             </div>
-
-            <Grid columns="4" content={renderImages()} />
-  
-            {/* <div className="row">
-                <div className="column"> 
-                    <img 
-                        ref={imgRef} 
-                        src={engine}
-                        alt="engine" 
-                        style={{ maxWidth: '100%' }} 
-                        onClick={showMarkerArea}
-                    />
-                </div>
-                <div className="column">
-                    <img 
-                        ref={car1Ref} 
-                        src={car1}
-                        alt="car1" 
-                        style={{ maxWidth: '100%' }} 
-                        onClick={showMarkerArea}
-                    />
-                 </div>
-                <div className="column">   
-                    <img 
-                        ref={car2Ref} 
-                        src={car2}
-                        alt="car2" 
-                        style={{ maxWidth: '100%' }} 
-                        onClick={showMarkerArea}
-                    />
-                </div>
-                <div className="column">
-                    <img 
-                        ref={car3Ref} 
-                        src={car3}
-                        alt="car3" 
-                        style={{ maxWidth: '100%' }} 
-                        onClick={showMarkerArea}
-                    />
-                </div> 
-            </div>  */}
-            {/* <div >
-                <span onClick="this.parentElement.style.display='none'" >&times;</span>
-                <img id="expandedImg" />
-                <div id="imgtext"></div>
-            </div> */}
-        </div>
-
-    
+            <div className={style.center}>
+                <Carousel
+                    className={style.carousel}
+                    aria-roledescription="carousel"
+                    aria-label="Image collection"
+                    navigation={{
+                    'aria-label': 'car images',
+                    items: carouselItems.map((item, index) => ({
+                        key: item.id,
+                        'aria-label': item.id,
+                        'aria-controls': item.id,
+                        })),
+                    }}
+                    items={carouselItems}
+                    getItemPositionText={(index, size) => `${index + 1} of ${size}`}
+                />
+            </div>
+        </div>    
     );
 }
