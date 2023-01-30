@@ -5,10 +5,12 @@ const bodyParser = require('body-parser');
 
 // Create connection
 const db = mysql.createConnection({
-    //host: "localhost",  
-    //user: "root",  
-    host: "autorepairdb1001.mysql.database.azure.com",  
-    user: "autoadmin",  
+    // host: "localhost",  
+    // user: "root",  
+    // host: "autorepairdb1001.mysql.database.azure.com",  
+    // user: "autoadmin",
+    host: ((!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "localhost" : "autorepairdb1001.mysql.database.azure.com"),
+    user: ((!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "root" : "autoadmin"),
     password: "Ganesh20022002"
   });
 
@@ -85,25 +87,23 @@ app.get('/mycustomers', function(req, res) {
   var params = [username];
   
   let sql =  
-  "select distinct " +
+  "select " +
+  " SR.id, " +
+  " SR.vehicle_vin, " +
   " firstname, " + 
   " lastname, " +
-  " address," +
-  " address2, " +
-  " city, " +
-  " state, " +
-  " zip, " +
   " phone, " +
   " email, " + 
-  " creditcard " +
+  " SR.vehicle_repair_status " +
   "from " +
-  "autorepair.customer C " +
+  "autorepair.service_records SR " +
   "LEFT JOIN " +
-  "autorepair.service_records SR " + 
+  "autorepair.customer C " + 
   "on C.id = SR.customer_id " +
   "LEFT JOIN  " +
   "autorepair.employee E " +
-  "on E.id = SR.employee_id where E.name = ? ";
+  "on E.id = SR.employee_id where E.name = ? " +
+  "ORDER BY SR.id desc limit 30 ";
   
   db.query(sql, params, (err, rows) => {
     if(err) throw err;
