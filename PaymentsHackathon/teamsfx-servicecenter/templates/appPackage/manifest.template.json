@@ -23,7 +23,45 @@
         "full": "{{config.manifest.description.full}}"
     },
     "accentColor": "#FFFFFF",
-    "bots": [],
+    "bots": [
+        {
+            "botId": "{{state.fx-resource-bot.botId}}",
+            "scopes": [
+                "personal",
+                "team",
+                "groupchat"
+            ],
+            "supportsFiles": false,
+            "isNotificationOnly": false,
+            "commandLists": [
+                {
+                    "scopes": [
+                        "personal",
+                        "team",
+                        "groupchat"
+                    ],
+                    "commands": [
+                        {
+                            "title": "vin",
+                            "description": "Search for vehicles by VIN"
+                        },
+                        {
+                            "title": "vrm",
+                            "description": "Search for vehicles by Registration #"
+                        },
+                        {
+                            "title": "email",
+                            "description": "Search for vehicles by owner email"
+                        },
+                        {
+                            "title": "inspection",
+                            "description": "Capture Vehicle Inspection data"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
     "composeExtensions": [],
     "configurableTabs": [
         {
@@ -78,7 +116,8 @@
         "messageTeamMembers"
     ],
     "validDomains": [
-        "{{state.fx-resource-frontend-hosting.domain}}"
+        "{{state.fx-resource-frontend-hosting.domain}}",
+        "{{state.fx-resource-bot.domain}}"
     ],
     "webApplicationInfo": {
         "id": "{{state.fx-resource-aad-app-for-teams.clientId}}",
