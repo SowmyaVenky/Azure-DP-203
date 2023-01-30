@@ -41,6 +41,7 @@
       <p> Service Records </p>
       <table id="customers">
         <tr>
+            <th>Serivce Req #</th>
             <th>Advisor</th>
             <th>Vehicle Color</th>
             <th>VIN</th>
@@ -55,6 +56,11 @@
         </tr>
         <% servicerecords.forEach(function(servicerecord) { %>
           <tr>
+            <% if (servicerecord.id && servicerecord.vehicle_repair_status == "Pending review" ) { %>
+              <td><a href="/review?id=<%= servicerecord.id %>"><%= servicerecord.id %></a></td>  
+              <%} else { %>
+                <td><%= servicerecord.id %></td>
+              <% } %>
             <td><%= servicerecord.name %></td>
             <td><%= servicerecord.vehicle_color %></td>
             <td><%= servicerecord.vehicle_vin %></td>
@@ -66,7 +72,7 @@
             <td><%= moment(servicerecord.vehicle_repair_date).format('MM/DD/YYYY'); %></td>
             <td><%= servicerecord.vehicle_repair_status %></td>
             <% if (servicerecord.vehicle_repair_status != "Paid" && servicerecord.vehicle_repair_status != "Declined by customer" ) { %>
-            <td><a href="/payment?email=<%= customerEmail %>&cc=<%= customerCreditCard %>&amount=<%= servicerecord.vehicle_repair_cost %>">Payment</a></td>  
+            <td><a href="/payment?customerId=<%= servicerecord.customer_id %>&email=<%= customerEmail %>&cc=<%= customerCreditCard %>&amount=<%= servicerecord.vehicle_repair_cost %>&date=<%= moment(servicerecord.vehicle_repair_date).format('MM/DD/YYYY'); %>">Payment</a></td>  
             <%} else { %>
               <td>No Payment Needed</td>
             <% } %>  

@@ -12,6 +12,7 @@
         "@microsoft/teamsfx": "^2.0.0",
         "@microsoft/teamsfx-react": "^2.0.0",
         "axios": "^0.21.1",
+        "markerjs2": "^2.28.1",
         "react": "^16.14.0",
         "react-dom": "^16.14.0",
         "react-router-dom": "^5.1.2",

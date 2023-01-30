@@ -42,7 +42,7 @@ export function Summary(props) {
     }, [userName]);
 
   const customersheader = {
-    items: ['First Name', 'Last Name', 'Address 1', 'Phone', 'Email']
+    items: ['Service Record', 'VIN', 'First Name', 'Last Name', 'Phone', 'Email', 'Status']
   }
   
   return (

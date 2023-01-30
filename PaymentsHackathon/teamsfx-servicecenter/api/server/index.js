@@ -5,10 +5,12 @@ const bodyParser = require('body-parser');
 
 // Create connection
 const db = mysql.createConnection({
-    //host: "localhost",  
-    //user: "root",  
-    host: "autorepairdb1001.mysql.database.azure.com",  
-    user: "autoadmin",  
+    // host: "localhost",  
+    // user: "root",  
+    // host: "autorepairdb1001.mysql.database.azure.com",  
+    // user: "autoadmin",
+    host: ((!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "localhost" : "autorepairdb1001.mysql.database.azure.com"),
+    user: ((!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "root" : "autoadmin"),
     password: "Ganesh20022002"
   });
 
@@ -22,6 +24,7 @@ db.connect((err) => {
 
 const app = express();
 const cors = require('cors');
+const { response } = require("express");
 app.use(cors({
   origin: '*'
 }));
@@ -84,25 +87,23 @@ app.get('/mycustomers', function(req, res) {
   var params = [username];
   
   let sql =  
-  "select distinct " +
+  "select " +
+  " SR.id, " +
+  " SR.vehicle_vin, " +
   " firstname, " + 
   " lastname, " +
-  " address," +
-  " address2, " +
-  " city, " +
-  " state, " +
-  " zip, " +
   " phone, " +
   " email, " + 
-  " creditcard " +
+  " SR.vehicle_repair_status " +
   "from " +
-  "autorepair.customer C " +
+  "autorepair.service_records SR " +
   "LEFT JOIN " +
-  "autorepair.service_records SR " + 
+  "autorepair.customer C " + 
   "on C.id = SR.customer_id " +
   "LEFT JOIN  " +
   "autorepair.employee E " +
-  "on E.id = SR.employee_id where E.name = ? ";
+  "on E.id = SR.employee_id where E.name = ? " +
+  "ORDER BY SR.id desc limit 30 ";
   
   db.query(sql, params, (err, rows) => {
     if(err) throw err;
@@ -110,9 +111,118 @@ app.get('/mycustomers', function(req, res) {
     });     
 });
 
-app.post('/inspectionsubmit', function(req, res) {
-  console.log(req.body);
-  res.send({'message': 'Inspection report accepted!'});
+async function getEmployee(empName){
+  console.log("starting getCust with " + empName);
+  var params = [empName.trim().toUpperCase()];
+  
+  let empsql =  
+  "select id from " +
+  "autorepair.employee where " +
+  "upper(name) = ?";
+  return new Promise((resolve) => {
+    console.log("call getEmp query with " + JSON.stringify(params));
+    console.log("empsql " + empsql);
+    db.query(empsql, params, (err, rows) => {
+      if(err) throw err;      
+      console.log("emp query callback found " + JSON.stringify(rows));
+      resolve(rows[0].id);
+      // custrows = rows;
+    });
+    // custrows = rows;
+  })  
+
+}
+
+
+async function getCusotmer(customerName){
+  console.log("starting getCust with " + customerName);
+  var params = [customerName.trim().toUpperCase()];
+  
+  let custsql =  
+  "select id from " +
+  "autorepair.customer C where " +
+  "upper(lastname) = ?";
+  return new Promise((resolve) => {
+    console.log("call getCust query with " + JSON.stringify(params));
+    console.log("custsql " + custsql);
+    db.query(custsql, params, (err, rows) => {
+      if(err) throw err;      
+      console.log("customer query callback found " + JSON.stringify(rows));
+      resolve(rows[0].id);
+      // custrows = rows;
+    });
+    // custrows = rows;
+  })  
+  
+}
+
+app.post('/inspectionsubmit', async (req, res) => {
+
+  // console.log(JSON.stringify(req));
+  
+  let serviceRecord = req.body;
+  console.log(JSON.stringify(serviceRecord.lastName));
+  // var params = [serviceRecord.lastName];
+
+  console.log("Let's save an inspections with " + JSON.stringify(serviceRecord))
+
+  // let custsql =  
+  // "select id from " +
+  // "autorepair.customer C where " +
+  // "upper(lastname) = ?";
+
+  // let custrows;
+  // db.query(custsql, params, (err, rows) => {
+  //   if(err) throw err;
+  //   console.log("rows " + JSON.stringify(rows));
+  //   custrows = rows;
+  //   });
+
+  let empId = await getEmployee(serviceRecord.userName);
+
+  getCusotmer(serviceRecord.lastName).then((customer) => {    
+      
+    console.log("cust " + JSON.stringify(customer));
+
+    // let customer = custrows[0];
+
+    var vehicle_color = faker.vehicle.color();
+    var vehicle_fuel = faker.vehicle.fuel();
+    var vehicle_manufacturer = faker.vehicle.manufacturer();
+    var vehicle_model = faker.vehicle.model();
+    var vehicle_type = faker.vehicle.type();
+    var vehicle_vrm = faker.vehicle.vrm();
+
+    var formattedDate = new Date(serviceRecord.inspectionDate);
+
+    console.log("formatted date " + formattedDate);
+
+    post = { 
+      "employee_id": empId, 
+      "customer_id": customer,
+      "vehicle_color": vehicle_color,
+      "vehicle_fuel": vehicle_fuel,
+      "vehicle_manufacturer": vehicle_manufacturer,
+      "vehicle_model": vehicle_model,
+      "vehicle_type": vehicle_type,
+      "vehicle_vin": serviceRecord.vin,
+      "vehicle_vrm": vehicle_vrm,
+      "vehicle_problem": "repair needed",
+      "vehicle_repair_cost": faker.commerce.price(100, 900),
+      "vehicle_repair_date": formattedDate,
+      "vehicle_repair_status": "Pending review"
+    };
+
+    let sql = "INSERT INTO autorepair.service_records SET ?";
+
+    query = db.query(sql, post, (err) => {
+        if (err) {
+            throw err;
+        }
+        res.send({'message': 'Inspection report accepted!'});
+    });  
+  });
+  
 });
 
 app.get('/vehiclebyvin', function(req, res) {
@@ -209,6 +319,21 @@ app.get('/vehiclebyemail', function(req, res) {
     if(err) throw err;  
     res.send(rows);
   });      
+});
+
+app.get('/diagnostics-results', function(request, response, next) {
+	var email = request.query.email;
+  //teams does not keep sessions for some reason.
+  // If the user is loggedin
+  // if(email) {
+    console.log("email is not null and moving to diagnostics results via email not session");
+    response.render('diagnostics-results.ejs', { useremail: email});
+  // }else if (request.session.loggedin) {
+	// 	response.render('diagnostics-results.ejs', { useremail: request.session.email});
+	// } else {
+  //   response.redirect('/?loginerror=true');
+	// }
+	response.end();  
 });
 
 app.listen("8080", () => {
