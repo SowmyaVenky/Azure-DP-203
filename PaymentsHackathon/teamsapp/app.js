@@ -9,6 +9,14 @@ const ENV_FILE = path.join(__dirname, '.env');
 require('dotenv').config({ path: ENV_FILE });
 const PORT = process.env.PORT || 3978;
 const webhookURL = 'https://6g2rrf.webhook.office.com/webhookb2/18556687-90ae-4e12-93ad-f033a4f45a9d@de8bd1e0-78f7-4cd0-aeff-73e09d462d5c/IncomingWebhook/cf5e120fd89348a897c09588947fc9b2/579c7f37-c7d1-4869-89a8-906ad6f02c02';
+const unirest = require('unirest');
+const crypto = require('crypto');
+const setTimeOut = require('timers/promises');
+
+//For RTP
+var api_key = process.env.KEY;
+var api_secret = process.env.SECRET;
+var br_token  = btoa(api_key + ':' + api_secret);
 
 app.set("view-engine", "ejs");
 app.locals.moment = require('moment');
@@ -38,10 +46,10 @@ const {
 
 // Create connection
 const db = mysql.createConnection({
-  //host: "localhost",  
-  //user: "root",  
-  host: "autorepairdb1001.mysql.database.azure.com",  
-  user: "autoadmin",  
+  host: "localhost",  
+  user: "root",  
+  //host: "autorepairdb1001.mysql.database.azure.com",  
+  //user: "autoadmin",  
   password: "Ganesh20022002"
 });
 
@@ -93,6 +101,7 @@ app.get('/records', function(req, res, next) {
       "autorepair.employee E " +
       "on E.id = SR.employee_id WHERE upper(email) = ? and upper(lastname) = ? ORDER BY SR.vehicle_repair_date desc";
 
+    var customerId = "";  
     var customerFirstName = "";
     var customerLastName = "";
     var customerPhone = "";
@@ -116,6 +125,7 @@ app.get('/records', function(req, res, next) {
           req.session.loggedin = true;
 				  req.session.email = email;
           rows.forEach(function(servicerecord) {
+            customerId = servicerecord.customer_id;
             customerFirstName = servicerecord.firstname;
             customerLastName = servicerecord.lastname;
             customerPhone = servicerecord.phone;
@@ -134,6 +144,7 @@ app.get('/records', function(req, res, next) {
           //console.log(vehicleVin);
 
           res.render('servicerecords.ejs', { 
+            "customerId": customerId,
             "customerFirstName": customerFirstName,
             "customerLastName": customerLastName,
             "customerPhone": customerPhone,
@@ -184,12 +195,220 @@ app.get('/diagnostics-results', function(request, response, next) {
 	response.end();  
 });
 
+app.get('/api/rtpfundtransfer', async function(req, res, next) {
+  try{ 
+    console.log("api/rtpfundtransfer");
+    var customerId = req.query.customerId;
+    var invid = req.query.invId;
+    var acctno = req.query.acctNo;
+    var routno = req.query.routNo;
+    var amount = req.query.amount;
+    console.log(customerId, invid, acctno, routno);
+    const bankRTPRes = await rtpFundTransfer(customerId, invid, acctno, routno, amount);
+    //const bankRTPRes = await rtpFundTransfer("101138", "12344232122", "122105155");
+    //res.send(bankRTPRes);
+    res.render('payment-ack.ejs', { "status": bankRTPRes.status, "transactionId": bankRTPRes.transactionID, "message": "Below is the status of the transfer you have made."});
+  }
+  catch (error){
+    console.log(`Error in /api/rtpfundtransfer handling: ${error}`);
+    //res.status(500).json({status: 500, statusText: error });
+    res.render('payment-ack.ejs', { "status": "ERROR", "transactionId": error, "message":"An error occured while transferring the amount, please try again later or call the customer center."});
+  }
+
+});
+
+async function rtpFundTransfer(customerId, invid, acctno, routno, amount){
+  function getToken(){
+      return new Promise((resolve, reject) => {
+          unirest('POST', 'https://sandbox.usbank.com/auth/oauth2/v1/token')
+              .headers({
+              'Accept': 'application/json',
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': 'Basic '+ br_token
+              })
+              .send('grant_type=client_credentials')
+              .end(function (response) { 
+                  if (response.error){
+                      return reject(response.error);
+                  }
+                  else {
+                      return resolve(response.body.accessToken);
+                  }
+              });
+      })
+  }
+
+  function fundtransfer (accessToken,correlationId){
+      return new Promise((resolve, reject) => {
+      var ft = unirest('POST', 'https://sandbox.usbank.com/money-movement/rtp/v1/credit-transfers')
+              .headers({
+                  'Accept-Encoding': '*',
+                  'Authorization': 'Bearer ' + accessToken,
+                  'Correlation-ID': correlationId,
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+              })
+              .send(getRequestPayload())
+              .end(function (res) { 
+                if (res.error) 
+                    return reject(res.error);
+                else
+                    return resolve(res.body);
+                });
+              });
+  }
+
+  function paymentAcknowledgement(accessToken, correlationId, transactionId){
+    console.log("Transaction ID: "+transactionId)
+    return new Promise((resolve, reject) => {
+        unirest('GET', 'https://sandbox.usbank.com/money-movement/rtp/v1/credit-transfers/'+transactionId)
+            .headers({
+                'Accept-Encoding': '*',
+                'Authorization': 'Bearer ' + accessToken,
+                'Correlation-ID': correlationId,
+                'Accept': 'application/json'
+            })
+            .send('')
+            .end(function (response) { 
+              if (response.error) 
+                  return reject(response.error);
+              else
+                  return resolve(response.body);
+              });
+       });
+}
+
+function getRequestPayload(){
+  var payload = JSON.stringify({
+    "creditTransfer": {
+      "clientDetails": {
+        "clientRequestID": invid
+      },
+      "payerDetails": {
+        "name": "Zeal Inc",
+        "accountNumber": acctno,
+        "routingNumber": routno,
+        "address": {
+          "addressLine1": "100 Main St",
+          "addressLine2": "Apt 116",
+          "city": "Chicago",
+          "state": "IL",
+          "zipCode": "60606",
+          "country": "US"
+        }
+      },
+      "ultimatePayerDetails": {
+        "name": "John D",
+        "identifier": "12344232122",
+        "address": {
+          "addressLine1": "100 Main St",
+          "addressLine2": "Apt 116",
+          "city": "Chicago",
+          "state": "IL",
+          "zipCode": "60606",
+          "country": "US"
+        }
+      },
+      "payeeDetails": {
+        "name": "ABC Corp",
+        "accountNumber": "asd-344232122",
+        "routingNumber": "091000019",
+        "address": {
+          "addressLine1": "100 Main St",
+          "addressLine2": "Apt 116",
+          "city": "Chicago",
+          "state": "IL",
+          "zipCode": "60606",
+          "country": "US"
+        }
+      },
+      "ultimatePayeeDetails": {
+        "name": "Jim K",
+        "identifier": "12344232122",
+        "address": {
+          "addressLine1": "100 Main St",
+          "addressLine2": "Apt 116",
+          "city": "Chicago",
+          "state": "IL",
+          "zipCode": "60606",
+          "country": "US"
+        }
+      },
+      "transactionDetails": {
+        "amount": amount,
+        "paymentType": "STANDARD"
+      },
+      "remittanceData": {
+        "remittanceID": "20151112INFOABCD",
+        "remittanceLocationDetails": {
+          "email": "remit@healthcorp.com",
+          "URI": "https://remittances/healthcorp.com"
+        },
+        "additionalInfo": "Unstructured remittance Information"
+      }
+    }
+  });
+  console.log("Payload for RTP Request: "+payload)
+  return payload;
+}
+
+function insertRealTimePayment(transactionId, status){
+   //DB insert
+   let sql =  
+   "insert into autorepair.realtime_payments (customerId, amount, transactionId, status)" +
+   " values " +
+   "(" +
+     customerId +"," + amount + ", '"+ transactionId +"', '"+ status
+   + "')" ;
+   console.log("RTP SQL: "+sql)
+   db.query(sql, (err, rows) => {
+     if(err) throw err;  
+     console.log("Payment record inserted for transaction: "+transactionId)
+   }); 
+}
+
+  var accessToken = await getToken();
+  console.log("Access token for the RTP is: "+accessToken);
+
+  let correlationId = crypto.randomUUID();
+  console.log("Correlation Id: "+correlationId)
+  var ft_response = await fundtransfer(accessToken,correlationId);
+  console.log(ft_response, ft_response.transactionID)
+
+  // Sleep in case the RTP takes more time for approval.
+  await sleep(500)
+  function sleep(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
+
+  var pmt_ackResponse;
+  if(ft_response && ft_response.transactionID){
+    let transactionId = ft_response.transactionID;
+      pmt_ackResponse = await paymentAcknowledgement(accessToken, correlationId, transactionId);
+      console.log("Payment Acknowledgement Response: "+JSON.stringify(pmt_ackResponse));
+      if(pmt_ackResponse && pmt_ackResponse.transactiondDetails && pmt_ackResponse.transactiondDetails.status){
+        ft_response.status = pmt_ackResponse.transactiondDetails.status.statusCode;
+        ft_response.reason = pmt_ackResponse.transactiondDetails.status.message;
+        insertRealTimePayment(transactionId, ft_response.status);
+      }
+  }
+  console.log("Final response: "+JSON.stringify(ft_response));
+  return ft_response;
+}
+
+
+
 //This will send a message to the sales people channel to notify them that a customer has sent a payment.
 const axios = require('axios');
 app.get('/payment', function(request, response, next) {
+  var customerId = request.query.customerId;
   var email = request.query.email;
   var creditcard = request.query.cc;
   var amount = request.query.amount;
+  var date = request.query.date;
+  console.log(request);
   
   axios.post(
     webhookURL,
@@ -201,8 +420,8 @@ app.get('/payment', function(request, response, next) {
     }
   );
 
-  var message = "This will process payment of $" + amount + ", with cc = " + creditcard + " and send invoice to customer email = " + email;
-  response.render('payments.ejs', { "message" : message });
+  var message = "You will be transfering an amount of $" + amount + ", to the below account number. Please check the account details and click \"Click to Pay\"";
+  response.render('payments.ejs', { "message" : message, "amount": amount, "date": date , "customerId": customerId});
   response.end();
 });
 

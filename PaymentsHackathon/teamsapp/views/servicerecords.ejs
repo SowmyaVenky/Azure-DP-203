@@ -72,7 +72,7 @@
             <td><%= moment(servicerecord.vehicle_repair_date).format('MM/DD/YYYY'); %></td>
             <td><%= servicerecord.vehicle_repair_status %></td>
             <% if (servicerecord.vehicle_repair_status != "Paid" && servicerecord.vehicle_repair_status != "Declined by customer" ) { %>
-            <td><a href="/payment?email=<%= customerEmail %>&cc=<%= customerCreditCard %>&amount=<%= servicerecord.vehicle_repair_cost %>">Payment</a></td>  
+            <td><a href="/payment?customerId=<%= servicerecord.customer_id %>&email=<%= customerEmail %>&cc=<%= customerCreditCard %>&amount=<%= servicerecord.vehicle_repair_cost %>&date=<%= moment(servicerecord.vehicle_repair_date).format('MM/DD/YYYY'); %>">Payment</a></td>  
             <%} else { %>
               <td>No Payment Needed</td>
             <% } %>  
