@@ -60,45 +60,24 @@
 
 <body>
   <header>
-    <h1>PAY YOUR BILL</h1>
+    <h1>PAYMENT ACKNOWLEDGEMENT</h1>
   </header>
   <div class="surface">
-    <table class="meta" id="table1">
-      <tbody><tr id="id1">
-        <th><span contenteditable="">Invoice #</span></th>
-        <td><span contenteditable="">101138</span></td>
-      </tr>
-      <tr>
-        <th><span contenteditable="">Date</span></th>
-        <td><span contenteditable=""><%=date %></span></td>
-      </tr> 
-      <tr>
-        <th><span contenteditable="">Amount Due</span></th>
-        <td><span contenteditable="">$</span><span><%=amount %></span></td>
-      </tr>
-    </tbody></table>
-
 
     <div class="font-semibold">
       <p> <%=message %></p>
     </div>
 
-    <table class="accdet">
-      <tbody><tr>
-        <th><span contenteditable="">Account Number</span></th>
-        <td><span contenteditable=""></span>12344232122</td>
+    <table class="meta" id="table1">
+      <tbody><tr id="id1">
+        <th><span contenteditable="">Payment status</span></th>
+        <td><span contenteditable=""><%=status %></span></td>
       </tr>
       <tr>
-        <th><span contenteditable="">Routing Number</span></th>
-        <td><span contenteditable=""></span>122105155</td>
-      </tr>
+        <th><span contenteditable="">Transaction ID</span></th>
+        <td><span contenteditable=""><%=transactionId %></span></td>
+      </tr> 
     </tbody></table>
-
-    <div class="btn-block">
-      <!-- <a href="/pages/hop.html"> -->
-      <br><br>
-      <button type="button" id="btn-send" onclick="location.href='/api/rtpfundtransfer?customerId=<%=customerId %>&invId=11983&acctNo=12344232122&routNo=122105155&amount=<%=amount %>'">Click To Pay</button>
-    </div>
     <div id="message" class="errorMessage"></div>
     <div class="panel">
         <a href="/">Home</a>&nbsp;       
