@@ -10,17 +10,18 @@
     "startapp": "node app.js"
   },
   "dependencies": {
-    "express": "^4.16.2",
-    "faker": "^5.5.3",
-    "mysql2": "^2.3.3",
-    "creditcard-generator": "0.0.7",
-    "ejs":"^3.1.8",
-    "moment": "^2.29.4",
-    "express-session": "^1.17.3",
-    "markerjs2": "^2.28.1",
+    "botbuilder": "^4.19.0",
+    "botbuilder-dialogs": "^4.19.0",
     "cors": "2.8.5",
+    "creditcard-generator": "0.0.7",
     "dotenv": "16.0.3",
-    "botbuilder": "4.18.0",
-    "botbuilder-dialogs": "4.18.0"
+    "ejs": "^3.1.8",
+    "express": "^4.16.2",
+    "express-session": "^1.17.3",
+    "faker": "^5.5.3",
+    "markerjs2": "^2.28.1",
+    "moment": "^2.29.4",
+    "mysql2": "^2.3.3",
+    "unirest": "^0.6.0"
   }
 }

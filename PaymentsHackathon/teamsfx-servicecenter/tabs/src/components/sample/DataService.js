@@ -1,6 +1,6 @@
 export async function getEmployeeSummaries(employeeName)
 {
-    const response = await fetch (`https://autosvcenterapi1001.azurewebsites.net/summary?username=` + employeeName, {
+    const response = await fetch (process.env.REACT_APP_API_BASE + `/summary?username=` + employeeName, {
         "method": "get",
         "cache": "default"
     });
@@ -29,7 +29,7 @@ export async function getEmployeeSummaries(employeeName)
 
 export async function getEmployeeMonthlySummaries(employeeName)
 {
-    const response = await fetch (`https://autosvcenterapi1001.azurewebsites.net/monthlysummary?username=` + employeeName, {
+    const response = await fetch (process.env.REACT_APP_API_BASE + `/monthlysummary?username=` + employeeName, {
         "method": "get",
         "cache": "default"
     });
@@ -60,7 +60,7 @@ export async function getEmployeeMonthlySummaries(employeeName)
 
 export async function getEmployeeMonthlySummariesForGraph(employeeName)
 {
-    const response = await fetch (`https://autosvcenterapi1001.azurewebsites.net/monthlysummary?username=` + employeeName, {
+    const response = await fetch (process.env.REACT_APP_API_BASE + `/monthlysummary?username=` + employeeName, {
         "method": "get",
         "cache": "default"
     });
@@ -106,7 +106,7 @@ export async function getEmployeeMonthlySummariesForGraph(employeeName)
 
 export async function getEmployeeCustomers(employeeName)
 {
-    const response = await fetch (`https://autosvcenterapi1001.azurewebsites.net/mycustomers?username=` + employeeName, {
+    const response = await fetch (process.env.REACT_APP_API_BASE + `/mycustomers?username=` + employeeName, {
         "method": "get",
         "cache": "default"
     });
