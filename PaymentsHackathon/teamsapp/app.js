@@ -90,7 +90,7 @@ app.get('/records', function(req, res, next) {
 
     console.log("parms " + params);
     let sql =  
-      "select SR.id as id, E.name, SR.vehicle_color, SR.vehicle_vin, SR.vehicle_vrm, SR.vehicle_manufacturer, " +
+      "select SR.customer_id, SR.id as id, E.name, SR.vehicle_color, SR.vehicle_vin, SR.vehicle_vrm, SR.vehicle_manufacturer, " +
       "SR.vehicle_model, SR.vehicle_problem, SR.vehicle_repair_cost, SR.vehicle_repair_date, SR.vehicle_repair_status " +
       "from " +
       "autorepair.customer C " +
