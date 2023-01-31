@@ -10,7 +10,8 @@
             "provision": true,
             "build": true,
             "folder": "tabs",
-            "sso": true
+            "sso": true,
+            "artifactFolder": "tabs\\build"
         },
         {
             "name": "azure-storage",
@@ -25,6 +26,32 @@
             "name": "aad-app",
             "provision": true,
             "deploy": true
+        },
+        {
+            "name": "teams-bot",
+            "hosting": "azure-web-app",
+            "provision": false,
+            "deploy": true,
+            "capabilities": [
+                "command-response"
+            ],
+            "build": true,
+            "folder": "bot",
+            "artifactFolder": "bot"
+        },
+        {
+            "name": "bot-service",
+            "provision": true
+        },
+        {
+            "name": "azure-web-app",
+            "scenario": "Bot",
+            "connections": [
+                "identity",
+                "aad-app",
+                "teams-tab",
+                "teams-bot"
+            ]
         }
     ],
     "programmingLanguage": "javascript",
@@ -35,7 +62,8 @@
         "azureResources": [],
         "capabilities": [
             "Tab",
-            "TabSSO"
+            "TabSSO",
+            "Bot"
         ],
         "activeResourcePlugins": [
             "fx-resource-local-debug",
@@ -44,7 +72,16 @@
             "fx-resource-api-connector",
             "fx-resource-aad-app-for-teams",
             "fx-resource-frontend-hosting",
+            "fx-resource-bot",
             "fx-resource-identity"
         ]
+    },
+    "pluginSettings": {
+        "fx-resource-bot": {
+            "host-type": "app-service",
+            "capabilities": [
+                "command-response"
+            ]
+        }
     }
 }
