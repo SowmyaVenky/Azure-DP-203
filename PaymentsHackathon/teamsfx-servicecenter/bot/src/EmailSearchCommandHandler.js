@@ -8,7 +8,7 @@ class EmailSearchCommandHandler {
   triggerPatterns = "email";
   
   async getVehicleByEmail(email) {
-    const response = await fetch (`https://autosvcenterapi1001.azurewebsites.net/vehiclebyemail?email=` + email, {
+    const response = await fetch (process.env.REACT_APP_API_BASE + `/vehiclebyemail?email=` + email, {
           "method": "get",
           "cache": "default"
       });

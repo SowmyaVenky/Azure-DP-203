@@ -8,7 +8,7 @@ class VINSearchCommandHandler {
   triggerPatterns = "vin";
   
   async getVehicleByVin(vin) {
-    const response = await fetch (`https://autosvcenterapi1001.azurewebsites.net/vehiclebyvin?vin=` + vin, {
+    const response = await fetch (process.env.REACT_APP_API_BASE + `/vehiclebyvin?vin=` + vin, {
           "method": "get",
           "cache": "default"
       });
