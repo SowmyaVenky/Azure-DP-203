@@ -5,10 +5,10 @@ const faker = require("faker");
 
 // Create connection
 const db = mysql.createConnection({
-    //host: "localhost",  
-    //user: "root",  
-    host: "autorepairdb1001.mysql.database.azure.com",  
-    user: "autoadmin",  
+    host: "localhost",  
+    user: "root",  
+    //host: "autorepairdb1001.mysql.database.azure.com",  
+    //user: "autoadmin",  
     password: "Ganesh20022002"
   });
 
@@ -42,6 +42,19 @@ app.get("/createdb", (req, res) => {
       }
   
       res.send("Employee table created");
+    });  
+  });
+
+  app.get("/createpaymentstable", (req, res) => {
+    let sql =  
+      "CREATE TABLE autorepair.realtime_payments(customerid int, amount DECIMAL(10,2), transactionid VARCHAR(300), status VARCHAR(50))";
+  
+    db.query(sql, (err) => {
+      if (err) {  
+        throw err;  
+      }
+  
+      res.send("realtime_payments table created");
     });  
   });
 

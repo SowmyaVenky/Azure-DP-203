@@ -20,6 +20,9 @@ curl http://localhost:3000/createemployees
 curl http://localhost:3000/listemployees
 curl http://localhost:3000/createcustomertable
 curl http://localhost:3000/createfakecustomers
+curl http://localhost:3000/createpaymentstable
+
+
 
 ##Jump 20 rows return next 10.
 curl http://localhost:3000/listcustomers/20
