@@ -5,3 +5,8 @@ teamsfx -h
 
 Then we can just lauch a local debug with this command.
 teamsfx preview --local
+
+# Tests for bot from MY DATABASE. YOURS WILL BE DIFFERENT!
+vin 3S4KG0HMVPTE94873
+vrm RF21UGA
+email Hunter_Bins6@yahoo.com
