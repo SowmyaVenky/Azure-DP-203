@@ -119,11 +119,12 @@ export async function getEmployeeCustomers(employeeName)
             
             rowcols.push(employeeSummaries[x].id);
             rowcols.push(employeeSummaries[x].vehicle_vin);
-            rowcols.push(employeeSummaries[x].firstname);
-            rowcols.push(employeeSummaries[x].lastname);
+            rowcols.push(employeeSummaries[x].firstname + ' ' + employeeSummaries[x].lastname);
+            //rowcols.push(employeeSummaries[x].lastname);
             // rowcols.push(employeeSummaries[x].address + ' ' + employeeSummaries[x].address2 + ' ' + employeeSummaries[x].city + ' ' + employeeSummaries[x].state + ' ' + employeeSummaries[x].zip);
             rowcols.push(employeeSummaries[x].phone);
             rowcols.push(employeeSummaries[x].email);
+            rowcols.push('')
             rowcols.push(employeeSummaries[x].vehicle_repair_status);
             //rowcols.push(employeeSummaries[x].creditcard);
 
