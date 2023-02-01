@@ -9,6 +9,7 @@ import {
     Image,
   } from '@fluentui/react-northstar'
 import style from './Photos.module.css'
+import { Header, Divider, Provider} from '@fluentui/react-northstar';
 
 export default function Photos(props) {
 
@@ -94,14 +95,82 @@ export default function Photos(props) {
           
     ]
 
+    
+
     return (
 
         <div className={style.page} > 
             <div className={style.header}>
-                <h3 className={style.header}>Your Vehicle Images</h3>
+              <Divider color="brand" content="Diagnostic Vehicle Images" size={3} important/>
             </div>
             <div className={style.center}>
+            <Provider
+    theme={{
+      animations: {
+        enterFromRight: {
+          keyframe: {
+            '0%': {
+              transform: 'translateX(100%)',
+            },
+            '100%': {
+              transform: 'translateX(0px)',
+            },
+          },
+          duration: '1s',
+          timingFunction: 'cubic-bezier(0.33,0.00,0.67,1.00)',
+          fillMode: 'forwards',
+        },
+        enterFromLeft: {
+          keyframe: {
+            '0%': {
+              transform: 'translateX(-100%)',
+            },
+            '100%': {
+              transform: 'translateX(0px)',
+            },
+          },
+          duration: '1s',
+          timingFunction: 'cubic-bezier(0.33,0.00,0.67,1.00)',
+          fillMode: 'forwards',
+        },
+        exitToLeft: {
+          keyframe: {
+            '0%': {
+              position: 'absolute',
+              transform: 'translateX(0px)',
+            },
+            '100%': {
+              position: 'absolute',
+              transform: 'translateX(-100%)',
+            },
+          },
+          duration: '1s',
+          timingFunction: 'cubic-bezier(0.33,0.00,0.67,1.00)',
+          fillMode: 'forwards',
+        },
+        exitToRight: {
+          keyframe: {
+            '0%': {
+              position: 'absolute',
+              transform: 'translateX(0px)',
+            },
+            '100%': {
+              position: 'absolute',
+              transform: 'translateX(100%)',
+            },
+          },
+          duration: '1s',
+          timingFunction: 'cubic-bezier(0.33,0.00,0.67,1.00)',
+          fillMode: 'forwards',
+        },
+      },
+    }}
+  >
                 <Carousel
+                    animationEnterFromNext='enterFromRight'
+                    animationEnterFromPrev='enterFromLeft'
+                    animationExitToPrev='exitToLeft'
+                    animationExitToNext='exitToRight'
                     className={style.carousel}
                     aria-roledescription="carousel"
                     aria-label="Image collection"
@@ -116,6 +185,7 @@ export default function Photos(props) {
                     items={carouselItems}
                     getItemPositionText={(index, size) => `${index + 1} of ${size}`}
                 />
+                </Provider>
             </div>
         </div>    
     );

@@ -67,7 +67,7 @@ export async function getEmployeeMonthlySummariesForGraph(employeeName)
     if (response.ok) {
         const employeeSummaries = await response.json();
         const returnmap = {};
-        returnmap['title'] = { text : 'Sales Summaries' };
+        returnmap['title'] = { text : '' };
 
         const series1datapoints = [];
         const series2datapoints = [];

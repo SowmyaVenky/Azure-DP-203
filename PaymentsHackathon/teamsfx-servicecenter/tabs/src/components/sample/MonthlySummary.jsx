@@ -3,7 +3,7 @@ import "./MonthlySummary.css";
 import { useData } from "@microsoft/teamsfx-react";
 import { TeamsFxContext } from "../Context";
 import { getEmployeeMonthlySummaries, getEmployeeMonthlySummariesForGraph } from "./DataService.js";
-import { Table } from "@fluentui/react-northstar";
+import { Table, Header, Divider } from "@fluentui/react-northstar";
 import CanvasJSReact from './canvasjs.react';
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -46,11 +46,11 @@ export function MonthlySummary(props) {
       //alert(JSON.stringify(monthlysummariesgraph));
   return (
     <div className="welcome page">
-        <h3 className="center">Welcome {userName ? ", " + userName : ""}!</h3>
-        <h3 className="center">Here are your monthly summaries</h3>
+      <Divider color="brand" content="Service Request Summary for February" size={3} important/>
+
         <CanvasJSChart options = {monthlysummariesgraph} />
         <br />
-        <Table header={monthlysummaryheader} rows={monthlysummaries} />        
+        <Table compact header={monthlysummaryheader} rows={monthlysummaries} />        
     </div>
   );
 }

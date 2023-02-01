@@ -3,7 +3,7 @@ import "./Summary.css";
 import { useData } from "@microsoft/teamsfx-react";
 import { TeamsFxContext } from "../Context";
 import { getEmployeeSummaries, getEmployeeCustomers } from "./DataService.js";
-import { Table } from "@fluentui/react-northstar";
+import { Table, Header, Divider, Button, CallVideoIcon } from "@fluentui/react-northstar";
 
 export function Summary(props) {
   const { teamsUserCredential } = useContext(TeamsFxContext);
@@ -14,6 +14,10 @@ export function Summary(props) {
     }
   });
   const userName = (loading || error) ? "": data.displayName;
+  const today = new Date(); 
+  const hour = today.getHours(); 
+  const greetings = (hour < 12) ? "Good Morning" : "Good Afternoon"; 
+  const pageGreeting = greetings + " " + userName;
 
   const [summaries, setSummaries] = useState([userName]);
   useEffect(() => {
@@ -44,14 +48,12 @@ export function Summary(props) {
   const customersheader = {
     items: ['Service Record', 'VIN', 'First Name', 'Last Name', 'Phone', 'Email', 'Status']
   }
-  
+
   return (
     <div className="welcome page">
-        <h3 className="center">Welcome {userName ? ", " + userName : ""}!</h3>
-        <h3 className="center">Here are your sales summaries</h3>
-        <Table header={summaryheader} rows={summaries} />
-        <br />
-        <Table header={customersheader} rows={customers} />
+      <Header className="center" as="h2" color="brand" content={pageGreeting} />
+      <Divider color="brand" content="Here are your assignments" size={3} important/>
+      <Table header={customersheader} rows={customers} compact/>    
     </div>
   );
 }

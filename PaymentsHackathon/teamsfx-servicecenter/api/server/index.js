@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 app.get('/summary', function(req, res) {
     var username = req.query.username;
     var params = [username];
-    console.log("Current user passed is: " + username);
+    //console.log("Current user passed is: " + username);
     
     let sql =  
     "select count(distinct customer_id) as custcount, count(*) as service_recs, sum(vehicle_repair_cost) as repaircost " +

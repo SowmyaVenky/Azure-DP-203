@@ -112,7 +112,7 @@
         },
         {
             "entityId": "index4",
-            "name": "Terms Of Use",
+            "name": "Video Library",
             "contentUrl": "{{{state.fx-resource-frontend-hosting.endpoint}}}{{{state.fx-resource-frontend-hosting.indexPath}}}/termsofuse",
             "websiteUrl": "{{{state.fx-resource-frontend-hosting.endpoint}}}{{{state.fx-resource-frontend-hosting.indexPath}}}/termsofuse",
             "scopes": [

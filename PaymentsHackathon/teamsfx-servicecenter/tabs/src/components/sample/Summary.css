@@ -16,7 +16,7 @@
 .welcome.page > .narrow > ul {
   width: 80%;
   justify-content: space-between;
-  margin: 4rem auto;
+  margin: 10rem auto;
   border-bottom: none;
 }
 
@@ -90,9 +90,14 @@ code {
 }
 
 form#inspectionreportform {
-  padding-left: 4px;
+  padding-left: 20px;
 }
 
 label {
-  font-weight: bold;
+  color:rgb(98, 100, 167)
 }
+
+.inputText {
+  color:rgb(98, 100, 167)
+}
+
