@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.12/MicrosoftTeams.schema.json",
   "manifestVersion": "1.12",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "id": "63b69213-bd4c-466e-afc3-172e45b6a59a",
   "packageName": "com.autorepair.app",
   "developer": {
@@ -28,6 +28,14 @@
       "entityId": "com.autorepair.hometab",
       "name": "Deloreans Auto",
       "contentUrl": "https://autorepair1001.azurewebsites.net",
+      "scopes": [
+        "personal"
+      ]
+    },
+    {
+      "entityId": "com.autorepair.chattab",
+      "name": "Ask us anything",
+      "contentUrl": "https://autorepairchat1001.azurewebsites.net/",
       "scopes": [
         "personal"
       ]

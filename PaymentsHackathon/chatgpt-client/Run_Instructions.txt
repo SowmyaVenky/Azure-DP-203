@@ -1,0 +1,21 @@
+## Docker run steps.
+1. build the docker image from the current directory. 
+docker build . -t "sowmyavenky/chatgptclient:1.0"
+
+2. Check to make sure the image is there.
+C:\Venky\DP-203\PaymentsTeamsApp\teamsapp>docker images
+
+REPOSITORY                TAG   IMAGE ID       CREATED         SIZE
+sowmyavenky/chatgptclient 1.0   aa8a5527edc2   22 seconds ago  933MB
+
+3. Run the container locally 
+docker run -p 5173:5173 -d sowmyavenky/chatgptclient:1.0
+
+4. Push image to docker
+docker image push sowmyavenky/chatgptclient:1.0
+
+4. App service does not like 5173
+az login
+az webapp config appsettings set --resource-group user73 --name autorepairchat1001 --settings WEBSITES_PORT=5173
+
+
