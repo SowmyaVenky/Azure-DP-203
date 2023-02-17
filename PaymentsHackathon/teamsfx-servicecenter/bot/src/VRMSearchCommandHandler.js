@@ -8,7 +8,15 @@ class VRMSearchCommandHandler {
   triggerPatterns = "vrm";
   
   async getVehicleByVRM(vrm) {
-    const response = await fetch (process.env.REACT_APP_API_BASE + `/vehiclebyvrm?vrm=` + vrm, {
+    var API_BASE = ""; 
+
+    if( process.env.REACT_APP_API_BASE == null) {
+      API_BASE = "https://autosvcenterapi1001.azurewebsites.net/";
+    }else {
+      API_BASE = process.env.REACT_APP_API_BASE;
+    }
+
+    const response = await fetch (API_BASE + `/vehiclebyvrm?vrm=` + vrm, {
           "method": "get",
           "cache": "default"
       });

@@ -7,10 +7,11 @@ const bodyParser = require('body-parser');
 const db = mysql.createConnection({
     // host: "localhost",  
     // user: "root",  
-    // host: "autorepairdb1001.mysql.database.azure.com",  
-    // user: "autoadmin",
-    host: ((!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "localhost" : "autorepairdb1001.mysql.database.azure.com"),
-    user: ((!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "root" : "autoadmin"),
+    //Venky we need to figure this out later, causes errors on azure.
+    host: "autorepairdb1001.mysql.database.azure.com",  
+     user: "autoadmin",
+    // host: ((!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "localhost" : "autorepairdb1001.mysql.database.azure.com"),
+    // user: ((!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "root" : "autoadmin"),
     password: "Ganesh20022002"
   });
 

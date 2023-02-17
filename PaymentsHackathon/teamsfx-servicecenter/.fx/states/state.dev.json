@@ -2,50 +2,50 @@
     "solution": {
         "provisionSucceeded": true,
         "teamsAppTenantId": "de8bd1e0-78f7-4cd0-aeff-73e09d462d5c",
-        "subscriptionId": "7907eb29-cbbf-4c41-b1c5-8d3d4ae6679e",
+        "subscriptionId": "0466f4ed-87d3-419c-9e14-cdec2f77440a",
         "subscriptionName": "Azure Pass - Sponsorship",
         "tenantId": "3e659543-5405-4674-a640-041299486c06",
         "needCreateResourceGroup": false,
         "resourceGroupName": "user73",
         "location": "eastus",
-        "resourceNameSuffix": "96701c"
+        "resourceNameSuffix": "860f25"
     },
     "fx-resource-appstudio": {
         "tenantId": "de8bd1e0-78f7-4cd0-aeff-73e09d462d5c",
-        "teamsAppId": "eac05f47-763b-4cd8-bdef-8d9c244f3b53"
+        "teamsAppId": "281f3333-c88b-4681-a2e3-c494b32e683a"
     },
     "fx-resource-frontend-hosting": {
         "indexPath": "/index.html#",
-        "domain": "teamsfxsso89ad0dtab.z13.web.core.windows.net",
-        "endpoint": "https://teamsfxsso89ad0dtab.z13.web.core.windows.net",
-        "storageResourceId": "/subscriptions/7907eb29-cbbf-4c41-b1c5-8d3d4ae6679e/resourceGroups/user73/providers/Microsoft.Storage/storageAccounts/teamsfxsso89ad0dtab"
+        "domain": "teamsfxssodev759f67tab.z13.web.core.windows.net",
+        "endpoint": "https://teamsfxssodev759f67tab.z13.web.core.windows.net",
+        "storageResourceId": "/subscriptions/0466f4ed-87d3-419c-9e14-cdec2f77440a/resourceGroups/user73/providers/Microsoft.Storage/storageAccounts/teamsfxssodev759f67tab"
     },
     "fx-resource-aad-app-for-teams": {
-        "clientId": "a40a5d33-c607-4e32-85a0-dd9cee13d12c",
+        "clientId": "5da26053-7511-4906-b527-b6a4472e42af",
         "clientSecret": "{{fx-resource-aad-app-for-teams.clientSecret}}",
-        "objectId": "d1f5c238-4065-4b0b-9ac2-e33dc720c07c",
-        "oauth2PermissionScopeId": "5abb16ea-14db-4ff5-b2e5-c6292596843b",
+        "objectId": "98ff2cd7-fd9b-4775-8f10-be4040ee0700",
+        "oauth2PermissionScopeId": "2de9d5b5-694a-4251-b9d5-ad48124b2031",
         "tenantId": "de8bd1e0-78f7-4cd0-aeff-73e09d462d5c",
         "oauthHost": "https://login.microsoftonline.com",
         "oauthAuthority": "https://login.microsoftonline.com/de8bd1e0-78f7-4cd0-aeff-73e09d462d5c",
-        "applicationIdUris": "api://teamsfxsso89ad0dtab.z13.web.core.windows.net/botid-bc02547c-56b9-4941-8eb1-bf7f29a71a73",
-        "botId": "bc02547c-56b9-4941-8eb1-bf7f29a71a73",
-        "botEndpoint": "https://teamsfxsso89ad0dbot.azurewebsites.net",
-        "frontendEndpoint": "https://teamsfxsso89ad0dtab.z13.web.core.windows.net"
+        "applicationIdUris": "api://teamsfxssodev759f67tab.z13.web.core.windows.net/botid-2f78ae41-f9c0-4218-98a1-90cc0a3ec3e5",
+        "botId": "2f78ae41-f9c0-4218-98a1-90cc0a3ec3e5",
+        "botEndpoint": "https://teamsfxssodev759f67bot.azurewebsites.net",
+        "frontendEndpoint": "https://teamsfxssodev759f67tab.z13.web.core.windows.net"
     },
     "fx-resource-bot": {
-        "botId": "bc02547c-56b9-4941-8eb1-bf7f29a71a73",
+        "botId": "2f78ae41-f9c0-4218-98a1-90cc0a3ec3e5",
         "botPassword": "{{fx-resource-bot.botPassword}}",
         "skuName": "B1",
-        "siteName": "teamsfxsso89ad0dbot",
-        "domain": "teamsfxsso89ad0dbot.azurewebsites.net",
-        "appServicePlanName": "teamsfxsso89ad0dbot",
-        "resourceId": "/subscriptions/7907eb29-cbbf-4c41-b1c5-8d3d4ae6679e/resourceGroups/user73/providers/Microsoft.Web/sites/teamsfxsso89ad0dbot",
-        "siteEndpoint": "https://teamsfxsso89ad0dbot.azurewebsites.net"
+        "siteName": "teamsfxssodev759f67bot",
+        "domain": "teamsfxssodev759f67bot.azurewebsites.net",
+        "appServicePlanName": "teamsfxssodev759f67bot",
+        "resourceId": "/subscriptions/0466f4ed-87d3-419c-9e14-cdec2f77440a/resourceGroups/user73/providers/Microsoft.Web/sites/teamsfxssodev759f67bot",
+        "siteEndpoint": "https://teamsfxssodev759f67bot.azurewebsites.net"
     },
     "fx-resource-identity": {
-        "identityName": "teamsfxsso89ad0d",
-        "identityResourceId": "/subscriptions/7907eb29-cbbf-4c41-b1c5-8d3d4ae6679e/resourceGroups/user73/providers/Microsoft.ManagedIdentity/userAssignedIdentities/teamsfxsso89ad0d",
-        "identityClientId": "90bfe492-da76-4183-97f3-69e6c1bef913"
+        "identityName": "teamsfxssodev759f67",
+        "identityResourceId": "/subscriptions/0466f4ed-87d3-419c-9e14-cdec2f77440a/resourceGroups/user73/providers/Microsoft.ManagedIdentity/userAssignedIdentities/teamsfxssodev759f67",
+        "identityClientId": "a882bf56-76cd-41af-a786-a5ed5a7a0a52"
     }
 }
