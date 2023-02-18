@@ -3,12 +3,12 @@
     "description": "You can customize the TeamsFx config for different environments. Visit https://aka.ms/teamsfx-env-config to learn more about this.",
     "manifest": {
         "appName": {
-            "short": "delores-sidepanel-tab",
-            "full": "Full name for delores-sidepanel-tab"
+            "short": "delores-inspection-1.0",
+            "full": "This sidepanel app is used when we meet with the customer and discuss inspection of their vehicle."
         },
         "description": {
-            "short": "Short description of delores-sidepanel-tab",
-            "full": "Full description of delores-sidepanel-tab"
+            "short": "Sidepanel for vehicle inspection",
+            "full": "This sidepanel app is used when we meet with the customer and discuss inspection of their vehicle."
         },
         "icons": {
             "color": "resources/color.png",

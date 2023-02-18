@@ -3,12 +3,12 @@
     "description": "You can customize the TeamsFx config for different environments. Visit https://aka.ms/teamsfx-env-config to learn more about this.",
     "manifest": {
         "appName": {
-            "short": "deloreans-iot",
-            "full": "Full name for deloreans-iot"
+            "short": "deloreans-iot-1.0",
+            "full": "This applications shows the teams integration part of the iot based application."
         },
         "description": {
-            "short": "Short description of deloreans-iot",
-            "full": "Full description of deloreans-iot"
+            "short": "This applications shows the teams integration part of the iot based application.",
+            "full": "This applications shows the teams integration part of the iot based application."
         },
         "icons": {
             "color": "resources/color.png",

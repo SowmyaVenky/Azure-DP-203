@@ -1,14 +1,14 @@
 {
     "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.14/MicrosoftTeams.schema.json",
     "manifestVersion": "1.14",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "id": "{{state.fx-resource-appstudio.teamsAppId}}",
     "packageName": "com.microsoft.teams.extension",
     "developer": {
-        "name": "Teams App, Inc.",
-        "websiteUrl": "https://www.example.com",
-        "privacyUrl": "https://www.example.com/termofuse",
-        "termsOfUseUrl": "https://www.example.com/privacy"
+        "name": "Deloreans Developers",
+        "websiteUrl": "https://www.deloreans.com",
+        "privacyUrl": "https://www.deloreans.com/termofuse",
+        "termsOfUseUrl": "https://www.deloreans.com/privacy"
     },
     "icons": {
         "color": "{{config.manifest.icons.color}}",
@@ -42,7 +42,7 @@
     "staticTabs": [
         {
             "entityId": "index0",
-            "name": "Personal Tab",
+            "name": "RFP Tab",
             "contentUrl": "{{{state.fx-resource-frontend-hosting.endpoint}}}{{{state.fx-resource-frontend-hosting.indexPath}}}/tab",
             "websiteUrl": "{{{state.fx-resource-frontend-hosting.endpoint}}}{{{state.fx-resource-frontend-hosting.indexPath}}}/tab",
             "scopes": [

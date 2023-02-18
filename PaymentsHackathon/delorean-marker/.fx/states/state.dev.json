@@ -1,0 +1,28 @@
+{
+    "solution": {
+        "provisionSucceeded": true,
+        "teamsAppTenantId": "de8bd1e0-78f7-4cd0-aeff-73e09d462d5c",
+        "subscriptionId": "7907eb29-cbbf-4c41-b1c5-8d3d4ae6679e",
+        "subscriptionName": "Azure Pass - Sponsorship",
+        "tenantId": "3e659543-5405-4674-a640-041299486c06",
+        "needCreateResourceGroup": false,
+        "resourceGroupName": "user73",
+        "location": "eastus",
+        "resourceNameSuffix": "553847"
+    },
+    "fx-resource-appstudio": {
+        "tenantId": "de8bd1e0-78f7-4cd0-aeff-73e09d462d5c",
+        "teamsAppId": "4252f992-a3cf-47b7-8854-9d1df8096889"
+    },
+    "fx-resource-frontend-hosting": {
+        "indexPath": "/index.html#",
+        "domain": "deloreanma5d7e7atab.z13.web.core.windows.net",
+        "endpoint": "https://deloreanma5d7e7atab.z13.web.core.windows.net",
+        "storageResourceId": "/subscriptions/7907eb29-cbbf-4c41-b1c5-8d3d4ae6679e/resourceGroups/user73/providers/Microsoft.Storage/storageAccounts/deloreanma5d7e7atab"
+    },
+    "fx-resource-identity": {
+        "identityName": "deloreanma5d7e7a",
+        "identityResourceId": "/subscriptions/7907eb29-cbbf-4c41-b1c5-8d3d4ae6679e/resourceGroups/user73/providers/Microsoft.ManagedIdentity/userAssignedIdentities/deloreanma5d7e7a",
+        "identityClientId": "ce77e75e-d083-40d0-aad2-03330e90e0e4"
+    }
+}

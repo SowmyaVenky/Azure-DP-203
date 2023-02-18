@@ -3,8 +3,8 @@
     "description": "You can customize the TeamsFx config for different environments. Visit https://aka.ms/teamsfx-env-config to learn more about this.",
     "manifest": {
         "appName": {
-            "short": "delorean-marker",
-            "full": "Full name for delorean-marker"
+            "short": "delorean-marker-1.0",
+            "full": "This app will act as a sidepanel tool to show customers their vehicle images and discuss repairs."
         },
         "description": {
             "short": "Short description of delorean-marker",

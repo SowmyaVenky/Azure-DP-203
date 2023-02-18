@@ -3,12 +3,12 @@
     "description": "You can customize the TeamsFx config for different environments. Visit https://aka.ms/teamsfx-env-config to learn more about this.",
     "manifest": {
         "appName": {
-            "short": "deloreans-rfp-sidepanel",
-            "full": "Full name for deloreans-rfp-sidepanel"
+            "short": "deloreans-rfp-1.0",
+            "full": "Side panel app for allowing service center people do a screen share in the meeting and RFP."
         },
         "description": {
-            "short": "Short description of deloreans-rfp-sidepanel",
-            "full": "Full description of deloreans-rfp-sidepanel"
+            "short": "Meeting and RFP.",
+            "full": "Side panel app for allowing service center people do a screen share in the meeting and RFP."
         },
         "icons": {
             "color": "resources/color.png",
