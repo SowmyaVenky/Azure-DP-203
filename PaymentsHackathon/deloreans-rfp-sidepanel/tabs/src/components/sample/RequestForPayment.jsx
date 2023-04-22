@@ -1,4 +1,6 @@
 import "./RequestForPayment.css";
+import axios from 'axios';
+
 import {
   Form,
   FormInput,
@@ -20,6 +22,16 @@ export function RequestForPayment(props) {
   const history = useHistory();
 
   let handleSubmit = async (e) => {
+    const webhookURL = 'https://6g2rrf.webhook.office.com/webhookb2/18556687-90ae-4e12-93ad-f033a4f45a9d@de8bd1e0-78f7-4cd0-aeff-73e09d462d5c/IncomingWebhook/cf5e120fd89348a897c09588947fc9b2/579c7f37-c7d1-4869-89a8-906ad6f02c02';
+    axios.post(
+      webhookURL,
+      {
+        text: 'The RFP URL has been sent to the customer for payment.',
+      },
+      {
+        headers: { "content-type": "application/json" },
+      }
+    );  
       history.push("/feedback");
   }
   return (

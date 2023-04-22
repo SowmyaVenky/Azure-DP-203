@@ -90,3 +90,9 @@ az login
 az webapp config appsettings set --resource-group user73 --name autorepair1001 --settings WEBSITES_PORT=3978
 
 
+docker build . -t "sowmyavenky/autosvcenterapi:1.0"
+docker image push sowmyavenky/autosvcenterapi:1.0
+
+
+
+

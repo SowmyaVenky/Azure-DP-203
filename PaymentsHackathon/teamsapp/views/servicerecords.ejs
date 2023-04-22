@@ -22,7 +22,10 @@
           <td><%= customerEmail %></td>
           <td><%= customerTitle %></td>
           <td><%= address %>, <%= address2 %>, <%= city %> <%= state %> <%= zip %></td>
-          <td><%= customerCreditCard %></td>
+          <td><%=maskCard(customerCreditCard)%></td>      
+          <% function maskCard(customerCreditCard) {
+          return `${'*'.repeat(customerCreditCard.length - 4)}${customerCreditCard.substr(customerCreditCard.length - 4)}`;
+          } %>        
          </tr>
       </table> 
       <p>Vehicles Registered</p>

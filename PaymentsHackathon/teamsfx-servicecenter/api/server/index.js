@@ -9,7 +9,7 @@ const db = mysql.createConnection({
     // user: "root",  
     //Venky we need to figure this out later, causes errors on azure.
     host: "autorepairdb1001.mysql.database.azure.com",  
-     user: "autoadmin",
+    user: "autoadmin",
     // host: ((!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "localhost" : "autorepairdb1001.mysql.database.azure.com"),
     // user: ((!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "root" : "autoadmin"),
     password: "Ganesh20022002"

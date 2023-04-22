@@ -463,7 +463,7 @@ app.get('/payment', function(request, response, next) {
   var creditcard = request.query.cc;
   var amount = request.query.amount;
   var date = request.query.date;
-  console.log(request);
+  //console.log(request);
   
   axios.post(
     webhookURL,
