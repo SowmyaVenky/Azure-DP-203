@@ -53,3 +53,9 @@ Here are the steps:
 13. Establish P2S vpn between laptop and VNET.
 14. Deploy flask app to demonstrate route based load balancing across multiple VMs using app gateway.
 15. Private DNS zones and VNET linking.
+
+*** To Learn About #Azure DP-203 Data Engineering Concepts and Certification
+1. https://learn.microsoft.com/en-us/training/courses/dp-203t00
+2. https://medium.com/@ershivamgupta/how-to-pass-microsofts-azure-data-engineer-certification-dp-203-exam-guide-5b4f0c35252f
+3. https://kloudsaga.com/important-data-engineering-concepts-microsoft-azure/
+4. https://courses.kloudsaga.com/courses/microsoft-azure-data-engineer-exam-practice-sets
